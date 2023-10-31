@@ -33,9 +33,9 @@ export const UsersVm = new (class {
   removeUser = async (name: string) => {
     this.users = this.users.filter((u) => u.name !== name);
   };
-  private createNewUser = async () => {
-    //todo ручки с бэка
-  };
+  // private createNewUser = async () => {
+  //   //todo ручки с бэка
+  // };
   constructor() {
     makeAutoObservable(this);
     this.users = [
