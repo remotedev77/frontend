@@ -20,7 +20,7 @@ instance.interceptors.response.use(
     return config;
   },
   async (error) => {
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
       new RootStore().authStore.checkAuth();
       return instance.request(error);
     }

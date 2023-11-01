@@ -25,6 +25,7 @@ interface InputProps {
   type?: string;
   required?: boolean;
   textSize?: number;
+  value?: string;
 }
 
 export const Input: FC<InputProps> = (props) => {
@@ -44,5 +45,5 @@ export const Input: FC<InputProps> = (props) => {
     border-radius: 15px;
     border: 1px solid #000;
   `;
-  return <Custom {...props} />;
+  return <Custom {...props} autoComplete="true" />;
 };
