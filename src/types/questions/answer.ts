@@ -12,6 +12,7 @@ export interface AnswerResultDTO {
   description?: string;
   correct_answers_count?: number;
   incorrect_answers_count?: number;
+  success?: boolean;
 }
 
 export enum ExamType {

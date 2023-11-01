@@ -3,13 +3,14 @@ import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
 import { EllipseShape, IconProps } from "../../assets/lib";
 import { Button } from "../../components/Button/button.component";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { postData } from "../../api/apis";
 import { AnswerResultDTO, AnswersArgs, ExamType } from "../../types";
 import useSWRMutation from "swr/mutation";
 import { Loading } from "../../components";
 import { ExamSimulatorVm } from "../../pages/ExamSimulator/exam-simulator.vm";
 import { FinalTestVm } from "../../pages/FinalTest/final-test.vm";
+import { RootStoreContext } from "../../app.view";
 
 const Container = styled.div`
   display: flex;
@@ -101,9 +102,11 @@ export const ResultList = styled.div`
 type QuizResultProps = {
   vm: typeof FinalTestVm | typeof ExamSimulatorVm;
   Icon: ({ style }: IconProps) => JSX.Element;
+  title?: string;
 };
 
 export const QuizResult = observer((x: QuizResultProps) => {
+  const { userStore } = useContext(RootStoreContext);
   const { data, isMutating, trigger } = useSWRMutation<
     AnswerResultDTO[],
     unknown,
@@ -113,7 +116,11 @@ export const QuizResult = observer((x: QuizResultProps) => {
 
   useEffect(() => {
     trigger(x.vm.selectedAnswers);
-  }, []);
+
+    x.vm.exam_type === ExamType.FINAL_TEST &&
+      userStore.setIsFinalExamPass(data?.[data.length - 1]?.success || false);
+    userStore.setIsExamPass(data?.[data.length - 1]?.success || false);
+  }, [trigger]);
 
   const navigate = useNavigate();
 
@@ -134,10 +141,10 @@ export const QuizResult = observer((x: QuizResultProps) => {
       <Card>
         <EllipseShape style="position:absolute; left:0;bottom:-10;rotate:10deg;height:100%;" />
         <CardText>
-          <h1>Экзамен сдан</h1>
-          <h3>
-            {x.vm.exam_type === ExamType.MARATHON ? (
-              <>
+          {x.vm.exam_type === ExamType.MARATHON ? (
+            <>
+              <h1>Вы прошли марафон!</h1>
+              <h3>
                 <p>
                   Кол-во правильных ответов:{" "}
                   {data?.[data.length - 1]?.correct_answers_count}
@@ -146,14 +153,27 @@ export const QuizResult = observer((x: QuizResultProps) => {
                   Кол-во неправильных ответов:{" "}
                   {data?.[data.length - 1]?.incorrect_answers_count}
                 </p>
-              </>
-            ) : (
-              <>
+              </h3>
+            </>
+          ) : x.vm.exam_type === ExamType.CATEGORY ? (
+            <>
+              <h1>{x.title}</h1>
+              <h3>
                 Кол-во правильных ответов:{" "}
                 {data?.[data.length - 1]?.correct_answers_count}
-              </>
-            )}
-          </h3>
+              </h3>
+            </>
+          ) : (
+            <>
+              <h1>
+                {userStore.isExamPassed ? "Экзамен сдан" : "Экзамен не сдан"}
+              </h1>
+              <h3>
+                Кол-во правильных ответов:{" "}
+                {data?.[data.length - 1]?.correct_answers_count}
+              </h3>
+            </>
+          )}
         </CardText>
 
         <x.Icon

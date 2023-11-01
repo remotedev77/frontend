@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
 import {
@@ -13,6 +13,7 @@ import useGetUserData from "../../hooks/useGetUserData";
 import { Header } from "../../components";
 import { Category } from "../../containers";
 import { Statistics } from "../../containers/Statistics";
+import { RootStoreContext } from "../../app.view";
 
 type Card = {
   title: string;
@@ -155,7 +156,7 @@ const Wrapper = styled.div`
 
 export const Home = observer(() => {
   const navigate = useNavigate();
-
+  const { userStore } = useContext(RootStoreContext);
   const {
     userData,
     // isLoading: userLoading
@@ -188,9 +189,9 @@ export const Home = observer(() => {
       if (!userData) {
         return {};
       }
-      const type = userData?.main_test_count >= 2 ? "active" : "deactive";
-      const link = userData?.main_test_count >= 2 ? "/test" : "/";
-      const Icon = userData?.main_test_count >= 2 ? WatchIcon : () => <></>;
+      const type = userData?.final_test ? "active" : "deactive";
+      const link = userData?.final_test ? "/test" : "/";
+      const Icon = userData?.final_test ? WatchIcon : () => <></>;
       return { type, link, Icon };
     };
 
@@ -198,7 +199,7 @@ export const Home = observer(() => {
       { ...prev[0], ...updateTestCount() },
       ...prev.slice(1),
     ]);
-  }, [userData, userData?.main_test_count]);
+  }, [userData, userData?.final_test]);
 
   return (
     <Container>
@@ -248,7 +249,7 @@ export const Home = observer(() => {
                   </CardOverviewTitle>
                   <CardOverviewSubtitle>
                     Итоговое тестирование -{" "}
-                    {userData?.final_test ? "сдано" : "не сдано"}
+                    {userStore?.isFinalExamPassed ? "сдано" : "не сдано"}
                   </CardOverviewSubtitle>
                 </CardOverviewHeader>
                 {/*  */}

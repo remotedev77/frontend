@@ -59,6 +59,6 @@ export const CategoryExam = observer(() => {
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (
-    <QuizResult Icon={getIcons(state)} vm={vm} />
+    <QuizResult Icon={getIcons(state)} title={state} vm={vm} />
   ) : null;
 });
