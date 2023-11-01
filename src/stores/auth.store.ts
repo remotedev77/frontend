@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { authService } from "../api/api.auth.ts";
 import { RootStore } from "./root.store.ts";
+import { AxiosError } from "axios";
 
 export class AuthStore {
   isAdmin = false;
@@ -20,6 +21,8 @@ export class AuthStore {
       localStorage.setItem("accessToken", res?.data?.access);
       localStorage.setItem("refreshToken", res?.data?.refresh);
       this.isAuth = true;
+    } catch (err) {
+      if (err instanceof AxiosError) return err;
     } finally {
       this.isAuthInProgress = false;
     }

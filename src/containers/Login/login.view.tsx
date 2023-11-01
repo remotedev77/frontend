@@ -67,7 +67,7 @@ export const Login = observer(() => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await vm.login();
-    res ? navigate("/") : toast.error("Username or Password wrong!");
+    res === true ? navigate("/") : toast.error("Username or Password wrong!");
   };
 
   return (
