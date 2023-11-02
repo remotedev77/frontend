@@ -7,7 +7,7 @@ import { QuestionDTO } from "../../types";
 import { CategoryExamVm, SessionStatus } from "./category-exam.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
-import { Loading } from "../../components";
+import { Loading, NotFound404 } from "../../components";
 import { useLocation } from "react-router-dom";
 import {
   DocsCheck,
@@ -47,7 +47,7 @@ export const CategoryExam = observer(() => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return <>{error}</>;
+  if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart

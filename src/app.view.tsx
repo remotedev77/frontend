@@ -23,6 +23,7 @@ import { preload } from "swr";
 import { authService } from "./api/api.auth.ts";
 import { getData } from "./api/apis.ts";
 import { Questions, Users } from "./pages/AdminPage/views";
+import { NotFound404 } from "./components/notfound404.component.tsx";
 
 preload(authService.getUserEndpoint, authService.getUser);
 preload("/app/get-user-statistic/", getData);
@@ -31,12 +32,20 @@ export const RootStoreContext = createContext<RootStore>(new RootStore());
 
 const router = createBrowserRouter([
   {
+    path: "*",
+    element: <NotFound404 />,
+  },
+  {
     path: "/",
     element: <PersistLogin />,
     children: [
       {
         element: <ProtectedRoute />,
         children: [
+          {
+            path: "*",
+            element: <NotFound404 />,
+          },
           {
             index: !new RootStore().authStore.isAdmin,
             element: <Home />,

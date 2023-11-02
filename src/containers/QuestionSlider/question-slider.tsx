@@ -7,6 +7,9 @@ const QuestionSliderContainer = styled.div`
   padding: 0 40px;
   display: flex;
   gap: 10px;
+  height: 70px;
+  overflow: hidden;
+  overflow-x: auto;
 `;
 
 type QuestionSlider = {
@@ -51,7 +54,7 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
     justify-content: center;
     align-items: center;
     border: 1px solid #000;
-
+    padding: 20px;
     ${props.answer !== undefined
       ? `background: ${props.answer ? "#B9FF6D" : "#F5574D"}`
       : ``};

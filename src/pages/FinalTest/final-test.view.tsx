@@ -7,7 +7,7 @@ import { QuestionDTO } from "../../types";
 import { FinalTestVm, SessionStatus } from "./final-test.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
-import { Loading } from "../../components";
+import { Loading, NotFound404 } from "../../components";
 import { DocsIcon } from "../../assets/lib";
 
 export const FinalTest = observer(() => {
@@ -23,7 +23,7 @@ export const FinalTest = observer(() => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return <>{error}</>;
+  if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart

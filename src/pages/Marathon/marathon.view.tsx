@@ -7,7 +7,7 @@ import { QuestionDTO } from "../../types";
 import { MarathonVm, SessionStatus } from "./marathon.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
-import { Loading } from "../../components";
+import { Loading, NotFound404 } from "../../components";
 import { BigCardsIcon } from "../../assets/lib";
 
 export const Marathon = observer(() => {
@@ -23,7 +23,7 @@ export const Marathon = observer(() => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return <>{error}</>;
+  if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart

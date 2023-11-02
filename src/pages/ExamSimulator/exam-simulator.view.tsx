@@ -10,6 +10,7 @@ import { ExamSimulatorVm, SessionStatus } from "./exam-simulator.vm.ts";
 import { Exam } from "./views/exam/exam.view.tsx";
 import { Loading } from "../../components/loading.component.tsx";
 import { DocsIcon } from "../../assets/lib/icons.tsx";
+import { NotFound404 } from "../../components/index.ts";
 
 export const ExamSimulator = observer(() => {
   const vm = ExamSimulatorVm;
@@ -23,7 +24,7 @@ export const ExamSimulator = observer(() => {
   }, [data, vm, vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
-  if (error) return <>{error}</>;
+  if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart

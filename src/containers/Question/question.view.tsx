@@ -5,10 +5,8 @@ import { ExamType, VM } from "../../types";
 
 const QContainer = styled.div`
   box-sizing: border-box;
-  width: 100%;
   display: flex;
   flex-grow: 1;
-  height: 100%;
 `;
 
 const QWrapper = styled.div`
@@ -18,6 +16,8 @@ const QWrapper = styled.div`
   border-radius: 30px;
   background: #fff;
   box-shadow: 0px 4px 46px 0px rgba(0, 0, 0, 0.25);
+  max-height: 600px;
+  overflow-x: auto;
 `;
 
 const Title = styled.p`
