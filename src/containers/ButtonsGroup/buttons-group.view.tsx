@@ -8,6 +8,7 @@ interface ButtonProps extends PropsWithChildren {
   left?: boolean;
   right?: boolean;
   middle?: boolean;
+  isTime?: boolean;
 }
 
 const Group = styled.div`
@@ -28,7 +29,7 @@ const Button: FC<ButtonProps> = (props) => {
   const Styled = styled.button`
     display: flex;
     width: ${props.middle || props.primary ? "100%" : "fit-content"};
-    cursor: pointer;
+    cursor: ${props.isTime ? "default" : "pointer"};
     margin: ${props.left
       ? "0 auto 0 0"
       : props.right
@@ -97,7 +98,11 @@ export const ButtonsGroup: FC<ButtonsGroupProps> = observer((x) => {
                 />
               </svg>
             </Button>
-            <Button middle onClick={x.middle.middle!}>
+            <Button
+              isTime={x.time ? true : false}
+              middle
+              onClick={x.middle.middle!}
+            >
               {x.time
                 ? `${x.time.hours}${x.time.minutes}${x.time.seconds}`
                 : "Проверить ответ"}

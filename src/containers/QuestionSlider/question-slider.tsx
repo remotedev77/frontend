@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { FC, PropsWithChildren } from "react";
-import { VM } from "../../types";
+import { ExamType, VM } from "../../types";
 import { observer } from "mobx-react";
 
 const QuestionSliderContainer = styled.div`
@@ -19,19 +19,39 @@ type QuestionSlider = {
 export const QuestionSlider = observer((x: QuestionSlider) => {
   return (
     <QuestionSliderContainer>
-      {x.vm?.questions?.map(({ id }, index) => (
-        <QuestionSquare
-          vm={x.vm}
-          answer={
-            x?.vm?.checkedAnswers.find(({ questionId }) => id === questionId)
-              ?.isCorrect
-          }
-          key={id}
-          number={index}
-        >
-          {index}
-        </QuestionSquare>
-      ))}
+      {x.vm.exam_type === ExamType.MARATHON
+        ? x.vm?.questions
+            ?.slice(0, x.vm.checkedAnswers.length + 1)
+            ?.map(({ id }, index) => (
+              <QuestionSquare
+                vm={x.vm}
+                answer={
+                  x?.vm?.checkedAnswers.find(
+                    ({ questionId }) => id === questionId
+                  )?.isCorrect
+                }
+                key={id}
+                questionId={id}
+                number={index}
+              >
+                {index}
+              </QuestionSquare>
+            ))
+        : x.vm?.questions?.map(({ id }, index) => (
+            <QuestionSquare
+              vm={x.vm}
+              answer={
+                x?.vm?.checkedAnswers.find(
+                  ({ questionId }) => id === questionId
+                )?.isCorrect
+              }
+              key={id}
+              questionId={id}
+              number={index}
+            >
+              {index}
+            </QuestionSquare>
+          ))}
     </QuestionSliderContainer>
   );
 });
@@ -40,6 +60,7 @@ interface ISquareProps extends PropsWithChildren {
   number: number;
   answer?: boolean;
   vm: VM;
+  questionId: number;
 }
 
 const QuestionSquare: FC<ISquareProps> = observer((props) => {
@@ -55,8 +76,13 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
     align-items: center;
     border: 1px solid #000;
     padding: 20px;
+
+    &[data-selected="true"] {
+      background: #e7e7e7;
+    }
+
     ${props.answer !== undefined
-      ? `background: ${props.answer ? "#B9FF6D" : "#F5574D"}`
+      ? `background: ${props.answer ? "#B9FF6D" : "#F5574D"} !important`
       : ``};
 
     &[data-state="true"]::after {
@@ -74,6 +100,11 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
 
   return (
     <Square
+      data-selected={
+        props.vm.selectedAnswers.find(({ q_id }) => props.questionId === q_id)
+          ? true
+          : false
+      }
       data-state={props.number === props.vm.questionNumber}
       onClick={() => {
         if (props.vm.questionNumber !== props.number) {

@@ -143,7 +143,7 @@ export const QuizResult = observer((x: QuizResultProps) => {
         <CardText>
           {x.vm.exam_type === ExamType.MARATHON ? (
             <>
-              <h1>Вы прошли марафон!</h1>
+              <h1>Вы завершили марафон!</h1>
               <h3>
                 <p>
                   Кол-во правильных ответов:{" "}
@@ -151,7 +151,11 @@ export const QuizResult = observer((x: QuizResultProps) => {
                 </p>
                 <p>
                   Кол-во неправильных ответов:{" "}
-                  {data?.[data.length - 1]?.incorrect_answers_count}
+                  {/*  data?.[data.length - 1]?.incorrect_answers_count */}
+                  {
+                    x.vm.checkedAnswers.filter(({ isCorrect }) => !isCorrect)
+                      .length
+                  }
                 </p>
               </h3>
             </>

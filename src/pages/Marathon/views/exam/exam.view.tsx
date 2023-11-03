@@ -7,6 +7,7 @@ import {
   QuestionSlider,
 } from "../../../../containers/index.ts";
 import { useNavigate } from "react-router-dom";
+import { ExamType } from "../../../../types/index.ts";
 
 const Container = styled.div`
   display: flex;
@@ -51,8 +52,14 @@ export const Exam = observer(() => {
                 }
               },
               right() {
-                if (vm.questions.length - 1 > vm.questionNumber) {
-                  vm.changeSelectedQuestion(vm.questionNumber + 1);
+                if (vm.exam_type === ExamType.MARATHON) {
+                  if (vm.checkedAnswers.length > vm.questionNumber) {
+                    return vm.changeSelectedQuestion(vm.questionNumber + 1);
+                  }
+                } else {
+                  if (vm.questions.length - 1 > vm.questionNumber) {
+                    return vm.changeSelectedQuestion(vm.questionNumber + 1);
+                  }
                 }
               },
             }}

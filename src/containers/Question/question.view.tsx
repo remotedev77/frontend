@@ -64,6 +64,7 @@ const Input = styled.input`
 
 const AnswerText = styled.p<{ isCorrect?: boolean }>`
   flex: 1;
+  font-weight: 400;
   color: ${(props) =>
     props.isCorrect
       ? "#B9FF6D"

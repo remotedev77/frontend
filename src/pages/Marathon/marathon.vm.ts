@@ -38,8 +38,8 @@ export const MarathonVm = new (class {
   }
 
   setQuestions(questions: QuestionDTO[]) {
-    this.questions = [...questions];
-    this.changeSelectedQuestion(0);
+    this.questions = [...this.questions, ...questions];
+    this.changeSelectedQuestion(this.questionNumber);
   }
 
   changeSelectedQuestion(n: number) {
@@ -91,10 +91,12 @@ export const MarathonVm = new (class {
     const checkAnswerCorrect =
       checkAnswerObj.correctAnswerId === checkAnswerObj.answerId;
 
-    this.checkedAnswers.push({
-      ...checkAnswerObj,
-      isCorrect: checkAnswerCorrect,
-    });
+    !this.findCheckedAnswer() &&
+      this.findSelectedAnswer() &&
+      this.checkedAnswers.push({
+        ...checkAnswerObj,
+        isCorrect: checkAnswerCorrect,
+      });
   }
 
   findCheckedAnswer() {

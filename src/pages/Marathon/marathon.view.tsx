@@ -12,14 +12,23 @@ import { BigCardsIcon } from "../../assets/lib";
 
 export const Marathon = observer(() => {
   const vm = MarathonVm;
-  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
-    data && vm.setQuestions(data);
-  }, [data, vm, vm.sessionStatus]);
+    data && vm.questions.length === 0 && vm.setQuestions(data);
+
+    const getNewQuestions = async () => {
+      const newData = await mutate();
+      newData && vm.setQuestions(newData);
+    };
+
+    if (vm.checkedAnswers.length === 40) {
+      getNewQuestions();
+    }
+  }, [vm.sessionStatus, vm.checkedAnswers.length]);
 
   if (isLoading) return <Loading />;
 
