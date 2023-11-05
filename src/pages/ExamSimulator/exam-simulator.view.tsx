@@ -14,14 +14,15 @@ import { NotFound404 } from "../../components/index.ts";
 
 export const ExamSimulator = observer(() => {
   const vm = ExamSimulatorVm;
-  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-  }, [data, vm, vm.sessionStatus]);
+    mutate();
+  }, [vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
   if (error) return <NotFound404 />;

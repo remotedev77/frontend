@@ -19,7 +19,7 @@ export const Marathon = observer(() => {
 
   useEffect(() => {
     data && vm.questions.length === 0 && vm.setQuestions(data);
-
+    mutate();
     const getNewQuestions = async () => {
       const newData = await mutate();
       newData && vm.setQuestions(newData);

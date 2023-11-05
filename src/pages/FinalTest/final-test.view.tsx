@@ -12,14 +12,15 @@ import { DocsIcon } from "../../assets/lib";
 
 export const FinalTest = observer(() => {
   const vm = FinalTestVm;
-  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-  }, [data, vm, vm.sessionStatus]);
+    mutate();
+  }, [vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
 

@@ -36,14 +36,15 @@ export const CategoryExam = observer(() => {
   const vm = CategoryExamVm;
   const { state } = useLocation();
 
-  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
     state ? `app/get-category-question/${state}/` : null,
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-  }, [data, vm, vm.sessionStatus]);
+    mutate();
+  }, [vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
 
