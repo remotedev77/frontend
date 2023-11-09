@@ -2,14 +2,27 @@ import styled from "@emotion/styled";
 import { FC, PropsWithChildren } from "react";
 import { ExamType, VM } from "../../types";
 import { observer } from "mobx-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode } from "swiper/modules";
+
+import "swiper/css";
 
 const QuestionSliderContainer = styled.div`
-  padding: 0 40px;
   display: flex;
   gap: 10px;
-  height: 70px;
-  overflow: hidden;
-  overflow-x: auto;
+
+  .swiper {
+    margin-left: 0;
+  }
+
+  .swiper-slide {
+    width: fit-content !important;
+    height: fit-content !important;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    padding: 0 40px;
+  }
 `;
 
 type QuestionSlider = {
@@ -19,39 +32,49 @@ type QuestionSlider = {
 export const QuestionSlider = observer((x: QuestionSlider) => {
   return (
     <QuestionSliderContainer>
-      {x.vm.exam_type === ExamType.MARATHON
-        ? x.vm?.questions
-            ?.slice(0, x.vm.checkedAnswers.length + 1)
-            ?.map(({ id }, index) => (
-              <QuestionSquare
-                vm={x.vm}
-                answer={
-                  x?.vm?.checkedAnswers.find(
-                    ({ questionId }) => id === questionId
-                  )?.isCorrect
-                }
-                key={id}
-                questionId={id}
-                number={index}
-              >
-                {index}
-              </QuestionSquare>
-            ))
-        : x.vm?.questions?.map(({ id }, index) => (
-            <QuestionSquare
-              vm={x.vm}
-              answer={
-                x?.vm?.checkedAnswers.find(
-                  ({ questionId }) => id === questionId
-                )?.isCorrect
-              }
-              key={id}
-              questionId={id}
-              number={index}
-            >
-              {index}
-            </QuestionSquare>
-          ))}
+      <Swiper
+        className="swiper"
+        slidesPerView={"auto"}
+        freeMode
+        modules={[FreeMode]}
+        spaceBetween={4}
+      >
+        {x.vm.exam_type === ExamType.MARATHON
+          ? x.vm?.questions
+              ?.slice(0, x.vm.checkedAnswers.length + 1)
+              ?.map(({ id }, index) => (
+                <SwiperSlide className="swiper-slide" key={id}>
+                  <QuestionSquare
+                    vm={x.vm}
+                    answer={
+                      x?.vm?.checkedAnswers.find(
+                        ({ questionId }) => id === questionId
+                      )?.isCorrect
+                    }
+                    questionId={id}
+                    number={index}
+                  >
+                    {index}
+                  </QuestionSquare>
+                </SwiperSlide>
+              ))
+          : x.vm?.questions?.map(({ id }, index) => (
+              <SwiperSlide key={id}>
+                <QuestionSquare
+                  vm={x.vm}
+                  answer={
+                    x?.vm?.checkedAnswers.find(
+                      ({ questionId }) => id === questionId
+                    )?.isCorrect
+                  }
+                  questionId={id}
+                  number={index}
+                >
+                  {index}
+                </QuestionSquare>
+              </SwiperSlide>
+            ))}
+      </Swiper>
     </QuestionSliderContainer>
   );
 });
@@ -69,13 +92,15 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
     cursor: pointer;
     display: inline-flex;
     box-sizing: border-box;
-    width: 42px;
-    height: 42px;
+    width: 35px;
+    margin-bottom: 5px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
     border: 1px solid #000;
-    padding: 20px;
+    padding: 8px 12px;
+    font-size: 12px;
 
     &[data-selected="true"] {
       background: #e7e7e7;
@@ -95,6 +120,12 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
       content: "";
       position: absolute;
       bottom: -10px;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      width: 50px;
+      padding: 10px 20px;
+      font-size: 20px;
     }
   `;
 

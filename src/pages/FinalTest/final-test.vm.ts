@@ -23,7 +23,6 @@ export const FinalTestVm = new (class {
   }
 
   finishSession() {
-    this.selectedAnswers.push({ exam_type: this.exam_type });
     this.sessionStatus = SessionStatus.FINISH;
   }
 
@@ -32,8 +31,8 @@ export const FinalTestVm = new (class {
   }
 
   setQuestions(questions: QuestionDTO[]) {
-    this.questions = [...questions];
-    this.changeSelectedQuestion(0);
+    this.questions = [...this.questions, ...questions];
+    this.changeSelectedQuestion(this.questionNumber);
   }
 
   changeSelectedQuestion(n: number) {
@@ -41,17 +40,20 @@ export const FinalTestVm = new (class {
     this.questionNumber = n;
   }
 
-  setSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  setSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
 
     updatedAnswerIndex === -1
-      ? this.selectedAnswers.push({ a_id, q_id: this.selectedQuestion.id })
-      : this.updateSelectedAnswer({ a_id });
+      ? this.selectedAnswers.push({
+          a_id: [a_id],
+          q_id: this.selectedQuestion.id,
+        })
+      : this.updateSelectedAnswer(a_id);
   }
 
-  updateSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  updateSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
@@ -61,7 +63,11 @@ export const FinalTestVm = new (class {
       updatedAnswerIndex,
       this.selectedAnswers.length - 1
     );
-    const current = { a_id, q_id: this.selectedQuestion.id };
+    const current: AnswersArgs = {
+      a_id: [a_id],
+      q_id: this.selectedQuestion.id,
+    };
+
     this.selectedAnswers = [...left, current, ...right];
   }
 
@@ -69,6 +75,28 @@ export const FinalTestVm = new (class {
     return this.selectedAnswers.find(
       ({ q_id }) => q_id === this.selectedQuestion.id
     )?.a_id;
+  }
+
+  checkAnswer() {
+    const correctAnswer = this.selectedQuestion.answers?.find(
+      ({ is_correct }) => is_correct
+    );
+
+    const checkAnswerObj: CheckedAnswers = {
+      correctAnswerId: correctAnswer?.id,
+      answerIds: this.findSelectedAnswer(),
+      questionId: this.selectedQuestion?.id,
+    };
+
+    const checkAnswerCorrect =
+      checkAnswerObj.correctAnswerId === checkAnswerObj.answerIds;
+
+    !this.findCheckedAnswer() &&
+      this.findSelectedAnswer() &&
+      this.checkedAnswers.push({
+        ...checkAnswerObj,
+        isCorrect: checkAnswerCorrect,
+      });
   }
 
   findCheckedAnswer() {

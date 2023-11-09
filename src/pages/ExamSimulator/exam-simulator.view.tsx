@@ -9,20 +9,19 @@ import { QuizResult, QuizStart } from "../../containers/index.ts";
 import { ExamSimulatorVm, SessionStatus } from "./exam-simulator.vm.ts";
 import { Exam } from "./views/exam/exam.view.tsx";
 import { Loading } from "../../components/loading.component.tsx";
-import { DocsIcon } from "../../assets/lib/icons.tsx";
+import DocsIcon from "../../assets/icons/docs.svg?react";
 import { NotFound404 } from "../../components/index.ts";
 
 export const ExamSimulator = observer(() => {
   const vm = ExamSimulatorVm;
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-    mutate();
-  }, [vm.sessionStatus]);
+  }, [data, vm, vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
   if (error) return <NotFound404 />;

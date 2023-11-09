@@ -23,7 +23,6 @@ export const ExamSimulatorVm = new (class {
   }
 
   finishSession() {
-    this.selectedAnswers.push({ exam_type: this.exam_type });
     this.sessionStatus = SessionStatus.FINISH;
   }
 
@@ -33,7 +32,11 @@ export const ExamSimulatorVm = new (class {
 
   setQuestions(questions: QuestionDTO[]) {
     this.questions = [...questions];
-    this.changeSelectedQuestion(0);
+    this.changeSelectedQuestion(this.questionNumber);
+  }
+
+  updateQuestions(newQuestions: QuestionDTO[]) {
+    this.questions.push(...newQuestions);
   }
 
   changeSelectedQuestion(n: number) {
@@ -41,26 +44,34 @@ export const ExamSimulatorVm = new (class {
     this.questionNumber = n;
   }
 
-  setSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  setSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
 
     updatedAnswerIndex === -1
-      ? this.selectedAnswers.push({ a_id, q_id: this.selectedQuestion.id })
-      : this.updateSelectedAnswer({ a_id });
+      ? this.selectedAnswers.push({
+          a_id: [a_id],
+          q_id: this.selectedQuestion.id,
+        })
+      : this.updateSelectedAnswer(a_id);
   }
 
-  updateSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  updateSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
-    const left = this.selectedAnswers.slice(0, updatedAnswerIndex);
+
+    const left = this.selectedAnswers.slice(0, updatedAnswerIndex - 1);
     const right = this.selectedAnswers.slice(
-      updatedAnswerIndex + 1,
-      this.selectedAnswers.length
+      updatedAnswerIndex,
+      this.selectedAnswers.length - 1
     );
-    const current = { a_id, q_id: this.selectedQuestion.id };
+    const current: AnswersArgs = {
+      a_id: [a_id],
+      q_id: this.selectedQuestion.id,
+    };
+
     this.selectedAnswers = [...left, current, ...right];
   }
 
@@ -68,6 +79,28 @@ export const ExamSimulatorVm = new (class {
     return this.selectedAnswers.find(
       ({ q_id }) => q_id === this.selectedQuestion.id
     )?.a_id;
+  }
+
+  checkAnswer() {
+    const correctAnswer = this.selectedQuestion.answers?.find(
+      ({ is_correct }) => is_correct
+    );
+
+    const checkAnswerObj: CheckedAnswers = {
+      correctAnswerId: correctAnswer?.id,
+      answerIds: this.findSelectedAnswer(),
+      questionId: this.selectedQuestion?.id,
+    };
+
+    const checkAnswerCorrect =
+      checkAnswerObj.correctAnswerId === checkAnswerObj.answerIds;
+
+    !this.findCheckedAnswer() &&
+      this.findSelectedAnswer() &&
+      this.checkedAnswers.push({
+        ...checkAnswerObj,
+        isCorrect: checkAnswerCorrect,
+      });
   }
 
   findCheckedAnswer() {

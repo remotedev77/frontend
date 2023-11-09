@@ -8,27 +8,30 @@ import { MarathonVm, SessionStatus } from "./marathon.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
 import { Loading, NotFound404 } from "../../components";
-import { BigCardsIcon } from "../../assets/lib";
+import Cards from "../../assets/icons/cards.svg?react";
 
 export const Marathon = observer(() => {
   const vm = MarathonVm;
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
-    data && vm.questions.length === 0 && vm.setQuestions(data);
-    mutate();
-    const getNewQuestions = async () => {
-      const newData = await mutate();
-      newData && vm.setQuestions(newData);
-    };
+    data && vm.setQuestions(data);
+    // const getNewQuestions = async () => {
+    //   const newData = await mutate();
+    //   newData && vm.updateQuestions(newData);
+    // };
 
-    if (vm.checkedAnswers.length === 40) {
-      getNewQuestions();
-    }
-  }, [vm.sessionStatus, vm.checkedAnswers.length]);
+    // if (vm.checkedAnswers.length === 2) {
+    //   getNewQuestions();
+    // } else {
+    //   data && vm.questions?.length === 0 && vm.setQuestions(data);
+    // }
+    // console.log(toJS(vm.questions));
+    // vm.checkedAnswers.length,
+  }, [vm.sessionStatus, vm, data]);
 
   if (isLoading) return <Loading />;
 
@@ -36,7 +39,7 @@ export const Marathon = observer(() => {
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart
-      Icon={BigCardsIcon}
+      Icon={Cards}
       title="Марафон"
       subtitle="Бесконечный поток вопросов...."
       vm={vm}
@@ -44,6 +47,6 @@ export const Marathon = observer(() => {
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (
-    <QuizResult Icon={BigCardsIcon} vm={vm} />
+    <QuizResult Icon={Cards} vm={vm} />
   ) : null;
 });

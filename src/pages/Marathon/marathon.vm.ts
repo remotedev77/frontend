@@ -9,7 +9,7 @@ export enum SessionStatus {
 
 export type CheckedAnswers = {
   questionId?: number;
-  answerId?: number;
+  answerIds?: number[];
   correctAnswerId?: number;
   isCorrect?: boolean;
 };
@@ -29,7 +29,6 @@ export const MarathonVm = new (class {
   }
 
   finishSession() {
-    this.selectedAnswers.push({ exam_type: this.exam_type });
     this.sessionStatus = SessionStatus.FINISH;
   }
 
@@ -38,8 +37,12 @@ export const MarathonVm = new (class {
   }
 
   setQuestions(questions: QuestionDTO[]) {
-    this.questions = [...this.questions, ...questions];
+    this.questions = [...questions];
     this.changeSelectedQuestion(this.questionNumber);
+  }
+
+  updateQuestions(newQuestions: QuestionDTO[]) {
+    this.questions.push(...newQuestions);
   }
 
   changeSelectedQuestion(n: number) {
@@ -47,17 +50,20 @@ export const MarathonVm = new (class {
     this.questionNumber = n;
   }
 
-  setSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  setSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
 
     updatedAnswerIndex === -1
-      ? this.selectedAnswers.push({ a_id, q_id: this.selectedQuestion.id })
-      : this.updateSelectedAnswer({ a_id });
+      ? this.selectedAnswers.push({
+          a_id: [a_id],
+          q_id: this.selectedQuestion.id,
+        })
+      : this.updateSelectedAnswer(a_id);
   }
 
-  updateSelectedAnswer({ a_id }: Pick<AnswersArgs, "a_id">) {
+  updateSelectedAnswer(a_id: number) {
     const updatedAnswerIndex = this.selectedAnswers.findIndex(
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
@@ -67,7 +73,11 @@ export const MarathonVm = new (class {
       updatedAnswerIndex,
       this.selectedAnswers.length - 1
     );
-    const current = { a_id, q_id: this.selectedQuestion.id };
+    const current: AnswersArgs = {
+      a_id: [a_id],
+      q_id: this.selectedQuestion.id,
+    };
+
     this.selectedAnswers = [...left, current, ...right];
   }
 
@@ -84,12 +94,12 @@ export const MarathonVm = new (class {
 
     const checkAnswerObj: CheckedAnswers = {
       correctAnswerId: correctAnswer?.id,
-      answerId: this.findSelectedAnswer(),
+      answerIds: this.findSelectedAnswer(),
       questionId: this.selectedQuestion?.id,
     };
 
     const checkAnswerCorrect =
-      checkAnswerObj.correctAnswerId === checkAnswerObj.answerId;
+      checkAnswerObj.correctAnswerId === checkAnswerObj.answerIds;
 
     !this.findCheckedAnswer() &&
       this.findSelectedAnswer() &&

@@ -11,9 +11,13 @@ import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 10px;
   width: 100%;
   height: 100vh;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 20px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -31,33 +35,31 @@ export const Exam = observer(() => {
       <Wrapper>
         <QuestionSlider vm={vm} />
         <Question vm={vm} />
-        <div style={{ marginTop: 20 }}>
-          <ButtonsGroup
-            left={() => {
-              vm.waitSession();
-              navigate("/");
-            }}
-            right={() => {
-              vm.finishSession();
-            }}
-            middle={{
-              amount: 3,
-              middle() {
-                vm.checkAnswer();
-              },
-              left() {
-                if (vm.questionNumber > 0) {
-                  vm.changeSelectedQuestion(vm.questionNumber - 1);
-                }
-              },
-              right() {
-                if (vm.questions.length - 1 > vm.questionNumber) {
-                  vm.changeSelectedQuestion(vm.questionNumber + 1);
-                }
-              },
-            }}
-          />
-        </div>
+        <ButtonsGroup
+          left={() => {
+            vm.waitSession();
+            navigate("/");
+          }}
+          right={() => {
+            vm.finishSession();
+          }}
+          middle={{
+            amount: 3,
+            middle() {
+              vm.checkAnswer();
+            },
+            left() {
+              if (vm.questionNumber > 0) {
+                vm.changeSelectedQuestion(vm.questionNumber - 1);
+              }
+            },
+            right() {
+              if (vm.questions.length - 1 > vm.questionNumber) {
+                vm.changeSelectedQuestion(vm.questionNumber + 1);
+              }
+            },
+          }}
+        />
       </Wrapper>
     </Container>
   );

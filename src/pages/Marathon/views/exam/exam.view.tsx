@@ -12,9 +12,13 @@ import { ExamType } from "../../../../types/index.ts";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 10px;
   width: 100%;
   height: 100vh;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 20px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -32,39 +36,37 @@ export const Exam = observer(() => {
       <Wrapper>
         <QuestionSlider vm={vm} />
         <Question vm={vm} />
-        <div style={{ marginTop: 20 }}>
-          <ButtonsGroup
-            left={() => {
-              vm.waitSession();
-              navigate("/");
-            }}
-            right={() => {
-              vm.finishSession();
-            }}
-            middle={{
-              amount: 3,
-              middle() {
-                vm.checkAnswer();
-              },
-              left() {
-                if (vm.questionNumber > 0) {
-                  vm.changeSelectedQuestion(vm.questionNumber - 1);
+        <ButtonsGroup
+          left={() => {
+            vm.waitSession();
+            navigate("/");
+          }}
+          right={() => {
+            vm.finishSession();
+          }}
+          middle={{
+            amount: 3,
+            middle() {
+              vm.checkAnswer();
+            },
+            left() {
+              if (vm.questionNumber > 0) {
+                vm.changeSelectedQuestion(vm.questionNumber - 1);
+              }
+            },
+            right() {
+              if (vm.exam_type === ExamType.MARATHON) {
+                if (vm.checkedAnswers.length > vm.questionNumber) {
+                  return vm.changeSelectedQuestion(vm.questionNumber + 1);
                 }
-              },
-              right() {
-                if (vm.exam_type === ExamType.MARATHON) {
-                  if (vm.checkedAnswers.length > vm.questionNumber) {
-                    return vm.changeSelectedQuestion(vm.questionNumber + 1);
-                  }
-                } else {
-                  if (vm.questions.length - 1 > vm.questionNumber) {
-                    return vm.changeSelectedQuestion(vm.questionNumber + 1);
-                  }
+              } else {
+                if (vm.questions.length - 1 > vm.questionNumber) {
+                  return vm.changeSelectedQuestion(vm.questionNumber + 1);
                 }
-              },
-            }}
-          />
-        </div>
+              }
+            },
+          }}
+        />
       </Wrapper>
     </Container>
   );

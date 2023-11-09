@@ -1,113 +1,233 @@
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
-import { EllipseShape, IconProps } from "../../assets/lib";
 import { Button } from "../../components/Button/button.component";
 import { FinalTestVm } from "../../pages/FinalTest/final-test.vm";
 import { ExamSimulatorVm } from "../../pages/ExamSimulator/exam-simulator.vm";
-import {
-  ResultContainer,
-  ResultList,
-  ResultsList,
-} from "../QuizResult/quiz-result";
+
 import { ExamType } from "../../types";
+import { Accordion } from "../../components";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  padding: 56px 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 1150px;
-  margin: 0 auto;
-  flex-flow: column;
-  gap: 20px;
-  padding-top: 60px;
+
+  @media only screen and (min-width: 1024px) {
+  }
 `;
+
 const Card = styled.div`
-  position: relative;
   overflow: hidden;
+  position: relative;
+  width: 100%;
+
   border-radius: 30px;
   background: #fff;
   box-shadow: 0px 4px 46px 0px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 80px;
-`;
-const CardText = styled.div`
-  h1 {
-    color: #505050;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+
+  padding: 35px 10px;
+
+  @media only screen and (min-width: 1024px) {
+    height: 300px;
+
+    padding: 30px;
   }
-  display: flex;
-  gap: 4px;
-  flex-direction: column;
-  margin-top: 80px;
-  align-self: center;
-  color: #555;
 `;
-const ButtonSection = styled.div`
-  width: 100%;
-  gap: 40px;
-  margin: 10px 0;
+
+const CardBody = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 40px;
+
+  .icon {
+    width: 200px;
+    height: 210px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    max-width: 60%;
+    gap: 60px;
+    justify-content: flex-end;
+    align-items: normal;
+    text-align: start;
+
+    .icon {
+      position: absolute;
+      width: 400px;
+      height: 310px;
+      right: -20px;
+      top: 0;
+    }
+
+    .iconMarathone {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      right: -150px;
+      top: 0;
+    }
+  }
+`;
+
+const Title = styled.div`
+  color: #505050;
+  font-size: 24px;
+  font-weight: 600;
+  @media only screen and (min-width: 1024px) {
+    font-size: 52px;
+  }
+`;
+const Description = styled.div`
+  color: #505050;
+  font-size: 16px;
+  font-weight: 600;
+  @media only screen and (min-width: 1024px) {
+    font-size: 27px;
+  }
+`;
+
+const ButtonSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  @media only screen and (min-width: 1024px) {
+    flex-direction: row;
+    gap: 40px;
+  }
+`;
+
+const ScrollToTop = styled.div`
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  background: #f3673e;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+`;
+
+const ResultContainer = styled.div`
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  @media only screen and (min-width: 1024px) {
+  }
 `;
 
 type QuizStartProps = {
   vm: typeof FinalTestVm | typeof ExamSimulatorVm;
   title: string;
   subtitle: string;
-  Icon: ({ style }: IconProps) => JSX.Element;
+  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 };
 
 export const QuizStart = observer((x: QuizStartProps) => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleStartQuiz = () => {
     x?.vm?.startSession();
   };
 
-  return (
-    <Container>
-      <Card>
-        <EllipseShape style="position:absolute; left:0;bottom:-10;rotate:10deg;height:100%;" />
-        <CardText>
-          <h1>{x.title}</h1>
-          <h3>{x.subtitle}</h3>
-        </CardText>
-        <x.Icon
-          style={
-            x.vm.exam_type === ExamType.MARATHON
-              ? "z-index:50; position:relative;right:-20%;top:10% ;"
-              : "z-index:50;"
-          }
-        />
-      </Card>
-      <ButtonSection>
-        <Button onClick={() => navigate("/")}>Вернуться в меню</Button>
-        <Button primary onClick={handleStartQuiz}>
-          Начать
-        </Button>
-      </ButtonSection>
-      {x.vm?.exam_type === ExamType.CATEGORY && (
-        <ResultContainer>
-          <p>Список вопросов:</p>
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
-          <ResultsList>
-            {x.vm.questions?.map(({ question }, index) => (
-              <ResultList key={index}>
-                <span>{index + 1}.</span>
-                <span>{question}</span>
-              </ResultList>
-            ))}
-          </ResultsList>
-        </ResultContainer>
+  useEffect(() => {
+    // Button is displayed after scrolling for 500 pixels
+    const toggleVisibility = () => {
+      if (window.scrollY > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+  return (
+    <Container className="container">
+      <Wrapper>
+        <Card>
+          <CardBody>
+            <div>
+              <Title>{x.title}</Title>
+              <Description>{x.subtitle}</Description>
+            </div>
+
+            <x.Icon
+              className={
+                x.vm.exam_type === ExamType.MARATHON ? "iconMarathone" : "icon"
+              }
+            />
+
+            <ButtonSection>
+              <Button primary onClick={handleStartQuiz}>
+                Начать
+              </Button>
+              <Button onClick={() => navigate("/")}>Вернуться в меню</Button>
+            </ButtonSection>
+          </CardBody>
+        </Card>
+
+        {x.vm.exam_type === ExamType.MARATHON ||
+        x.vm.exam_type === ExamType.CATEGORY ? (
+          <ResultContainer>
+            {x.vm.questions
+              ?.slice(0, x.vm.questions?.length - 1)
+              ?.map((result, index) => (
+                <Accordion key={index} {...result} index={index + 1} />
+              ))}
+          </ResultContainer>
+        ) : null}
+      </Wrapper>
+
+      {isVisible && (
+        <ScrollToTop onClick={scrollToTop}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#ffffff"
+            width={30}
+            height={30}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
+            />
+          </svg>
+        </ScrollToTop>
       )}
     </Container>
   );

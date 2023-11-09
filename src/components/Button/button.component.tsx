@@ -9,16 +9,19 @@ interface ButtonProps extends PropsWithChildren {
 
 export const Button: FC<ButtonProps> = (x) => {
   const StyledButton = styled.button`
+    @media only screen and (min-width: 1024px) {
+      padding: ${x.size ? `${x.size}px ${x.size - 10}px` : `16px`};
+      font-size: 18px;
+    }
     cursor: pointer;
     border: none;
-    padding: ${x.size ? `${x.size}px ${x.size - 10}px` : `24px`};
     width: 100%;
+    padding: 10px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    font-size: 16px;
     border-radius: 40px;
     font-family: Inter, sans-serif;
-    font-size: ${x.size ? x.size : 24}px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

@@ -12,9 +12,13 @@ import { ExamSimulatorVm } from "../../exam-simulator.vm.ts";
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 10px;
   width: 100%;
   height: 100vh;
+
+  @media only screen and (min-width: 1024px) {
+    padding: 20px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -34,27 +38,25 @@ export const Exam = observer(() => {
       <Wrapper>
         <QuestionSlider vm={vm} />
         <Question vm={vm} />
-        <div style={{ marginTop: 20 }}>
-          <ButtonsGroup
-            right={() => {
-              vm.finishSession();
-            }}
-            middle={{
-              amount: 3,
-              left() {
-                if (vm.questionNumber > 0) {
-                  vm.changeSelectedQuestion(vm.questionNumber - 1);
-                }
-              },
-              right() {
-                if (vm.questions.length - 1 > vm.questionNumber) {
-                  vm.changeSelectedQuestion(vm.questionNumber + 1);
-                }
-              },
-            }}
-            time={time}
-          />
-        </div>
+        <ButtonsGroup
+          right={() => {
+            vm.finishSession();
+          }}
+          middle={{
+            amount: 3,
+            left() {
+              if (vm.questionNumber > 0) {
+                vm.changeSelectedQuestion(vm.questionNumber - 1);
+              }
+            },
+            right() {
+              if (vm.questions.length - 1 > vm.questionNumber) {
+                vm.changeSelectedQuestion(vm.questionNumber + 1);
+              }
+            },
+          }}
+          time={time}
+        />
       </Wrapper>
     </Container>
   );

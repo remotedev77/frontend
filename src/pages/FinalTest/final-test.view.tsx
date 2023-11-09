@@ -8,19 +8,18 @@ import { FinalTestVm, SessionStatus } from "./final-test.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
 import { Loading, NotFound404 } from "../../components";
-import { DocsIcon } from "../../assets/lib";
+import DocsIcon from "../../assets/icons/docs.svg?react";
 
 export const FinalTest = observer(() => {
   const vm = FinalTestVm;
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-    mutate();
-  }, [vm.sessionStatus]);
+  }, [data, vm, vm.sessionStatus]);
 
   if (isLoading) return <Loading />;
 

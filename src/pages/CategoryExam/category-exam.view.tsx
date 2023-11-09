@@ -9,42 +9,46 @@ import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
 import { Loading, NotFound404 } from "../../components";
 import { useLocation } from "react-router-dom";
-import {
-  DocsCheck,
-  DocsEx,
-  DocsQuestion,
-  DocsX,
-  IconProps,
-} from "../../assets/lib";
+
+import DocsIcon from "../../assets/icons/docs.svg?react";
+import DocsCheck from "../../assets/icons/docsCheck.svg?react";
+import DocsEx from "../../assets/icons/docsExclamation.svg?react";
+import DocsQuestion from "../../assets/icons/docsQuestion.svg?react";
+import DocsX from "../../assets/icons/docsX.svg?react";
 
 interface GetIcon {
-  "Не решал": ({ style }: IconProps) => JSX.Element;
-  Знаю: ({ style }: IconProps) => JSX.Element;
-  "Делаю ошибки": ({ style }: IconProps) => JSX.Element;
-  "Не знаю": ({ style }: IconProps) => JSX.Element;
+  "Не решал": { icon: JSX.Element; desc: string };
+  Знаю: { icon: JSX.Element; desc: string };
+  "Делаю ошибки": { icon: JSX.Element; desc: string };
+  "Не знаю": { icon: JSX.Element; desc: string };
 }
 
 const getIcons = (categoryTitle: keyof GetIcon) =>
   ({
-    "Не решал": DocsEx,
-    "Делаю ошибки": DocsX,
-    Знаю: DocsCheck,
-    "Не знаю": DocsQuestion,
+    "Не решал": { icon: DocsEx, desc: "Вопросы, которые вы ещё не решали" },
+    "Делаю ошибки": {
+      icon: DocsX,
+      desc: "Вопросы, в которых вы ошибаетесь",
+    },
+    Знаю: { icon: DocsCheck, desc: "Вопросы, которые вы решаете правильно" },
+    "Не знаю": {
+      icon: DocsQuestion,
+      desc: "Вопросы, которые вы решаете неправильно",
+    },
   }[categoryTitle]);
 
 export const CategoryExam = observer(() => {
   const vm = CategoryExamVm;
   const { state } = useLocation();
 
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
     state ? `app/get-category-question/${state}/` : null,
     getData
   );
 
   useEffect(() => {
     data && vm.setQuestions(data);
-    mutate();
-  }, [vm.sessionStatus]);
+  }, [vm.sessionStatus, data, vm]);
 
   if (isLoading) return <Loading />;
 
@@ -52,14 +56,14 @@ export const CategoryExam = observer(() => {
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
     <QuizStart
-      Icon={getIcons(state)}
-      title={state}
-      subtitle={"Категория вопросов"}
+      Icon={getIcons(state).icon}
+      title={`«${state}»`}
+      subtitle={getIcons(state).desc}
       vm={vm}
     />
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (
-    <QuizResult Icon={getIcons(state)} title={state} vm={vm} />
+    <QuizResult Icon={DocsIcon} title={state} vm={vm} />
   ) : null;
 });
