@@ -129,13 +129,12 @@ const QuestionSquare: FC<ISquareProps> = observer((props) => {
     }
   `;
 
+  const selectedAnswer =
+    props.vm.selectedAnswers.find(({ q_id }) => props.questionId === q_id)
+      ?.a_id || [];
   return (
     <Square
-      data-selected={
-        props.vm.selectedAnswers.find(({ q_id }) => props.questionId === q_id)
-          ? true
-          : false
-      }
+      data-selected={selectedAnswer?.length > 0 ? true : false}
       data-state={props.number === props.vm.questionNumber}
       onClick={() => {
         if (props.vm.questionNumber !== props.number) {

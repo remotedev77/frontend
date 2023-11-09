@@ -38,6 +38,13 @@ export const CategoryExamVm = new (class {
 
   setQuestions(questions: QuestionDTO[]) {
     this.questions = [...questions];
+    const defaultSelectedAnsers = questions?.map(({ id }) => ({
+      q_id: id,
+      a_id: [],
+    }));
+    console.log(defaultSelectedAnsers);
+    this.selectedAnswers = [...defaultSelectedAnsers];
+
     this.changeSelectedQuestion(this.questionNumber);
   }
 
@@ -68,17 +75,12 @@ export const CategoryExamVm = new (class {
       ({ q_id }) => q_id === this.selectedQuestion.id
     );
 
-    const left = this.selectedAnswers.slice(0, updatedAnswerIndex - 1);
-    const right = this.selectedAnswers.slice(
-      updatedAnswerIndex,
-      this.selectedAnswers.length - 1
-    );
     const current: AnswersArgs = {
       a_id: [a_id],
       q_id: this.selectedQuestion.id,
     };
 
-    this.selectedAnswers = [...left, current, ...right];
+    this.selectedAnswers[updatedAnswerIndex] = current;
   }
 
   findSelectedAnswer() {

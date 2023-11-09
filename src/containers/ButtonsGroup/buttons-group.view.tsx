@@ -19,6 +19,8 @@ const Group = styled.div`
   padding-bottom: 30px;
 
   @media only screen and (min-width: 1024px) {
+    padding-bottom: 0px;
+
     padding: auto;
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

@@ -6,10 +6,10 @@ export interface AnswerDTO {
 
 export interface AnswerResultDTO {
   question?: string;
-  user_answer?: string[];
-  correct_answer?: string[];
   is_correct?: boolean;
+  user_selected_check?: null;
   description?: null;
+  answers?: AnswerDTO[];
   correct_answers_count?: number;
   incorrect_answers_count?: number;
   success?: boolean;
@@ -25,5 +25,4 @@ export enum ExamType {
 export interface AnswersArgs {
   q_id?: number;
   a_id?: number[];
-  exam_type?: ExamType;
 }

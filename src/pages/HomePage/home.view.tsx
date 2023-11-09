@@ -11,6 +11,7 @@ import { Header } from "../../components";
 import { Category } from "../../containers";
 import { Statistics } from "../../containers/Statistics";
 import { RootStoreContext } from "../../app.view";
+import useGetStatistics from "../../hooks/useGetStatistics";
 
 type Card = {
   title: string;
@@ -40,6 +41,7 @@ const Wrapper = styled.div`
 
   @media only screen and (min-width: 1024px) {
     margin-top: 60px;
+    margin-bottom: 0;
   }
 `;
 
@@ -296,6 +298,8 @@ export const Home = observer(() => {
     // isLoading: userLoading
   } = useGetUserData();
 
+  const { statisticsData } = useGetStatistics();
+
   const [cards, setCards] = useState<Card[]>(() => [
     {
       title: "Итоговое тестирование",
@@ -354,8 +358,11 @@ export const Home = observer(() => {
                   <CardOverviewSubtitle>ООО Лукойл</CardOverviewSubtitle>
 
                   <CardOverviewStatus>
-                    Итоговое тестирование -{" "}
-                    {userStore?.isFinalExamPassed ? "сдано" : "не сдано"}
+                    Готовность к экзамену -{" "}
+                    {statisticsData?.statistic
+                      ?.find(({ category }) => category.includes("Знаю"))
+                      ?.statistic.toFixed(2)}
+                    %
                   </CardOverviewStatus>
                 </CardOverviewHeader>
               </CardOverview>

@@ -158,12 +158,25 @@ type QuizResultProps = {
 export const QuizResult = observer((x: QuizResultProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const { userStore } = useContext(RootStoreContext);
+  const examType = x.vm?.exam_type;
+
   const { data, isMutating, trigger } = useSWRMutation<
     AnswerResultDTO[],
     unknown,
     string,
     AnswersArgs[]
-  >("app/check-simulyator/", postData);
+  >(
+    examType === ExamType.CATEGORY
+      ? "app/check-category-question/"
+      : examType === ExamType.FINAL_TEST
+      ? "app/check-final-tets/"
+      : examType === ExamType.SIMULATOR
+      ? "app/check-question/"
+      : examType === ExamType.MARATHON
+      ? "app/check-category-question/"
+      : "",
+    postData
+  );
 
   useEffect(() => {
     trigger(x.vm.selectedAnswers);

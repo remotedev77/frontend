@@ -50,9 +50,10 @@ const AnswerLists = styled.ul`
   flex-direction: column;
 `;
 
-const AnswerList = styled.li`
+const AnswerList = styled.li<{ isCorrect: boolean }>`
   list-style: disc;
   list-style-position: inside;
+  color: ${(props) => (props.isCorrect ? "#6ACB00" : "#505050")};
 `;
 
 const TriggerButton = styled.div<{ isOpen: boolean }>`
@@ -83,10 +84,16 @@ const Badge = styled.div<{ $type: boolean | undefined }>`
   width: fit-content;
   border-radius: 90px;
   background: ${(props) =>
-    props.$type === null ? "#FFC42E" : props.$type ? "#6ACB00" : "#f87063"};
+    props.$type === undefined
+      ? "#ffffff"
+      : props.$type === null
+      ? "#FFC42E"
+      : props.$type
+      ? "#6ACB00"
+      : "#f87063"};
   box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
 
-  color: #fff;
+  color: ${(props) => (props.$type === undefined ? "#141414" : "#ffffff")};
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -99,6 +106,7 @@ type AccordionProps = {
 export const Accordion = observer((x: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleTriggerBtn = () => setIsOpen(!isOpen);
+
   return (
     <Container>
       <Wrapper>
@@ -110,14 +118,16 @@ export const Accordion = observer((x: AccordionProps) => {
           <div style={{ overflow: "hidden" }}>
             <b>Ответы:</b>
             <AnswerLists>
-              {x.correct_answer?.map((list, index) => (
-                <AnswerList key={index}>{list}</AnswerList>
+              {x.answers?.map((list, index) => (
+                <AnswerList isCorrect={list.is_correct} key={index}>
+                  {list.answer}
+                </AnswerList>
               ))}
             </AnswerLists>
 
             <p style={{ marginTop: 20 }}>
               <i>
-                <b>Объяснение:</b> объяснение объянение
+                <b>Объяснение:</b> {x.description}
               </i>
             </p>
           </div>
