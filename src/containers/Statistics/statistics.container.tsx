@@ -217,7 +217,6 @@ export const Statistics = () => {
       });
     });
   }, [statisticsData]);
-
   return (
     <Fragment>
       <Accordion>

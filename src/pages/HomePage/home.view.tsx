@@ -355,13 +355,15 @@ export const Home = observer(() => {
                     <p>{userData?.father_name}</p>
                   </CardOverviewTitle>
 
-                  <CardOverviewSubtitle>ООО Лукойл</CardOverviewSubtitle>
+                  <CardOverviewSubtitle>
+                    {userData?.organization}
+                  </CardOverviewSubtitle>
 
                   <CardOverviewStatus>
                     Готовность к экзамену -{" "}
                     {statisticsData?.statistic
                       ?.find(({ category }) => category.includes("Знаю"))
-                      ?.statistic.toFixed(2)}
+                      ?.statistic.toFixed(2) || "0.00"}
                     %
                   </CardOverviewStatus>
                 </CardOverviewHeader>

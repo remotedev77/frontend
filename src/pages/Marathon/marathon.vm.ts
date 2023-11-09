@@ -19,7 +19,7 @@ export const MarathonVm = new (class {
   questions: QuestionDTO[] = [];
   questionNumber: number = 0;
   selectedAnswers: AnswersArgs[] = [];
-  selectedQuestion = this.questions?.[0];
+  selectedQuestion: QuestionDTO = this.questions?.[0];
   checkedAnswers: CheckedAnswers[] = [];
   sessionStatus: SessionStatus = SessionStatus.WAIT;
   results: AnswersArgs[] = [];
@@ -72,6 +72,47 @@ export const MarathonVm = new (class {
       a_id: [a_id],
       q_id: this.selectedQuestion.id,
     };
+
+    this.selectedAnswers[updatedAnswerIndex] = current;
+  }
+
+  setSelectedMultipleAnswer(a_id: number) {
+    const updatedAnswerIndex = this.selectedAnswers.findIndex(
+      ({ q_id }) => q_id === this.selectedQuestion.id
+    );
+
+    updatedAnswerIndex === -1
+      ? this.selectedAnswers.push({
+          a_id: [a_id],
+          q_id: this.selectedQuestion.id,
+        })
+      : this.updateSelectedMultipleAnswer(a_id);
+  }
+
+  updateSelectedMultipleAnswer(a_id: number) {
+    const updatedAnswerIndex = this.selectedAnswers.findIndex(
+      ({ q_id }) => q_id === this.selectedQuestion.id
+    );
+
+    const isAnswerHave = this.selectedAnswers[updatedAnswerIndex].a_id?.find(
+      (a) => a === a_id
+    );
+
+    const answers = isAnswerHave
+      ? this.selectedAnswers[updatedAnswerIndex].a_id?.filter(
+          (a) => a !== a_id
+        ) || []
+      : this.selectedAnswers[updatedAnswerIndex].a_id || [];
+
+    const current: AnswersArgs = isAnswerHave
+      ? {
+          a_id: answers || [],
+          q_id: this.selectedQuestion.id,
+        }
+      : {
+          a_id: [...answers, a_id],
+          q_id: this.selectedQuestion.id,
+        };
 
     this.selectedAnswers[updatedAnswerIndex] = current;
   }

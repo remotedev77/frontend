@@ -1,8 +1,7 @@
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
 import { FC } from "react";
-import { ExamType, VM } from "../../types";
-import { toJS } from "mobx";
+import { ExamType, Note, VM } from "../../types";
 
 const QContainer = styled.div`
   box-sizing: border-box;
@@ -106,19 +105,25 @@ interface QuestionProps {
 }
 
 export const Question: FC<QuestionProps> = observer((x) => {
-  console.log(toJS(x.vm));
+  const currentQuestion = x.vm.selectedQuestion;
   return (
     <QContainer>
       <QWrapper>
         <Title>Вопрос {x.vm.questionNumber + 1}</Title>
-        <Text>{x.vm.selectedQuestion?.question}</Text>
+        <Text>{currentQuestion?.question}</Text>
         <Form>
           {x.vm.exam_type === ExamType.MARATHON ||
           x.vm.exam_type === ExamType.CATEGORY
-            ? x.vm.selectedQuestion?.answers?.map(({ id, answer }) => (
+            ? currentQuestion?.answers?.map(({ id, answer }) => (
                 <Label key={id}>
                   <Input
-                    type="radio"
+                    type={
+                      currentQuestion?.note === Note.Single
+                        ? "radio"
+                        : currentQuestion?.note === Note.Multiple
+                        ? "checkbox"
+                        : "radio"
+                    }
                     checked={
                       x.vm
                         .findSelectedAnswer()
@@ -129,7 +134,11 @@ export const Question: FC<QuestionProps> = observer((x) => {
                     value={id}
                     disabled={x.vm.findCheckedAnswer() ? true : false}
                     onChange={() => {
-                      x.vm?.setSelectedAnswer(id);
+                      currentQuestion?.note === Note.Single
+                        ? x.vm?.setSelectedAnswer(id)
+                        : currentQuestion?.note === Note.Multiple
+                        ? x.vm?.setSelectedMultipleAnswer(id)
+                        : x.vm?.setSelectedAnswer(id);
                     }}
                   />
                   {x.vm
@@ -145,10 +154,16 @@ export const Question: FC<QuestionProps> = observer((x) => {
                   )}
                 </Label>
               ))
-            : x.vm.selectedQuestion?.answers?.map(({ id, answer }) => (
+            : currentQuestion?.answers?.map(({ id, answer }) => (
                 <Label key={id}>
                   <Input
-                    type="radio"
+                    type={
+                      currentQuestion?.note === Note.Single
+                        ? "radio"
+                        : currentQuestion?.note === Note.Multiple
+                        ? "checkbox"
+                        : "radio"
+                    }
                     checked={
                       x.vm
                         .findSelectedAnswer()
@@ -158,7 +173,11 @@ export const Question: FC<QuestionProps> = observer((x) => {
                     }
                     value={id}
                     onChange={() => {
-                      x.vm?.setSelectedAnswer(id);
+                      currentQuestion?.note === Note.Single
+                        ? x.vm?.setSelectedAnswer(id)
+                        : currentQuestion?.note === Note.Multiple
+                        ? x.vm?.setSelectedMultipleAnswer(id)
+                        : x.vm?.setSelectedAnswer(id);
                     }}
                   />
                   <AnswerText>{answer}</AnswerText>
