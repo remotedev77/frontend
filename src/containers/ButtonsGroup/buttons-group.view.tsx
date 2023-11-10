@@ -55,7 +55,11 @@ const Button: FC<ButtonProps> = (props) => {
     padding: 10px;
     border-radius: 9999px;
     border: none;
-    background: ${props.right ? "#fff" : props.primary ? `#F3673E` : `#FFF`};
+    background: ${props.right
+      ? "#fff"
+      : props.primary
+      ? `#F3673E`
+      : `transparent`};
     box-shadow: ${props.middle || props.right
       ? "0px 4px 17px 0px rgba(0, 0, 0, 0.25)"
       : "none"};

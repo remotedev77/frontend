@@ -1,18 +1,18 @@
 import { makeAutoObservable } from "mobx";
-import { AnswersArgs, ExamType, QuestionDTO } from "../../types";
+import {
+  AnswerResultDTO,
+  AnswersArgs,
+  ExamType,
+  QuestionDTO,
+} from "../../types";
+import { CheckedAnswers } from "../Marathon/marathon.vm";
+import { isAllEqual } from "../../utils";
 
 export enum SessionStatus {
   START = "start",
   WAIT = "wait",
   FINISH = "finish",
 }
-
-export type CheckedAnswers = {
-  questionId?: number;
-  answerIds?: number[];
-  correctAnswerId?: number;
-  isCorrect?: boolean;
-};
 
 export const CategoryExamVm = new (class {
   exam_type: ExamType = ExamType.CATEGORY;
@@ -23,6 +23,7 @@ export const CategoryExamVm = new (class {
   checkedAnswers: CheckedAnswers[] = [];
   sessionStatus: SessionStatus = SessionStatus.WAIT;
   results: AnswersArgs[] = [];
+  answerResults: AnswerResultDTO[] = [];
 
   startSession() {
     this.sessionStatus = SessionStatus.START;
@@ -124,18 +125,20 @@ export const CategoryExamVm = new (class {
   }
 
   checkAnswer() {
-    const correctAnswer = this.selectedQuestion.answers?.find(
-      ({ is_correct }) => is_correct
-    );
+    const correctAnswer = this.selectedQuestion.answers
+      ?.filter(({ is_correct }) => is_correct)
+      .map(({ id }) => id);
 
     const checkAnswerObj: CheckedAnswers = {
-      correctAnswerId: correctAnswer?.id,
-      answerIds: this.findSelectedAnswer(),
+      correctAnswerIds: correctAnswer,
+      answerIds: this.findSelectedAnswer() || [],
       questionId: this.selectedQuestion?.id,
     };
 
-    const checkAnswerCorrect =
-      checkAnswerObj.correctAnswerId === checkAnswerObj.answerIds;
+    const checkAnswerCorrect = isAllEqual(
+      checkAnswerObj.correctAnswerIds,
+      checkAnswerObj.answerIds
+    );
 
     !this.findCheckedAnswer() &&
       this.findSelectedAnswer() &&

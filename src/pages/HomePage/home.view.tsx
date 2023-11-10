@@ -416,10 +416,10 @@ export const Home = observer(() => {
                           width="44"
                           height="44"
                           filterUnits="userSpaceOnUse"
-                          color-interpolation-filters="sRGB"
+                          colorInterpolationFilters="sRGB"
                         >
                           <feFlood
-                            flood-opacity="0"
+                            floodOpacity="0"
                             result="BackgroundImageFix"
                           />
                           <feColorMatrix
@@ -474,10 +474,10 @@ export const Home = observer(() => {
                           width="25"
                           height="25"
                           filterUnits="userSpaceOnUse"
-                          color-interpolation-filters="sRGB"
+                          colorInterpolationFilters="sRGB"
                         >
                           <feFlood
-                            flood-opacity="0"
+                            floodOpacity="0"
                             result="BackgroundImageFix"
                           />
                           <feColorMatrix

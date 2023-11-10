@@ -32,26 +32,29 @@ const TestCategoryList = styled.ul<{ isOpen?: boolean }>`
   flex-direction: row;
   gap: 10px;
   justify-content: space-between;
+  padding: 0 10px 10px;
+
   @media only screen and (min-width: 1024px) {
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;
     margin-top: 0px;
+    padding: 0;
   }
 `;
+
 const TestCategory = styled.li`
   width: 48%;
   height: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 15px;
   background: #fff;
+  border-radius: 15px;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
-
   .count {
     font-family: Inter;
-    font-size: 28px;
+    font-size: 32px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

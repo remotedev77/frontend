@@ -1,37 +1,47 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import useSWRImmutable from "swr/immutable";
-import { getData } from "../../api/apis";
+import { getData, postData } from "../../api/apis";
 
-import { QuestionDTO } from "../../types";
+import { AnswerResultDTO, AnswersArgs, QuestionDTO } from "../../types";
 import { MarathonVm, SessionStatus } from "./marathon.vm";
 import { Exam } from "./views";
 import { QuizResult, QuizStart } from "../../containers";
 import { Loading, NotFound404 } from "../../components";
 import Cards from "../../assets/icons/cards.svg?react";
+import useSWRMutation from "swr/mutation";
 
 export const Marathon = observer(() => {
   const vm = MarathonVm;
-  const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
     "/app/get-questions/",
     getData
   );
 
-  useEffect(() => {
-    data && vm.setQuestions(data);
-    // const getNewQuestions = async () => {
-    //   const newData = await mutate();
-    //   newData && vm.updateQuestions(newData);
-    // };
+  const { trigger } = useSWRMutation<
+    AnswerResultDTO[],
+    unknown,
+    string,
+    AnswersArgs[]
+  >("app/check-question/", postData);
 
-    // if (vm.checkedAnswers.length === 2) {
-    //   getNewQuestions();
-    // } else {
-    //   data && vm.questions?.length === 0 && vm.setQuestions(data);
-    // }
-    // console.log(toJS(vm.questions));
-    // vm.checkedAnswers.length,
-  }, [vm.sessionStatus, vm, data]);
+  useEffect(() => {
+    const getNewQuestions = async () => {
+      const newData = await mutate();
+      newData && vm.updateQuestions(newData);
+    };
+
+    const saveCheckedAnswerResult = async () => {
+      vm.setAnswerResult(await trigger(vm.selectedAnswers));
+    };
+
+    if (vm.checkedAnswers.length > 0 && vm.checkedAnswers.length % 40 === 0) {
+      getNewQuestions();
+    } else {
+      data && vm.questions?.length === 0 && vm.setQuestions(data);
+    }
+    saveCheckedAnswerResult();
+  }, [vm.sessionStatus, vm.checkedAnswers.length, isLoading]);
 
   if (isLoading) return <Loading />;
 

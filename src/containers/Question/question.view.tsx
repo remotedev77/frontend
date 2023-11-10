@@ -141,14 +141,14 @@ export const Question: FC<QuestionProps> = observer((x) => {
                         : x.vm?.setSelectedAnswer(id);
                     }}
                   />
-                  {x.vm
-                    .findCheckedAnswer()
-                    ?.answerIds?.find((answerId) => answerId === id) ? (
+                  {x.vm.findCheckedAnswer()?.correctAnswerIds.includes(id) ? (
+                    <AnswerText isCorrect={true}>{answer}</AnswerText>
+                  ) : x.vm
+                      .findCheckedAnswer()
+                      ?.answerIds?.find((answerId) => answerId === id) ? (
                     <AnswerText isCorrect={x.vm.findCheckedAnswer()?.isCorrect}>
                       {answer}
                     </AnswerText>
-                  ) : x.vm.findCheckedAnswer()?.correctAnswerId === id ? (
-                    <AnswerText isCorrect={true}>{answer}</AnswerText>
                   ) : (
                     <AnswerText>{answer}</AnswerText>
                   )}

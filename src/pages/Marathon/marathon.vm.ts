@@ -1,5 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import { AnswersArgs, ExamType, QuestionDTO } from "../../types";
+import {
+  AnswerResultDTO,
+  AnswersArgs,
+  ExamType,
+  QuestionDTO,
+} from "../../types";
+import { isAllEqual } from "../../utils";
 
 export enum SessionStatus {
   START = "start",
@@ -9,8 +15,8 @@ export enum SessionStatus {
 
 export type CheckedAnswers = {
   questionId?: number;
-  answerIds?: number[];
-  correctAnswerId?: number;
+  answerIds: number[];
+  correctAnswerIds: number[];
   isCorrect?: boolean;
 };
 
@@ -23,6 +29,7 @@ export const MarathonVm = new (class {
   checkedAnswers: CheckedAnswers[] = [];
   sessionStatus: SessionStatus = SessionStatus.WAIT;
   results: AnswersArgs[] = [];
+  answerResults: AnswerResultDTO[] = [];
 
   startSession() {
     this.sessionStatus = SessionStatus.START;
@@ -42,7 +49,7 @@ export const MarathonVm = new (class {
   }
 
   updateQuestions(newQuestions: QuestionDTO[]) {
-    this.questions.push(...newQuestions);
+    this.questions = [...this.questions, ...newQuestions];
   }
 
   changeSelectedQuestion(n: number) {
@@ -124,18 +131,21 @@ export const MarathonVm = new (class {
   }
 
   checkAnswer() {
-    const correctAnswer = this.selectedQuestion.answers?.find(
-      ({ is_correct }) => is_correct
-    );
+    const correctAnswer =
+      this.answerResults?.[this.questionNumber]?.answers
+        ?.filter(({ is_correct }) => is_correct)
+        .map(({ id }) => id) || [];
 
     const checkAnswerObj: CheckedAnswers = {
-      correctAnswerId: correctAnswer?.id,
-      answerIds: this.findSelectedAnswer(),
+      correctAnswerIds: correctAnswer,
+      answerIds: this.findSelectedAnswer() || [],
       questionId: this.selectedQuestion?.id,
     };
 
-    const checkAnswerCorrect =
-      checkAnswerObj.correctAnswerId === checkAnswerObj.answerIds;
+    const checkAnswerCorrect = isAllEqual(
+      checkAnswerObj.correctAnswerIds,
+      checkAnswerObj.answerIds
+    );
 
     !this.findCheckedAnswer() &&
       this.findSelectedAnswer() &&
@@ -151,6 +161,11 @@ export const MarathonVm = new (class {
     );
   }
 
+  setAnswerResult(results: AnswerResultDTO[]) {
+    this.answerResults.push(...results.slice(0, results?.length - 1));
+    this.selectedAnswers = [];
+  }
+
   reset() {
     this.checkedAnswers = [];
     this.questions = [];
@@ -159,6 +174,7 @@ export const MarathonVm = new (class {
     this.questionNumber = 0;
     this.sessionStatus = SessionStatus.WAIT;
     this.results = [];
+    this.answerResults = [];
   }
 
   constructor() {
