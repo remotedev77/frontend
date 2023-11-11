@@ -126,10 +126,9 @@ export const MarathonVm = new (class {
   }
 
   checkAnswer() {
-    const correctAnswer =
-      this.answerResults?.[this.questionNumber]?.answers
-        ?.filter(({ is_correct }) => is_correct)
-        .map(({ id }) => id) || [];
+    const correctAnswer = this.selectedQuestion.answers
+      ?.filter(({ is_correct }) => is_correct)
+      .map(({ id }) => id);
 
     const checkAnswerObj: CheckedAnswers = {
       correctAnswerIds: correctAnswer,
@@ -158,7 +157,6 @@ export const MarathonVm = new (class {
 
   setAnswerResult(results: AnswerResultDTO[]) {
     this.answerResults.push(...results.slice(0, results?.length - 1));
-    this.selectedAnswers = [];
   }
 
   reset() {

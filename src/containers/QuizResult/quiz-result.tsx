@@ -175,12 +175,14 @@ export const QuizResult = observer((x: QuizResultProps) => {
       ? "app/check-final-tets/"
       : examType === ExamType.SIMULATOR
       ? "app/check-question/"
+      : examType === ExamType.MARATHON
+      ? "app/check-category-question/"
       : "",
     postData
   );
 
   useEffect(() => {
-    x.vm.exam_type !== ExamType.MARATHON && trigger(x.vm.selectedAnswers);
+    trigger(x.vm.selectedAnswers);
 
     x.vm.exam_type === ExamType.FINAL_TEST &&
       userStore.setIsFinalExamPass(data?.[data.length - 1]?.success || false);
