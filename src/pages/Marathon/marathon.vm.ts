@@ -1,11 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import {
-  AnswerResultDTO,
-  AnswersArgs,
-  ExamType,
-  QuestionDTO,
-} from "../../types";
-import { isAllEqual } from "../../utils";
+import { AnswerResultDTO, AnswersArgs, ExamType, QuestionDTO } from "@/types";
+import { isAllEqual } from "@/utils";
 
 export enum SessionStatus {
   START = "start",

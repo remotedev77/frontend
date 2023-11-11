@@ -1,14 +1,17 @@
+import { lazily } from "react-lazily";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { postData } from "../../api/apis";
-import { AnswerResultDTO, AnswersArgs, ExamType } from "../../types";
 import useSWRMutation from "swr/mutation";
-import { Accordion, Button, Loading } from "../../components";
-import { ExamSimulatorVm } from "../../pages/ExamSimulator/exam-simulator.vm";
-import { FinalTestVm } from "../../pages/FinalTest/final-test.vm";
-import { RootStoreContext } from "../../app.view";
+import { useContext, useEffect, useState } from "react";
+
+import { postData } from "@/api/apis";
+import { AnswerResultDTO, AnswersArgs, ExamType } from "@/types";
+import { ExamSimulatorVm } from "@/pages/ExamSimulator/exam-simulator.vm";
+import { FinalTestVm } from "@/pages/FinalTest/final-test.vm";
+import { RootStoreContext } from "@/app.view";
+
+const { Button, Accordion, Loading } = lazily(() => import("@/components"));
 
 const Container = styled.div`
   min-height: 100vh;

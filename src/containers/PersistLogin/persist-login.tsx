@@ -1,8 +1,11 @@
+import { useContext, useEffect } from "react";
 import { observer } from "mobx-react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { RootStoreContext } from "../../app.view";
-import { Loading } from "../../components";
+import { lazily } from "react-lazily";
+
+import { RootStoreContext } from "@/app.view";
+
+const { Loading } = lazily(() => import("@/components"));
 
 export const PersistLogin = observer(() => {
   const { authStore } = useContext(RootStoreContext);

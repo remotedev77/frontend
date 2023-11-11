@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import useSWRImmutable from "swr/immutable";
-import { getData, postData } from "../../api/apis";
-
-import { AnswerResultDTO, AnswersArgs, QuestionDTO } from "../../types";
-import { MarathonVm, SessionStatus } from "./marathon.vm";
-import { Exam } from "./views";
-import { QuizResult, QuizStart } from "../../containers";
-import { Loading, NotFound404 } from "../../components";
-import Cards from "../../assets/icons/cards.svg?react";
 import useSWRMutation from "swr/mutation";
+import { lazily } from "react-lazily";
+
+import Cards from "@/assets/icons/cards.svg?react";
+
+import { getData, postData } from "@/api/apis";
+import { AnswerResultDTO, AnswersArgs, QuestionDTO } from "@/types";
+import { MarathonVm, SessionStatus } from "./marathon.vm";
+
+const { QuizResult, QuizStart } = lazily(() => import("@/containers"));
+const { Loading, NotFound404 } = lazily(() => import("@/components"));
+const { Exam } = lazily(() => import("./views"));
 
 export const Marathon = observer(() => {
   const vm = MarathonVm;

@@ -1,13 +1,14 @@
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Button/button.component";
-import { FinalTestVm } from "../../pages/FinalTest/final-test.vm";
-import { ExamSimulatorVm } from "../../pages/ExamSimulator/exam-simulator.vm";
+import { lazily } from "react-lazily";
 
-import { ExamType } from "../../types";
-import { Accordion } from "../../components";
-import { useEffect, useState } from "react";
+import { ExamType } from "@/types";
+import { FinalTestVm } from "@/pages/FinalTest/final-test.vm";
+import { ExamSimulatorVm } from "@/pages/ExamSimulator/exam-simulator.vm";
+
+const { Button, Accordion } = lazily(() => import("@/components"));
 
 const Container = styled.div`
   min-height: 100vh;

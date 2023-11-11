@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { getData } from "../api/apis";
-import { IStatistics } from "../types/statistics";
+import { getData } from "@/api/apis";
+import { IStatistics } from "@/types/statistics";
 
 const useGetStatistics = () => {
   const {

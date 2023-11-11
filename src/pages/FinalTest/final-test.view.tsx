@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import useSWRImmutable from "swr/immutable";
-import { getData } from "../../api/apis";
+import { lazily } from "react-lazily";
 
-import { QuestionDTO } from "../../types";
+import { getData } from "@/api/apis";
+import DocsIcon from "@/assets/icons/docs.svg?react";
+import { QuestionDTO } from "@/types";
 import { FinalTestVm, SessionStatus } from "./final-test.vm";
-import { Exam } from "./views";
-import { QuizResult, QuizStart } from "../../containers";
-import { Loading, NotFound404 } from "../../components";
-import DocsIcon from "../../assets/icons/docs.svg?react";
+
+const { QuizResult, QuizStart } = lazily(() => import("@/containers"));
+const { Loading, NotFound404 } = lazily(() => import("@/components"));
+const { Exam } = lazily(() => import("./views"));
 
 export const FinalTest = observer(() => {
   const vm = FinalTestVm;

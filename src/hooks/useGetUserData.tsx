@@ -1,8 +1,8 @@
 import useSWR from "swr";
-import { authService } from "../api/api.auth";
-import { UserDTO } from "../types";
+import { authService } from "@/api/api.auth";
+import { UserDTO } from "@/types";
 import { useContext, useEffect } from "react";
-import { RootStoreContext } from "../app.view";
+import { RootStoreContext } from "@/app.view";
 
 const useGetUserData = () => {
   const {

@@ -1,11 +1,12 @@
-import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
-import BlackCardsIcon from "../../assets/icons/black-card.svg?react";
-import GreenCardsIcon from "../../assets/icons/green-card.svg?react";
-import YellowCardsIcon from "../../assets/icons/yellow-card.svg?react";
-import RedCardsIcon from "../../assets/icons/red-card.svg?react";
-import useGetStatistics from "../../hooks/useGetStatistics";
+import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+
+import BlackCardsIcon from "@/assets/icons/black-card.svg?react";
+import GreenCardsIcon from "@/assets/icons/green-card.svg?react";
+import YellowCardsIcon from "@/assets/icons/yellow-card.svg?react";
+import RedCardsIcon from "@/assets/icons/red-card.svg?react";
+import useGetStatistics from "@/hooks/useGetStatistics";
 
 const CategoryWrapper = styled.div`
   display: flex;

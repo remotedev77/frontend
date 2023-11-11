@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
 import { FC } from "react";
-import { ExamType, Note, VM } from "../../types";
+import { ExamType, Note, VM } from "@/types";
 
 const QContainer = styled.div`
   box-sizing: border-box;

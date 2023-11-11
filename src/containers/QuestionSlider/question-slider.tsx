@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
 import { FC, PropsWithChildren } from "react";
-import { ExamType, VM } from "../../types";
+import { ExamType, VM } from "@/types";
 import { observer } from "mobx-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-
 import "swiper/css";
 
 const QuestionSliderContainer = styled.div`

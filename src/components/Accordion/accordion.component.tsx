@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
-import { AnswerResultDTO } from "../../types";
+import { AnswerResultDTO } from "@/types";
 
 const Container = styled.div`
   width: 100%;

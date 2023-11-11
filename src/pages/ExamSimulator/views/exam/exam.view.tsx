@@ -1,13 +1,13 @@
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
+import { lazily } from "react-lazily";
 
-import {
-  ButtonsGroup,
-  Question,
-  QuestionSlider,
-} from "../../../../containers/index.ts";
-import useTime from "../../../../hooks/useTime.tsx";
 import { ExamSimulatorVm } from "../../exam-simulator.vm.ts";
+import useTime from "@/hooks/useTime.tsx";
+
+const { ButtonsGroup, Question, QuestionSlider } = lazily(
+  () => import("@/containers")
+);
 
 const Container = styled.div`
   display: flex;

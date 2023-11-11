@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { authService } from "../api/api.auth.ts";
+import { authService } from "@/api/api.auth.ts";
 import { RootStore } from "./root.store.ts";
 import { AxiosError } from "axios";
 
@@ -50,5 +50,6 @@ export class AuthStore {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     this.isAuthInProgress = false;
+    this.rootStore.userStore.reset();
   }
 }

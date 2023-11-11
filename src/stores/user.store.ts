@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { UserDTO } from "../types";
+import { UserDTO } from "@/types";
 import { RootStore } from "./root.store";
 
 export class UserStore {
@@ -18,4 +18,10 @@ export class UserStore {
   setIsFinalExamPass = (isPassed: boolean) =>
     (this.isFinalExamPassed = isPassed);
   setIsExamPass = (isPassed: boolean) => (this.isExamPassed = isPassed);
+
+  reset() {
+    this.userData = undefined;
+    this.isFinalExamPassed = false;
+    this.isExamPassed = false;
+  }
 }

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Fragment, useEffect, useState } from "react";
-import useGetStatistics from "../../hooks/useGetStatistics";
+import useGetStatistics from "@/hooks/useGetStatistics";
 
 const CardOverview = styled.div`
   display: none;

@@ -1,12 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import {
-  AnswerResultDTO,
-  AnswersArgs,
-  ExamType,
-  QuestionDTO,
-} from "../../types";
+import { AnswerResultDTO, AnswersArgs, ExamType, QuestionDTO } from "@/types";
 import { CheckedAnswers } from "../Marathon/marathon.vm";
-import { isAllEqual } from "../../utils";
+import { isAllEqual } from "@/utils";
 
 export enum SessionStatus {
   START = "start",

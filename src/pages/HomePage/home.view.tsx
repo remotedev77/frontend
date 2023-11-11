@@ -1,17 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
-import { EllipseShape } from "../../assets/lib";
-
-import CardsIcon from "../../assets/icons/cards.svg?react";
-import Watch from "../../assets/icons/watch.svg?react";
 import { useNavigate } from "react-router-dom";
-import useGetUserData from "../../hooks/useGetUserData";
-import { Header } from "../../components";
-import { Category } from "../../containers";
-import { Statistics } from "../../containers/Statistics";
-import { RootStoreContext } from "../../app.view";
-import useGetStatistics from "../../hooks/useGetStatistics";
+import { lazily } from "react-lazily";
+
+import useGetUserData from "@/hooks/useGetUserData";
+import useGetStatistics from "@/hooks/useGetStatistics";
+
+import Watch from "@/assets/icons/watch.svg?react";
+import CardsIcon from "@/assets/icons/cards.svg?react";
+import EllipseShape from "@/assets/icons/ellipse.svg?react";
+import EllipseShapeSecond from "@/assets/icons/ellipse2.svg?react";
+import { RootStoreContext } from "@/app.view";
+
+const { Statistics, Category } = lazily(() => import("@/containers"));
+const { Header } = lazily(() => import("@/components"));
 
 type Card = {
   title: string;
@@ -110,9 +113,27 @@ const Card = styled.div<{ $type?: string }>`
       "linear-gradient(254deg, #BABABA 29.87%, #989898 76.65%)") ||
     "#FFFFFF"};
 
+  .ellipses {
+    display: none;
+  }
+
   @media only screen and (min-width: 1024px) {
     height: 170px;
     border-radius: 30px;
+
+    .ellipses {
+      display: flex;
+      position: absolute;
+      top: 10px;
+      .ellipse-first {
+        position: absolute;
+      }
+
+      .ellipse-second {
+        position: absolute;
+        top: 8px;
+      }
+    }
   }
 `;
 
@@ -376,21 +397,10 @@ export const Home = observer(() => {
               $type={cards?.[0]?.type}
               onClick={() => navigate(cards?.[0]?.link)}
             >
-              {cards?.[0]?.type !== "current" ? (
-                <>
-                  <EllipseShape
-                    style={`position:absolute; top:-3rem; left:-8rem;stroke:#FFFFFF;rotate:-7deg`}
-                  />
-                  <EllipseShape
-                    style={`position:absolute; top:-1.5rem; left:-10rem;stroke:#FFFFFF;rotate:-8deg
-                `}
-                  />
-                </>
-              ) : (
-                <EllipseShape
-                  style={`position:absolute; left:-24rem; top:5rem;rotate:-8deg;`}
-                />
-              )}
+              <div className="ellipses">
+                <EllipseShape className="ellipse-first" />
+                <EllipseShapeSecond className="ellipse-second" />
+              </div>
 
               <CardBadge>
                 {userStore?.isFinalExamPassed ? (

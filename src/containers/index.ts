@@ -7,3 +7,4 @@ export * from "./QuizStart";
 export * from "./QuizResult";
 export * from "./Category";
 export * from "./QuestionSlider";
+export * from "./Statistics";

@@ -1,4 +1,4 @@
-import { AnswersArgs } from "../types";
+import { AnswersArgs } from "@/types";
 import { instance } from "./api.config";
 
 const getData = async (path: string) => (await instance.get(path)).data;

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { RootStoreContext } from "../../app.view";
+import { RootStoreContext } from "@/app.view";
 
 export const ProtectedRoute = observer(() => {
   const { authStore } = useContext(RootStoreContext);

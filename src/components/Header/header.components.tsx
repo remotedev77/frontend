@@ -1,7 +1,7 @@
+import { useContext } from "react";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
-import { useContext } from "react";
-import { RootStoreContext } from "../../app.view";
+import { RootStoreContext } from "@/app.view";
 
 export const Header = observer(() => {
   const { authStore } = useContext(RootStoreContext);

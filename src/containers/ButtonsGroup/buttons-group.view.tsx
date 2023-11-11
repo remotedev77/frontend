@@ -1,6 +1,6 @@
+import { FC, PropsWithChildren } from "react";
 import { observer } from "mobx-react";
 import styled from "@emotion/styled";
-import { FC, PropsWithChildren } from "react";
 
 interface ButtonProps extends PropsWithChildren {
   primary?: boolean;

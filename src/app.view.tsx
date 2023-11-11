@@ -1,29 +1,22 @@
-import { createContext, useEffect, useState } from "react";
+import { Suspense, createContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react";
+import { preload } from "swr";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
+import { lazily } from "react-lazily";
 
-import {
-  Login,
-  ProtectedRoute,
-  PersistLogin,
-  ProtectedTestRoute,
-} from "./containers";
-import {
-  FinalTest,
-  ExamSimulator,
-  Home,
-  Marathon,
-  CategoryExam,
-  AdminPage,
-} from "./pages";
-import { RootStore } from "./stores/root.store.ts";
-import { preload } from "swr";
-import { authService } from "./api/api.auth.ts";
-import { getData } from "./api/apis.ts";
-import { Questions, Users } from "./pages/AdminPage/views";
-import { NotFound404 } from "./components/notfound404.component.tsx";
+import { RootStore } from "@/stores/root.store.ts";
+import { authService } from "@/api/api.auth.ts";
+import { getData } from "@/api/apis.ts";
+
+const { NotFound404, Loading } = lazily(() => import("@/components"));
+const { Login, ProtectedRoute, PersistLogin, ProtectedTestRoute } = lazily(
+  () => import("@/containers")
+);
+const { FinalTest, ExamSimulator, Home, Marathon, CategoryExam, AdminPage } =
+  lazily(() => import("@/pages"));
+const { Questions, Users } = lazily(() => import("@/pages/AdminPage/views"));
 
 preload(authService.getUserEndpoint, authService.getUser);
 preload("/app/get-user-statistic/", getData);
@@ -110,7 +103,9 @@ const App = observer(() => {
   return (
     <RootStoreContext.Provider value={rootStore}>
       <Container>
-        <RouterProvider router={router} />
+        <Suspense fallback={<Loading />}>
+          <RouterProvider router={router} />
+        </Suspense>
         <Toaster />
       </Container>
     </RootStoreContext.Provider>

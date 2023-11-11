@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import useSWRImmutable from "swr/immutable";
+import { lazily } from "react-lazily";
 
-import { getData } from "../../api/apis.ts";
-import { QuestionDTO } from "../../types/index.ts";
-
-import { QuizResult, QuizStart } from "../../containers/index.ts";
+import { getData } from "@/api/apis.ts";
+import { QuestionDTO } from "@/types/index.ts";
 import { ExamSimulatorVm, SessionStatus } from "./exam-simulator.vm.ts";
-import { Exam } from "./views/exam/exam.view.tsx";
-import { Loading } from "../../components/loading.component.tsx";
-import DocsIcon from "../../assets/icons/docs.svg?react";
-import { NotFound404 } from "../../components/index.ts";
+import DocsIcon from "@/assets/icons/docs.svg?react";
+
+const { QuizResult, QuizStart } = lazily(() => import("@/containers"));
+const { Loading, NotFound404 } = lazily(() => import("@/components"));
+const { Exam } = lazily(() => import("./views"));
 
 export const ExamSimulator = observer(() => {
   const vm = ExamSimulatorVm;

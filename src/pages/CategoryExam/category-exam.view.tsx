@@ -1,20 +1,22 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react";
 import useSWRImmutable from "swr/immutable";
-import { getData } from "../../api/apis";
-
-import { QuestionDTO } from "../../types";
-import { CategoryExamVm, SessionStatus } from "./category-exam.vm";
-import { Exam } from "./views";
-import { QuizResult, QuizStart } from "../../containers";
-import { Loading, NotFound404 } from "../../components";
 import { useLocation } from "react-router-dom";
+import { lazily } from "react-lazily";
 
-import DocsIcon from "../../assets/icons/docs.svg?react";
-import DocsCheck from "../../assets/icons/docsCheck.svg?react";
-import DocsEx from "../../assets/icons/docsExclamation.svg?react";
-import DocsQuestion from "../../assets/icons/docsQuestion.svg?react";
-import DocsX from "../../assets/icons/docsX.svg?react";
+import { QuestionDTO } from "@/types";
+import { getData } from "@/api/apis";
+import DocsIcon from "@/assets/icons/docs.svg?react";
+import DocsCheck from "@/assets/icons/docsCheck.svg?react";
+import DocsEx from "@/assets/icons/docsExclamation.svg?react";
+import DocsQuestion from "@/assets/icons/docsQuestion.svg?react";
+import DocsX from "@/assets/icons/docsX.svg?react";
+
+import { CategoryExamVm, SessionStatus } from "./category-exam.vm";
+
+const { QuizResult, QuizStart } = lazily(() => import("@/containers"));
+const { Loading, NotFound404 } = lazily(() => import("@/components"));
+const { Exam } = lazily(() => import("./views"));
 
 interface GetIcon {
   "Не решал": { icon: JSX.Element; desc: string };
