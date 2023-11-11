@@ -202,11 +202,9 @@ export const QuizStart = observer((x: QuizStartProps) => {
         {x.vm.exam_type === ExamType.MARATHON ||
         x.vm.exam_type === ExamType.CATEGORY ? (
           <ResultContainer>
-            {x.vm.questions
-              ?.slice(0, x.vm.questions?.length - 1)
-              ?.map((result, index) => (
-                <Accordion key={index} {...result} index={index + 1} />
-              ))}
+            {x.vm.questions?.map((result, index) => (
+              <Accordion key={index} {...result} index={index + 1} />
+            ))}
           </ResultContainer>
         ) : null}
       </Wrapper>

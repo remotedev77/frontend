@@ -5,6 +5,7 @@ import { observer } from "mobx-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/bundle";
 
 const QuestionSliderContainer = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ export const QuestionSlider = observer((x: QuestionSlider) => {
       <Swiper
         className="swiper"
         slidesPerView={"auto"}
-        freeMode
+        freeMode={true}
         modules={[FreeMode]}
         spaceBetween={4}
       >
