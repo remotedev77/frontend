@@ -4,12 +4,15 @@ import { UserDTO } from "@/types";
 import { useContext, useEffect } from "react";
 import { RootStoreContext } from "@/app.view";
 
-const useGetUserData = () => {
+const useGetUserData = (checkAdmin: boolean) => {
   const {
     data: userData,
     isLoading,
     error,
-  } = useSWR<UserDTO>(authService.getUserEndpoint, authService.getUser);
+  } = useSWR<UserDTO>(
+    checkAdmin ? authService.getAdminUserEndpoint : authService.getUserEndpoint,
+    checkAdmin ? authService.getAdminUser : authService.getUser
+  );
   const { userStore } = useContext(RootStoreContext);
   useEffect(() => {
     userData && userStore.setUserData(userData);

@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 
 import { RootStoreContext } from "@/app.view.tsx";
 import { LoginViewModel } from "./login.vm.ts";
+import useSWRMutation from "swr/mutation";
+import { getData } from "@/api/apis.ts";
+import { authService } from "@/api/api.auth.ts";
 
 const { Input } = lazily(() => import("@/components"));
 
@@ -80,10 +83,18 @@ export const Login = observer(() => {
   const { authStore } = useContext(RootStoreContext);
   const navigate = useNavigate();
   const vm = new LoginViewModel(authStore);
+  const { data: isAdmin, trigger } = useSWRMutation(
+    authService.getAdminUserEndpoint,
+    getData
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await vm.login();
+    trigger();
+    isAdmin?.role === "admin"
+      ? authStore.setAdmin(true)
+      : authStore.setAdmin(false);
     res === true ? navigate("/") : toast.error("Username or Password wrong!");
   };
 

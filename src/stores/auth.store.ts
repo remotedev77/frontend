@@ -44,6 +44,10 @@ export class AuthStore {
     }
   }
 
+  async setAdmin(isAdmin: boolean) {
+    this.isAdmin = isAdmin;
+  }
+
   async logout() {
     this.isAuthInProgress = true;
     this.isAuth = false;

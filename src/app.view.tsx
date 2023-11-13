@@ -22,7 +22,6 @@ preload(authService.getUserEndpoint, authService.getUser);
 preload("/app/get-user-statistic/", getData);
 
 export const RootStoreContext = createContext<RootStore>(new RootStore());
-
 const router = createBrowserRouter([
   {
     path: "*",
@@ -40,11 +39,11 @@ const router = createBrowserRouter([
             element: <NotFound404 />,
           },
           {
-            index: !new RootStore().authStore.isAdmin,
+            index: true,
             element: <Home />,
           },
           {
-            index: new RootStore().authStore.isAdmin,
+            path: "admin",
             element: <AdminPage />,
           },
           {

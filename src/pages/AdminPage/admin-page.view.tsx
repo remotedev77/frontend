@@ -1,83 +1,61 @@
 import { observer } from "mobx-react";
+import { Header } from "../../components";
+import { CompaniesTable, SideBar, UsersTable } from "./widgets";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { AdminPageVm, Company } from "./admin-page.vm.ts";
+import { ModalWrapper } from "../../components/Modals/modal-wrapper.tsx";
 
-const Card = styled.div<{ $type?: string }>`
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-  height: 11rem;
-  border-radius: 1.875rem;
-  box-shadow: 0px 4px 46px 0px rgba(22, 21, 21, 0.25);
-  background: ${(props) =>
-    (props.$type === "current" && "#FFFFFF") ||
-    (props.$type === "active" &&
-      "linear-gradient(254deg, #FF9272 29.87%, #F3673E 76.65%)") ||
-    (props.$type === "deactive" &&
-      "linear-gradient(254deg, #BABABA 29.87%, #989898 76.65%)") ||
-    "#FFFFFF"};
-`;
+import { QuestionTable } from "./widgets/QuestionTable/question-table.tsx";
+import { getData } from "../../api/apis.ts";
 
-const CardContent = styled.div<{ $type?: string }>`
-  position: relative;
-  display: flex;
-  flex-grow: 1;
-  padding: 0 1rem;
-`;
+import useSWR from "swr";
+import { ManagersTable } from "./widgets/ManagersTable";
 
-const CardHeading = styled.div`
+const Container = styled.div`
+  width: 100vw - 250px;
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  display: flex;
-  gap: 0.5rem 0;
-  padding: 1rem 0;
-  flex-direction: column;
-`;
-
-const CardTitle = styled.div<{ $type?: string }>`
-  color: ${(props) => (props.$type === "current" ? "#505050" : "#FFFFFF")};
-  font-weight: 600;
-  font-size: 2rem;
-`;
-
-const CardWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 1.2rem;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-`;
-const PageWrapper = styled.div`
-  padding: 50px 60px;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
+  margin-top: 56px;
+  justify-content: space-between;
 `;
 
 export const AdminPage = observer(() => {
-  const navigate = useNavigate();
+  const vm = AdminPageVm;
+  vm.isModalVisible
+    ? (document.body.style.overflow = "hidden")
+    : (document.body.style.overflow = "scroll");
+  const { data } = useSWR<Company[]>(`/admin-api/companies/`, getData);
+  if (!data) return "loading";
+  vm.setCompanies(data);
+
+  const CurrentTable = observer(() => {
+    switch (vm.selectedTable) {
+      case "users":
+        return <UsersTable vm={vm} />;
+      case "questions":
+        return <QuestionTable vm={vm} />;
+      case "companies":
+        return <CompaniesTable vm={vm} />;
+      case "managers":
+        return <ManagersTable vm={vm} />;
+    }
+  });
+
   return (
-    <PageWrapper>
-      <CardWrapper>
-        <Card $type="active" onClick={() => navigate("/users")}>
-          <CardContent>
-            <CardHeading>
-              <CardTitle>Добавить пользователя</CardTitle>
-            </CardHeading>
-          </CardContent>
-        </Card>
-        <Card $type="active" onClick={() => navigate("/questions")}>
-          <CardContent>
-            <CardHeading>
-              <CardTitle>Редактировать вопросы</CardTitle>
-            </CardHeading>
-          </CardContent>
-        </Card>
-      </CardWrapper>
-    </PageWrapper>
+    <>
+      {vm.isModalVisible && (
+        <ModalWrapper
+          offSet={window.scrollY}
+          onClick={vm.changeModalVisibility}
+        >
+          {vm.CurentModal}
+        </ModalWrapper>
+      )}
+      <Header></Header>
+      <Container>
+        <SideBar vm={vm} />
+
+        <CurrentTable />
+      </Container>
+    </>
   );
 });
