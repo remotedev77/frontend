@@ -1,21 +1,23 @@
 import {makeAutoObservable} from "mobx";
+import {deleteById} from "../../../../api/apis.ts";
 
 
 export interface Question{
-    id:number
+    id?:number
     question:string
     correct_answer_description:string
-    answers:Answer[]
-    img: string
+    answers?:Answer[]
+    image: string
     question_code: number
     work_function: string
     note: string
 }
 
 export interface Answer{
-    id:number,
+    id?:number,
     answer: string
     is_correct: boolean
+    question_id?:number
 }
 export interface DataFormat{
     count: number
@@ -42,6 +44,10 @@ export const QuestionTableVm = new class{
             this._questions.sort((a,b) => b.note.localeCompare(a.note))
         }
         this.isSortedByType = !this.isSortedByType
+    }
+
+    onDeleteQuestion = async (id:number) =>{
+       await deleteById('/admin-api/chage-question/', id)
     }
 
 

@@ -14,7 +14,6 @@ interface NewUserProps{
 export const EditUser:FC<NewUserProps> = observer(x=>{
     const vm = EditUserVm
     vm.setUser(x.user)
-    console.log(vm.user)
 
     return <>
         <ModalInput type="text"
@@ -36,14 +35,13 @@ export const EditUser:FC<NewUserProps> = observer(x=>{
         <Label>
             Начало обучения
             <ModalInput type="date"
-                        value={x.user.start_date?x.user.start_date:undefined}
+                        onChange={e=>vm.onStartDateChange(e.target.value)}
                         />
         </Label>
         <Label>
             Конец обучения
             <ModalInput type="date"
-                        value={x.user.start_date?x.user.start_date:undefined}
-                        onChange={e=> console.log(typeof e.target.value, e.target.value)}
+                        onChange={e=>vm.onEndDateChange(e.target.value)}
             />
         </Label>
         <CompaniesSelect companies={x.vm.companies} setCompany={vm.onCompanyChange} />

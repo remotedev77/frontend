@@ -51,7 +51,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
           <SearchBar
             placeholder="Поиск по ФИО"
             onSearchChange={vm.onSearchChange}
-            onSearch={vm.searchingUsers}
+            onSearch={() => vm.searchingUsers(data)}
           />
           <AddButton
             type="button"

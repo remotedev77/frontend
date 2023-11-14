@@ -1,9 +1,8 @@
 import { makeAutoObservable } from "mobx";
-import { QuestionDTO } from "../../types";
 import { ReactNode } from "react";
 
 export interface Company {
-  id: number;
+  id?: number;
   company_name: string;
   legal_adress: string;
   contact_person: string;
@@ -21,7 +20,6 @@ export const AdminPageVm = new (class {
   ];
   private _currentModal: ReactNode;
   private _companies: Company[] = [];
-  private _question: QuestionDTO[] = [];
   isModalVisible = false;
   selectedTable: string;
 

@@ -39,6 +39,13 @@ export const EditUserVm = new class{
         if (value.trim()===''){delete this._user["password"]}else this._user.password = value
     }
 
+    onStartDateChange = (value:string) =>{
+        this._user.start_date = value
+    }
+    onEndDateChange = (value:string) =>{
+        this._user.end_date = value
+    }
+
     onCompanyChange = (id:number)=>{
         this._user.organization = id
     }

@@ -4,7 +4,7 @@ import { UserDTO } from "@/types";
 import { useContext, useEffect } from "react";
 import { RootStoreContext } from "@/app.view";
 
-const useGetUserData = (checkAdmin: boolean) => {
+const useGetUserData = (checkAdmin?: boolean) => {
   const {
     data: userData,
     isLoading,

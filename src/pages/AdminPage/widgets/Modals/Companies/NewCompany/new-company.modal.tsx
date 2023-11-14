@@ -13,7 +13,7 @@ export const NewCompany:FC<NewUserProps> = observer(()=>{
 
 
     return <>
-        <ModalTitle>Добавление нового сотрудника</ModalTitle>
+        <ModalTitle>Добавление новой организации</ModalTitle>
         <ModalInput type="text"
                     onChange={e =>vm.onCompanyChange(e.target.value) }
                     placeholder="Наименование организации"/>

@@ -64,7 +64,6 @@ export const ManagersTable:FC<UsersTableProps> = observer(x=>{
             })}
         </>
     })
-    console.log(MappedInfo)
 
     return (
         <Container>

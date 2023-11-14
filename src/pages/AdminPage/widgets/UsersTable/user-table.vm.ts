@@ -40,14 +40,15 @@ export const UserTableVm = new class{
     }
 
     deleteUser = async (id:number) =>{
-        await deleteById(`admin-api/delete-user/`, id).then().catch(err => console.log(err))
+        await deleteById(`admin-api/change-user/`, id).then().catch(err => console.log(err))
     }
 
     getUsers = () =>{
         return this._users
     }
 
-    searchingUsers =  () =>{
+    searchingUsers =  (data:DataFormat[]) =>{
+        this.setUsers(data)
     this._users = this._users.filter(user => this.searchString.trim() === "" || (
                 this.searchString.includes(String(user.father_name)) ||
                 this.searchString.includes(String(user.first_name)) ||

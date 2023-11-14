@@ -5,23 +5,23 @@ interface ButtonProps extends PropsWithChildren {
   onClick(): void;
   primary?: boolean;
   size?: number;
+  width?:number;
+  type?: "button" | "submit" | "reset" | undefined
+  borderRadius?:string
 }
 
 export const Button: FC<ButtonProps> = (x) => {
   const StyledButton = styled.button`
-    @media only screen and (min-width: 1024px) {
-      padding: ${x.size ? `${x.size}px ${x.size - 10}px` : `16px`};
-      font-size: 18px;
-    }
     cursor: pointer;
     border: none;
-    width: 100%;
-    padding: 10px;
+    padding: ${x.size ? `${x.size}px ${x.size - 10}px` : `24px`};
+    width: ${x.width ? `${x.width}px`: `100%`};
     justify-content: center;
     align-items: center;
-    font-size: 16px;
-    border-radius: 40px;
+    gap: 10px;
+    border-radius: ${x.borderRadius?x.borderRadius:40}px;
     font-family: Inter, sans-serif;
+    font-size: ${x.size ? x.size : 24}px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -32,5 +32,5 @@ export const Button: FC<ButtonProps> = (x) => {
       : `color: #000;
         background: #FFF;`}
   `;
-  return <StyledButton onClick={x.onClick}>{x.children}</StyledButton>;
+  return <StyledButton type={x.type} onClick={x.onClick}>{x.children}</StyledButton>;
 };

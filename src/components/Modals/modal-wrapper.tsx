@@ -25,6 +25,27 @@ export const Label = styled.label`
   max-width: 450px;
   line-height: normal;
 `
+export const ConfirmControlls = styled.div`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      width: 100%;
+    `
+export const ConfirmContainer = styled.div`
+      position: absolute;
+      display: flex;
+      width: 600px;
+      top:calc(50% - 80px);
+      padding: 40px 0px 30px 0px;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      height: max-content;
+      border-radius: 10px;
+      background: #FFF;
+      box-shadow: 0px 4px 46px 0px rgba(0, 0, 0, 0.25);
+    `
 export const ModalTextarea = styled.textarea`
   width: 450px;
   min-height: 110px;
@@ -66,17 +87,20 @@ export const ModalTitle:FC<ModalTitleProps> =x => {
 interface InfofieldProps{
     type:string
     info:string | null
+    green?:boolean
 }
 export const InfoField:FC<InfofieldProps> = x =>{
     const Info = styled.p`
       overflow: hidden;
       text-overflow: ellipsis;
-      color: #505050;
+      color: ${x.green?'green':"#505050"};
       width: 450px;
       font-size: 14px;
       font-weight: 400;
     `
-    return <Info><b>{`${x.type}: `}</b>{x.info}</Info>
+    return x.info !== null
+        ? <Info><b>{x.type}: </b> {x.info}</Info>
+        : <Info>{x.type}</Info>
 }
 
 interface FileUploadProps{
@@ -111,7 +135,10 @@ export const FileUpload:FC<FileUploadProps> = observer(x=>{
         </svg></>
         }
 
-        <FileInput type="file" onChange={e=>x.setFile(e.target.files![0])} accept=".csv"/>
+        <FileInput type="file" onChange={e=>{
+            x.setFile(e.target.files![0])
+            console.log(e.target.files![0])
+        }} accept=".csv"/>
     </LaberWrapper>
 })
 
@@ -168,6 +195,7 @@ export const ButtonSection:FC<ButtonSectionProps> = x =>{
 interface ModalWrapper extends PropsWithChildren {
     onClick(): void
     offSet:number
+    isVisible?:boolean
 }
 
 export const ModalWrapper: FC<ModalWrapper> = observer(x => {
@@ -177,7 +205,7 @@ export const ModalWrapper: FC<ModalWrapper> = observer(x => {
       margin-top: ${x.offSet}px;
       background: rgba(0, 0, 0, 0.25);
       position: absolute;
-      display: flex;
+      display: ${x.isVisible === false? 'none': 'flex'};
       align-items: center;
       justify-content: center;
       z-index: 9999;

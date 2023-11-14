@@ -1,2 +1,1 @@
-export * from "./EditQuestion"
-export * from "./AddQuestion"
+export * from "./AddQuestion";
