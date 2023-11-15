@@ -8,7 +8,7 @@ export const FilterSectionContainer = styled.div`
 export const MainFilterControlls = styled.div`
   width: 100%;
   display: flex;
-  gap: 60px;
+  gap: 24px;
   margin-bottom: 20px;
 `;
 export const SubFilters = styled.div`

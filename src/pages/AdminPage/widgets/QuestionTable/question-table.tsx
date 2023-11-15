@@ -21,7 +21,7 @@ import { QuestionInfo } from "../Modals/Questions/QuestionInfo";
 import { CsvQuestion } from "../Modals/Questions/CSV";
 
 const Container = styled.div`
-  padding: 40px;
+  padding: 20px;
   display: flex;
   flex-flow: column;
 `;
@@ -110,9 +110,9 @@ export const QuestionTable: FC<QuestionTableProps> = observer((x) => {
   });
   const tableHeaderCells = [
     { width: 100, name: "Код вопроса" },
-    { width: 350, name: "Трудовая функция" },
-    { width: 900, name: "Вопрос" },
-    { width: 250, name: "Тип вопроса" },
+    { width: 150, name: "Трудовая функция" },
+    { width: 100, name: "Вопрос" },
+    { width: 150, name: "Тип вопроса" },
   ];
   const MappedInfo = observer(() => {
     return (

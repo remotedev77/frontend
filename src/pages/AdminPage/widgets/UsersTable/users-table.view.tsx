@@ -40,7 +40,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
   if (!data) return "loading";
 
   const Container = styled.div`
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-flow: column;
   `;
