@@ -3,7 +3,7 @@ import {Company} from "../../../../admin-page.vm.ts";
 import {updateCompany} from "../../../../../../api/apis.ts";
 
 
-export class EditCompanyVm{
+export const EditCompanyVm = new class{
     private _company:Company = {
         id: Date.now(),
         legal_adress:'',

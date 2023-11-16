@@ -6,13 +6,13 @@ import {
   ConfirmControlls,
   InfoField,
   ModalTitle,
-} from "../../../../../../components/Modals/modal-wrapper.tsx";
-import { AdminPageVm } from "../../../../admin-page.vm.ts";
+} from "@/components/Modals/modal-wrapper.tsx";
+import { AdminPageVm } from "@/pages/AdminPage/admin-page.vm.ts";
 import {
   Question,
   QuestionTableVm,
 } from "../../../QuestionTable/question-table.vm.ts";
-import { Button } from "../../../../../../components";
+import { Button } from "@/components";
 import { EditQuestion } from "../EditQuestion/edit-question.modal.tsx";
 
 interface UserInfoProps {

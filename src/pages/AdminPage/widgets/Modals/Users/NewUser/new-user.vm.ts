@@ -3,7 +3,7 @@ import {User} from "../../../UsersTable";
 import {postUser} from "../../../../../../api/apis.ts";
 
 
-export class NewUserVm{
+export const NewUserVm = new class{
     private _user:User = {
         id:Date.now(),
         father_name:'',

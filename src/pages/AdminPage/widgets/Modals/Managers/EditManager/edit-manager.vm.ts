@@ -3,7 +3,7 @@ import {updateManager} from "../../../../../../api/apis.ts";
 import {Manager} from "../../../ManagersTable";
 
 
-export class EditManagerVm{
+export const EditManagerVm = new class{
 
 
     private _manager:Manager = {

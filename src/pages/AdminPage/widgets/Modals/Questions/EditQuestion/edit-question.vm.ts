@@ -3,7 +3,7 @@ import { Question} from "../../../QuestionTable/question-table.vm.ts";
 import {deleteById, updateAnswer, updateQuestion} from "../../../../../../api/apis.ts";
 
 
-export class EditQuestionVm{
+export const EditQuestionVm = new class{
     private _question:Question = {
         id:0,
         question:'',

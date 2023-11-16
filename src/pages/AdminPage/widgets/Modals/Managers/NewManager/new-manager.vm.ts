@@ -3,7 +3,7 @@ import {postManager} from "../../../../../../api/apis.ts";
 import {Manager} from "../../../ManagersTable";
 
 
-export class NewManagerVm{
+export const NewManagerVm = new class{
     private _manager:Manager = {
         id:Date.now(),
         is_staff:true,
@@ -40,7 +40,7 @@ export class NewManagerVm{
     }
 
     createManager = async () =>{
-        postManager("/admin-api/managers/", this.manager).then().catch(err=>console.log(err))
+        postManager("/admin-api/managers", this.manager).then().catch(err=>console.log(err))
     }
     constructor() {
         makeAutoObservable(this)

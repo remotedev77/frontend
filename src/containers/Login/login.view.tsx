@@ -92,7 +92,7 @@ export const Login = observer(() => {
     e.preventDefault();
     const res = await vm.login();
     trigger();
-    isAdmin?.role === "admin"
+    isAdmin?.role === "admin" || isAdmin?.role === "manager"
       ? authStore.setAdmin(true)
       : authStore.setAdmin(false);
     res === true ? navigate("/") : toast.error("Username or Password wrong!");
