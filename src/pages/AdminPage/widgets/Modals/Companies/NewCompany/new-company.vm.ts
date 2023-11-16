@@ -3,7 +3,7 @@ import {postCompany,} from "../../../../../../api/apis.ts";
 import {Company} from "../../../../admin-page.vm.ts";
 
 
-export const NewCompanyVm = new class{
+export class NewCompanyVm{
     private _company:Company = {
         id: Date.now(),
         legal_adress:'',

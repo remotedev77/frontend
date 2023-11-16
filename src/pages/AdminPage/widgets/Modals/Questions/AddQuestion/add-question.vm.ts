@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
 import { postQuestion } from "../../../../../../api/apis.ts";
 
-export const AddQuestionVm = new (class {
+export class AddQuestionVm{
   private _question: Question = {
     id: Date.now(),
     question: "",
@@ -63,4 +63,4 @@ export const AddQuestionVm = new (class {
   constructor() {
     makeAutoObservable(this);
   }
-})();
+}

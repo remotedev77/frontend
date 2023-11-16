@@ -8,8 +8,8 @@ import {NewManagerVm} from "./new-manager.vm.ts";
 interface NewUserProps{
     vm: typeof AdminPageVm
 }
-export const NewManager:FC<NewUserProps> = observer(()=>{
-    const vm = NewManagerVm
+export const NewManager:FC<NewUserProps> = observer(x=>{
+    const vm = new NewManagerVm()
 
 
     return <>
@@ -31,7 +31,10 @@ export const NewManager:FC<NewUserProps> = observer(()=>{
                     onChange={e =>vm.onPasswordChange(e.target.value) }
                     placeholder="Пароль"/>
 
-        <Button width={160} onClick={vm.createManager} size={16} primary>
+        <Button width={160} onClick={()=>{
+            vm.createManager()
+            x.vm.closeModal()
+        }} size={16} primary>
             Добавить
         </Button>
     </>
