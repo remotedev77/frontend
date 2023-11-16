@@ -17,7 +17,7 @@ interface EditQuestionProps {
   vm: typeof AdminPageVm;
 }
 export const AddQuestion: FC<EditQuestionProps> = observer((x) => {
-  const vm = new AddQuestionVm;
+  const vm = AddQuestionVm;
 
   const Answers = observer(() => {
     const Container = styled.div`
@@ -107,8 +107,8 @@ export const AddQuestion: FC<EditQuestionProps> = observer((x) => {
       <Button
         width={160}
         onClick={() => {
+          x.vm.isModalVisible = false;
           vm.createQuestion();
-          x.vm.closeModal()
         }}
         size={16}
         primary

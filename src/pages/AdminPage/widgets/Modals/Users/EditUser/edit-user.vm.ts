@@ -3,7 +3,7 @@ import {User} from "../../../UsersTable";
 import { updateUser} from "../../../../../../api/apis.ts";
 
 
-export class EditUserVm{
+export const EditUserVm = new class{
     private _user:User = {
         id:Date.now(),
         father_name:'',

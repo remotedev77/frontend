@@ -14,7 +14,7 @@ interface EditManagerProps{
     manager: Manager
 }
 export const EditManager:FC<EditManagerProps> = observer(x=>{
-    const vm = new EditManagerVm()
+    const vm = EditManagerVm
     vm.setManager(x.manager)
 
 
@@ -40,7 +40,7 @@ export const EditManager:FC<EditManagerProps> = observer(x=>{
 
         <Button width={160} onClick={()=>{
             vm.editManager()
-            x.vm.closeModal()
+            x.vm.isModalVisible = false
         }} size={16} primary>
             Изменить
         </Button>

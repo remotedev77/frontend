@@ -43,11 +43,6 @@ export const AdminPageVm = new (class {
     if (!this.isModalVisible) this.changeModalVisibility();
   }
 
-  closeModal = () => {
-    this.CurrentModal = undefined
-    this.isModalVisible = false
-}
-
   get CurentModal() {
     return this._currentModal;
   }

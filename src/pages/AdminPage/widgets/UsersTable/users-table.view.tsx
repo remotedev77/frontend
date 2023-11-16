@@ -40,7 +40,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
   if (!data) return "loading";
 
   const Container = styled.div`
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-flow: column;
   `;
@@ -63,10 +63,10 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
           </AddButton>
           <FilterButton
             onClick={() => {
-              x.vm.CurrentModal = <CsvModal vm={x.vm} companies={x.vm.companies} />;
+              x.vm.CurrentModal = <CsvModal companies={x.vm.companies} />;
             }}
           >
-            Добавить через .CSV
+            Добавить через .XLSX
           </FilterButton>
           <FilterButton
             onClick={() => {
