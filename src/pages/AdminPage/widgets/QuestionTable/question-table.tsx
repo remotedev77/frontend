@@ -69,7 +69,7 @@ export const QuestionTable: FC<QuestionTableProps> = observer((x) => {
               x.vm.CurrentModal = <CsvQuestion />;
             }}
           >
-            Добавить через .CSV
+            Добавить через .XLSX
           </FilterButton>
           <FilterButton
             onClick={() => {

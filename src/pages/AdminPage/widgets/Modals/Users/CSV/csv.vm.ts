@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { postCSVUsers } from "../../../../../../api/apis.ts";
+import { postCSVUsers } from "@/api/apis.ts";
 
 export const CsvVm = new (class {
   private CSV: File | undefined;
@@ -16,7 +16,7 @@ export const CsvVm = new (class {
   postFile = async () => {
     const formData = new FormData();
     formData.append("filename", this.CSV!);
-    formData.append("organization_id", "1");
+    formData.append("organization_id", this.company.toString());
     console.log(formData.get("filename"), formData.get("organization_id"));
     postCSVUsers("/admin-api/upload-csv-user-file/", formData)
       .catch((err) => console.log(err))

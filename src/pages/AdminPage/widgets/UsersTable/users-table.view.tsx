@@ -66,7 +66,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
               x.vm.CurrentModal = <CsvModal companies={x.vm.companies} />;
             }}
           >
-            Добавить через .CSV
+            Добавить через .XLSX
           </FilterButton>
           <FilterButton
             onClick={() => {

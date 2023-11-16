@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import { Header } from "@/components";
+import { Header, Loading, NotFound404 } from "@/components";
 import { CompaniesTable, SideBar, UsersTable } from "./widgets";
 import styled from "@emotion/styled";
 import { AdminPageVm, Company } from "./admin-page.vm.ts";
@@ -10,6 +10,7 @@ import { getData } from "@/api/apis.ts";
 
 import useSWR from "swr";
 import { ManagersTable } from "./widgets/ManagersTable";
+import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -20,16 +21,22 @@ const Container = styled.div`
 `;
 
 const RightContainer = styled.div`
-  overflow: scroll;
+  overflow: auto;
   width: 100%;
 `;
 
 export const AdminPage = observer(() => {
   const vm = AdminPageVm;
 
-  const { data } = useSWR<Company[]>(`/admin-api/companies/`, getData);
-  if (!data) return "loading";
-  vm.setCompanies(data);
+  const { data, isLoading, error } = useSWR<Company[]>(
+    `/admin-api/companies/`,
+    getData
+  );
+  if (isLoading) return <Loading />;
+  if (error) return <NotFound404 />;
+  if (data) {
+    vm.setCompanies(data);
+  }
 
   const CurrentTable = observer(() => {
     switch (vm.selectedTable) {

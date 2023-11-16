@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import {
-  ButtonSection,
   ConfirmContainer,
   ConfirmControlls,
   CustomSelect,
@@ -9,8 +8,8 @@ import {
   ModalInput,
   ModalTextarea,
   ModalTitle,
-} from "../../../../../../components/Modals/modal-wrapper.tsx";
-import { Button } from "../../../../../../components";
+} from "@/components/Modals/modal-wrapper.tsx";
+import { Button } from "@/components";
 import { AdminPageVm } from "../../../../admin-page.vm.ts";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
 import { FC, useState } from "react";
@@ -138,13 +137,17 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
         onChange={(e) => vm.onDescriptionChange(e.target.value)}
         style={{ marginBottom: "20px" }}
       />
-      <ButtonSection
-        onDelete={() => setIsConfirming(true)}
-        onEdit={() => {
+      <Button
+        width={160}
+        onClick={() => {
           vm.editQuestion();
           x.vm.isModalVisible = false;
         }}
-      />
+        size={16}
+        primary
+      >
+        Изменить
+      </Button>
     </>
   );
 });
