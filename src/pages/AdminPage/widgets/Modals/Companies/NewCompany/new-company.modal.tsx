@@ -8,8 +8,8 @@ import {NewCompanyVm} from "./new-company.vm.ts";
 interface NewUserProps{
     vm: typeof AdminPageVm
 }
-export const NewCompany:FC<NewUserProps> = observer(()=>{
-    const vm = NewCompanyVm
+export const NewCompany:FC<NewUserProps> = observer(x=>{
+    const vm = new NewCompanyVm
 
 
     return <>
@@ -31,7 +31,10 @@ export const NewCompany:FC<NewUserProps> = observer(()=>{
                     onChange={e =>vm.onAdressChange(e.target.value) }
                     placeholder="Адрес"/>
 
-        <Button width={160} onClick={vm.createCompany} size={16} primary>
+        <Button width={160} onClick={()=>{
+            vm.createCompany()
+            x.vm.closeModal()
+        }} size={16} primary>
             Добавить
         </Button>
     </>
