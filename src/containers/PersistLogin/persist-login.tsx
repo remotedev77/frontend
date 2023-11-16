@@ -21,7 +21,7 @@ export const PersistLogin = observer(() => {
   useEffect(() => {
     authStore.checkAuth();
     trigger();
-    if (isAdmin?.role === "admin" || isAdmin?.role === "manager") {
+    if (isAdmin?.role === "admin") {
       authStore.setAdmin(true);
       navigate("/admin");
     } else {

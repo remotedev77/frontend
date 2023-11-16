@@ -12,8 +12,12 @@ export const CompaniesSelect:FC<CompaniesSelectProps> = observer(x=>{
     return<Label>
         Организации
         <CustomSelect
-            onChange={e=>x.setCompany(Number(e.target.selectedOptions[0].accessKey))}
+            onChange={e=>{
+                x.setCompany(Number(e.target.selectedOptions[0].accessKey))
+                console.log(Number(e.target.selectedOptions[0].accessKey))
+            }}
         >
+            <option selected unselectable="on">Выберите организацию</option>
             {x.companies.map(c=><option accessKey={String(c.id)} key={c.id}>{c.company_name}</option>)}
         </CustomSelect>
     </Label>

@@ -10,7 +10,7 @@ interface NewUserProps {
   company: Company;
 }
 export const EditCompany: FC<NewUserProps> = observer((x) => {
-  const vm = EditCompanyVm;
+  const vm = new EditCompanyVm;
   vm.setCompany(x.company);
 
   return (
@@ -42,7 +42,10 @@ export const EditCompany: FC<NewUserProps> = observer((x) => {
         placeholder={x.company.legal_adress}
       />
 
-      <Button width={160} onClick={vm.updateCompany} size={16} primary>
+      <Button width={160} onClick={()=>{
+          vm.updateCompany()
+          x.vm.closeModal()
+      }} size={16} primary>
         Изменить
       </Button>
     </>

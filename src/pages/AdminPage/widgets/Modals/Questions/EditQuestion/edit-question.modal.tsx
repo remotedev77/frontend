@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import {
+  ButtonSection,
   ConfirmContainer,
   ConfirmControlls,
   CustomSelect,
@@ -8,8 +9,8 @@ import {
   ModalInput,
   ModalTextarea,
   ModalTitle,
-} from "@/components/Modals/modal-wrapper.tsx";
-import { Button } from "@/components";
+} from "../../../../../../components/Modals/modal-wrapper.tsx";
+import { Button } from "../../../../../../components";
 import { AdminPageVm } from "../../../../admin-page.vm.ts";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
 import { FC, useState } from "react";
@@ -21,7 +22,7 @@ interface EditQuestionProps {
   question: Question;
 }
 export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
-  const vm = EditQuestionVm;
+  const vm =new EditQuestionVm;
   vm.setQuestion(x.question);
   const [isConfirming, setIsConfirming] = useState(false);
   interface ConfirmProps {
@@ -137,17 +138,13 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
         onChange={(e) => vm.onDescriptionChange(e.target.value)}
         style={{ marginBottom: "20px" }}
       />
-      <Button
-        width={160}
-        onClick={() => {
+      <ButtonSection
+        onDelete={() => setIsConfirming(true)}
+        onEdit={() => {
           vm.editQuestion();
-          x.vm.isModalVisible = false;
+          x.vm.closeModal();
         }}
-        size={16}
-        primary
-      >
-        Изменить
-      </Button>
+      />
     </>
   );
 });
