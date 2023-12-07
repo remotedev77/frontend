@@ -17,7 +17,6 @@ export const CsvVm = new (class {
     const formData = new FormData();
     formData.append("filename", this.CSV!);
     formData.append("organization_id", this.company.toString());
-    console.log(formData.get("filename"), formData.get("organization_id"));
     postCSVUsers("/admin-api/upload-csv-user-file/", formData)
       .catch((err) => console.log(err))
       .catch((err) => console.log(err.data.headers));

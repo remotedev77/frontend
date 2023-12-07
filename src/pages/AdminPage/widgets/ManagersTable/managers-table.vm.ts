@@ -42,6 +42,14 @@ export const ManagersTableVm = new class{
     getManagers = () =>{
         return this._managers
     }
+    searchingUsers = (data: Manager[]) => {
+        this.setManagers(data)
+        this._managers = this._managers.filter(manager => this.searchString.trim() === "" || (
+            this.searchString.includes(String(manager.father_name)) ||
+            this.searchString.includes(String(manager.first_name)) ||
+            this.searchString.includes(String(manager.last_name))
+        ))
+    }
 
 
 

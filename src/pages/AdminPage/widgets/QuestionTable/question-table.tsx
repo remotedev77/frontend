@@ -5,7 +5,7 @@ import { FC, useEffect } from "react";
 import { AdminPageVm } from "../../admin-page.vm.ts";
 import {
   AddButton,
-  Cell,
+  Cell, Dropdown,
   FilterButton,
   FilterSectionContainer,
   MainFilterControlls,
@@ -53,8 +53,8 @@ export const QuestionTable: FC<QuestionTableProps> = observer((x) => {
         <MainFilterControlls>
           <SearchBar
             placeholder="Поиск"
-            onSearchChange={() => {}}
-            onSearch={() => {}}
+            onSearchChange={vm.onSearchChange}
+            onSearch={() => vm.filter(data)}
           />
           <AddButton
             type="button"
@@ -101,9 +101,20 @@ export const QuestionTable: FC<QuestionTableProps> = observer((x) => {
               />
             </svg>
           </div>
-          <FilterButton onClick={vm.sortByType} style={{ marginLeft: "50px" }}>
-            Тип вопроса
-          </FilterButton>
+
+          <Dropdown placeholder="Тип вопроса"
+                    options={[
+                      {
+                        value:"Одиночный",
+                        key: "single"
+                      },
+                      {
+                        value:"Множественный",
+                        key: "multiple"
+                      }
+                        ]}
+                    onOptionChange={vm.setFilterNote}
+                    filter={()=> vm.filter(data)}/>
         </SubFilters>
       </FilterSectionContainer>
     );

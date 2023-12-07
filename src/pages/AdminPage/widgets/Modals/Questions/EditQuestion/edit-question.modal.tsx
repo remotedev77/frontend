@@ -10,14 +10,13 @@ import {
   ModalTitle,
 } from "@/components/Modals/modal-wrapper.tsx";
 import { Button } from "@/components";
-import { AdminPageVm } from "../../../../admin-page.vm.ts";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
 import { FC, useState } from "react";
 import { EditQuestionVm } from "./edit-question.vm.ts";
 import styled from "@emotion/styled";
 
 interface EditQuestionProps {
-  vm: typeof AdminPageVm;
+  vm: typeof EditQuestionVm;
   question: Question;
 }
 export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
@@ -31,12 +30,7 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
     <ConfirmContainer style={{ display: isConfirming ? "flex" : "none" }}>
       <ModalTitle>Вы уверены, что хотите удалить вопрос?</ModalTitle>
       <ConfirmControlls>
-        <Button
-          width={160}
-          onClick={() => setIsConfirming(false)}
-          primary
-          size={16}
-        >
+        <Button width={160} onClick={() => setIsConfirming(false)} primary size={16}>
           Отменить
         </Button>
         <Button
@@ -45,8 +39,7 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
             setIsConfirming(false);
           }}
           size={16}
-          width={160}
-        >
+          width={160}>
           Удалить
         </Button>
       </ConfirmControlls>
@@ -107,25 +100,15 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
       <Label>
         <CustomSelect
           placeholder="Тип вопроса"
-          onChange={(e) =>
-            vm.onNoteChange(e.target.selectedOptions[0].accessKey)
-          }
-          defaultValue={"Тип вопроса"}
-        >
+          onChange={(e) => vm.onNoteChange(e.target.selectedOptions[0].accessKey)}
+          defaultValue={"Тип вопроса"}>
           <option disabled>Тип вопроса</option>
           <option accessKey="single">Одиночный</option>
           <option accessKey="multiply">Множественный</option>
         </CustomSelect>
       </Label>
-      <ModalTextarea
-        value={vm.questionValue}
-        onChange={(e) => vm.onQuestionChange(e.target.value)}
-      />
-      <FileUpload
-        setFile={() => {}}
-        fileName={null}
-        description="загрузить фотографию"
-      />
+      <ModalTextarea value={vm.questionValue} onChange={(e) => vm.onQuestionChange(e.target.value)} />
+      <FileUpload setFile={() => {}} fileName={null} description="загрузить фотографию" />
       <ModalInput
         placeholder={x.question.work_function}
         onChange={(e) => vm.onWorkFunctionChange(e.target.value)}
@@ -144,8 +127,7 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
           x.vm.isModalVisible = false;
         }}
         size={16}
-        primary
-      >
+        primary>
         Изменить
       </Button>
     </>

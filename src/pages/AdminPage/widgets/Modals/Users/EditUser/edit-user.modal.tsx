@@ -15,7 +15,7 @@ interface NewUserProps {
   user: User;
 }
 export const EditUser: FC<NewUserProps> = observer((x) => {
-  const vm = EditUserVm;
+  const vm = new EditUserVm;
   vm.setUser(x.user);
 
   return (

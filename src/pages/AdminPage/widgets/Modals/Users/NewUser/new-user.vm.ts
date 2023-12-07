@@ -3,7 +3,7 @@ import {User} from "../../../UsersTable";
 import {postUser} from "../../../../../../api/apis.ts";
 
 
-export const NewUserVm = new class{
+export class NewUserVm{
     private _user:User = {
         id:Date.now(),
         father_name:'',
@@ -36,6 +36,14 @@ export const NewUserVm = new class{
         this._user.password = value
     }
 
+    onStartChange = (value:string) =>{
+        this._user.start_date = value
+    }
+
+    onEndChange = (value:string) =>{
+        this._user.end_date = value
+    }
+
     onCompanyChange = (id:number)=>{
         this._user.organization = id
     }
@@ -44,7 +52,8 @@ export const NewUserVm = new class{
     }
 
     createUser = async () =>{
-        postUser("/admin-api/create-user/", this.user).then().catch(err=>console.log(err))
+        console.log(this._user)
+        postUser("/admin-api/create-user/", this._user).then(res=>console.log(res)).catch(err=>console.log(err))
     }
 
     constructor() {

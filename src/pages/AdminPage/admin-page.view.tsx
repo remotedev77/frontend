@@ -10,7 +10,6 @@ import { getData } from "@/api/apis.ts";
 
 import useSWR from "swr";
 import { ManagersTable } from "./widgets/ManagersTable";
-import { useEffect } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -28,10 +27,7 @@ const RightContainer = styled.div`
 export const AdminPage = observer(() => {
   const vm = AdminPageVm;
 
-  const { data, isLoading, error } = useSWR<Company[]>(
-    `/admin-api/companies/`,
-    getData
-  );
+  const { data, isLoading, error } = useSWR<Company[]>(`/admin-api/companies/`, getData);
   if (isLoading) return <Loading />;
   if (error) return <NotFound404 />;
   if (data) {
@@ -54,10 +50,7 @@ export const AdminPage = observer(() => {
   return (
     <>
       {vm.isModalVisible && (
-        <ModalWrapper
-          offSet={window.scrollY}
-          onClick={vm.changeModalVisibility}
-        >
+        <ModalWrapper offSet={window.scrollY} onClick={vm.changeModalVisibility}>
           {vm.CurentModal}
         </ModalWrapper>
       )}

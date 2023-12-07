@@ -55,6 +55,7 @@ export const AddQuestionVm = new (class {
   };
 
   createQuestion = async () => {
+    console.log(this._question)
     await postQuestion("/admin-api/create-question/", this._question)
       .then((r) => console.log(r))
       .catch((err) => console.log(err));

@@ -14,7 +14,7 @@ interface NewUserProps {
   vm: typeof AdminPageVm;
 }
 export const NewUser: FC<NewUserProps> = observer((x) => {
-  const vm = NewUserVm;
+  const vm = new NewUserVm;
 
   return (
     <>
@@ -47,13 +47,15 @@ export const NewUser: FC<NewUserProps> = observer((x) => {
       />
       <Label>
         Начало обучения
-        <ModalInput type="date" />
+        <ModalInput type="date"
+                    onChange={(e) => vm.onStartChange(e.target.value)}
+        />
       </Label>
       <Label>
         Конец обучения
         <ModalInput
           type="date"
-          onChange={(e) => console.log(typeof e.target.value, e.target.value)}
+          onChange={(e) => vm.onEndChange(e.target.value)}
         />
       </Label>
       <CompaniesSelect
@@ -61,7 +63,11 @@ export const NewUser: FC<NewUserProps> = observer((x) => {
         setCompany={vm.onCompanyChange}
       />
 
-      <Button width={160} onClick={vm.createUser} size={16} primary>
+      <Button width={160} onClick={()=>{
+          vm.createUser()
+          x.vm.closeModal()
+
+      }} size={16} primary>
         Добавить
       </Button>
     </>

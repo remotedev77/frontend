@@ -52,8 +52,8 @@ export const UserInfoModal: FC<UserInfoProps> = observer((x) => {
     <>
       <Confirm
         onConfirm={() => {
-          x.admin.isModalVisible = false;
-          x.vm.deleteUser(x.user.id);
+            x.vm.deleteUser(x.user.id).then(() => x.admin.closeModal());
+
         }}
       />
       <ModalTitle size={20} align="left">

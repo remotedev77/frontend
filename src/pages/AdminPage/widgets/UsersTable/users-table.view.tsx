@@ -2,9 +2,9 @@ import { observer } from "mobx-react";
 import { AdminPageVm } from "../../admin-page.vm.ts";
 import { FC, useEffect } from "react";
 import styled from "@emotion/styled";
-import { getData } from "../../../../api/apis.ts";
+import { getData } from "@/api/apis.ts";
 import {
-  Cell,
+  Cell, Dropdown,
   MainFilterControlls,
   Row,
   SubFilters,
@@ -20,10 +20,12 @@ import {
 import useSWRInfinite from "swr/infinite";
 import { DataFormat, UserTableVm } from "./user-table.vm.ts";
 
+
 interface UsersTableProps {
   vm: typeof AdminPageVm;
 }
 export const UsersTable: FC<UsersTableProps> = observer((x) => {
+
   const vm = UserTableVm;
   const getKey = (pageIndex: number, previousPageData: DataFormat) => {
     if (previousPageData && !previousPageData.results.length) return null;
@@ -51,7 +53,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
           <SearchBar
             placeholder="Поиск по ФИО"
             onSearchChange={vm.onSearchChange}
-            onSearch={() => vm.searchingUsers(data)}
+            onSearch={() => vm.filter(data)}
           />
           <AddButton
             type="button"
@@ -63,7 +65,7 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
           </AddButton>
           <FilterButton
             onClick={() => {
-              x.vm.CurrentModal = <CsvModal companies={x.vm.companies} />;
+              x.vm.CurrentModal = <CsvModal  companies={x.vm.companies} />;
             }}
           >
             Добавить через .XLSX
@@ -73,9 +75,6 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
               const link = document.createElement("a");
               link.href = `src/pages/AdminPage/widgets/QuestionTable/csv/example.csv`;
               link.download = "example.csv";
-              link.click();
-              link.href = `src/pages/AdminPage/widgets/QuestionTable/csv/type.csv`;
-              link.download = "type.csv";
               link.click();
             }}
           >
@@ -98,18 +97,32 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
               />
             </svg>
           </div>
-          <FilterButton
-            onClick={vm.sortByOrganisation}
-            style={{ marginLeft: "50px" }}
-          >
-            Организация
-          </FilterButton>
-          <FilterButton
-            onClick={vm.sortByFinalTest}
-            style={{ marginLeft: "50px" }}
-          >
-            Аттестация
-          </FilterButton>
+
+          <Dropdown onOptionChange={vm.setFilterOrganization}
+                    filter={()=>vm.filter(data)}
+                    placeholder="Организация"
+                    options={
+                      x.vm.companies.map(c =>{
+                        return {value:c.company_name, key:c.company_name}
+                      })
+                    }
+          />
+          <Dropdown onOptionChange={vm.setFilterAccess}
+                    filter={()=>vm.filter(data)}
+                    placeholder="Аттестация"
+                    options={
+                      [
+                        {
+                          value:"сдана",
+                          key:"сдана"
+                        },
+                        {
+                          value:"не сдана",
+                          key:"не сдана"
+                        }
+                      ]
+                    }
+          />
         </SubFilters>
       </FilterSectionContainer>
     );
@@ -158,8 +171,9 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
               </Cell>
               <Cell>
                 {
-                  x.vm.companies.find((c) => c.id === u.organization)
-                    ?.company_name
+                  u.organization
+                  // x.vm.companies.find((c) => c.id === u.organization)
+                  //   ?.company_name
                 }
               </Cell>
               <Cell>{u.access}</Cell>
@@ -169,7 +183,6 @@ export const UsersTable: FC<UsersTableProps> = observer((x) => {
       </>
     );
   });
-  console.log(MappedInfo);
 
   return (
     <Container>

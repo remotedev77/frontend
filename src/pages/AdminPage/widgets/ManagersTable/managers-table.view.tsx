@@ -33,7 +33,7 @@ export const ManagersTable: FC<UsersTableProps> = observer((x) => {
           <SearchBar
             placeholder="Поиск по ФИО"
             onSearchChange={vm.onSearchChange}
-            onSearch={() => {}}
+            onSearch={() => vm.searchingUsers(data)}
           />
           <AddButton
             type="button"

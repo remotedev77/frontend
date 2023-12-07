@@ -28,7 +28,29 @@ export interface DataFormat{
 }
 export const QuestionTableVm = new class{
     private _questions:Question[] = []
-    private isSortedByType = false
+    private _filterNote: string|null = null
+    private _searchString: string = ""
+
+    onSearchChange = (value:string) =>{
+        this._searchString = value
+    }
+    get searchString(){
+        return this._searchString
+    }
+
+    setFilterNote = (note:string|null) =>{
+        this._filterNote = note
+    }
+
+    filter(data:DataFormat[]){
+        this.setQuestions(data)
+        console.log(this._filterNote)
+        this._questions = this._questions.filter(question => ((this.searchString.trim() === "" || (
+                question.question.toLowerCase().includes(this.searchString.toLowerCase()) ||
+                question.question_code.toString().includes(this.searchString))) &&
+            (this._filterNote === null || question.note === this._filterNote)
+        ))
+    }
     setQuestions(data:DataFormat[]){
         this._questions = []
         data.map(d=> this._questions = [...this._questions, ...d.results] )
@@ -37,14 +59,6 @@ export const QuestionTableVm = new class{
         return this._questions
     }
 
-    sortByType = () =>{
-        if (this.isSortedByType) {
-            this._questions.sort((a,b) => a.note.localeCompare(b.note))
-        }else {
-            this._questions.sort((a,b) => b.note.localeCompare(a.note))
-        }
-        this.isSortedByType = !this.isSortedByType
-    }
 
     onDeleteQuestion = async (id:number) =>{
        await deleteById('/admin-api/chage-question/', id)

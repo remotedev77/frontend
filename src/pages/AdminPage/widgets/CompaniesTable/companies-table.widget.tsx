@@ -26,14 +26,15 @@ interface CompaniesTableProps {
 }
 export const CompaniesTable: FC<CompaniesTableProps> = observer((x) => {
   const vm = CompaniesTableVm;
+  vm.setCompanies(x.vm.companies)
   const Filters = observer(() => {
     return (
       <FilterSectionContainer>
         <MainFilterControlls>
           <SearchBar
             placeholder="Поиск"
-            onSearchChange={() => {}}
-            onSearch={() => {}}
+            onSearchChange={vm.onSearchChange}
+            onSearch={() => vm.filter(x.vm.companies)}
           />
           <AddButton
             type="button"
@@ -57,7 +58,7 @@ export const CompaniesTable: FC<CompaniesTableProps> = observer((x) => {
   const MappedInfo = observer(() => {
     return (
       <>
-        {x.vm.companies.map((c, i) => (
+        {vm.getCompanies().map((c, i) => (
           <Row
             key={i}
             onClick={() =>
