@@ -11,7 +11,7 @@ import {
 } from "@/components/Modals/modal-wrapper.tsx";
 import { Button } from "@/components";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
-import { FC, useState } from "react";
+import { FC, Key, useState } from "react";
 import { EditQuestionVm } from "./edit-question.vm.ts";
 import styled from "@emotion/styled";
 
@@ -21,7 +21,7 @@ interface EditQuestionProps {
 }
 export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
   const vm = EditQuestionVm;
-  vm.setQuestion(x.question);
+  vm?.setQuestion(x.question);
   const [isConfirming, setIsConfirming] = useState(false);
   interface ConfirmProps {
     onConfirm: () => void;
@@ -70,20 +70,25 @@ export const EditQuestion: FC<EditQuestionProps> = observer((x) => {
     `;
     return (
       <Wrapper>
-        {vm?.answers?.map((a, i) => (
-          <Container key={a.id}>
-            <Radio
-              type="radio"
-              checked={a.is_correct}
-              onChange={(e) => vm.onAnswersChange(a?.id || 0, e.target.checked)}
-            />
-            <ModalInput
-              placeholder={a.answer}
-              onBlur={(e) => vm.onAnswerValueChange(e.target.value, i)}
-              style={{ height: "35px", width: "400px", fontSize: "12px" }}
-            />
-          </Container>
-        ))}
+        {vm?.answers?.map(
+          (
+            a: { id: Key | null | undefined; is_correct: boolean | undefined; answer: string | undefined },
+            i: unknown,
+          ) => (
+            <Container key={a.id}>
+              <Radio
+                type="radio"
+                checked={a.is_correct}
+                onChange={(e) => vm.onAnswersChange(a?.id || 0, e.target.checked)}
+              />
+              <ModalInput
+                placeholder={a.answer}
+                onBlur={(e) => vm.onAnswerValueChange(e.target.value, i)}
+                style={{ height: "35px", width: "400px", fontSize: "12px" }}
+              />
+            </Container>
+          ),
+        )}
         <AddButton onClick={vm.addAnswer}>Добавить вариант ответа</AddButton>
       </Wrapper>
     );

@@ -16,7 +16,7 @@ interface UsersTableProps {
 export const ManagersTable: FC<UsersTableProps> = observer((x) => {
   const vm = ManagersTableVm;
 
-  const { data } = useSWR<Manager[]>("/admin-api/managers", getData);
+  const { data } = useSWR<Manager[]>("/managers/", getData);
   if (!data) return "loading";
   vm.setManagers(data);
   console.log(data);
@@ -39,8 +39,7 @@ export const ManagersTable: FC<UsersTableProps> = observer((x) => {
             type="button"
             onClick={() => {
               x.vm.CurrentModal = <NewManager vm={x.vm} />;
-            }}
-          >
+            }}>
             Добавить сотрудника
           </AddButton>
         </MainFilterControlls>
@@ -59,14 +58,7 @@ export const ManagersTable: FC<UsersTableProps> = observer((x) => {
         {" "}
         {vm.getManagers().map((m, i) => {
           return (
-            <Row
-              key={i}
-              onClick={() =>
-                (x.vm.CurrentModal = (
-                  <ManagerInfoModal vm={vm} admin={x.vm} manager={m} />
-                ))
-              }
-            >
+            <Row key={i} onClick={() => (x.vm.CurrentModal = <ManagerInfoModal vm={vm} admin={x.vm} manager={m} />)}>
               <Cell>{`${m.last_name} ${m.first_name} ${m.father_name}`}</Cell>
               <Cell>{m.email}</Cell>
               <Cell>{m.is_staff ? "Менеджер" : "Администратор"}</Cell>

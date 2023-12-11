@@ -12,12 +12,7 @@ export interface Company {
 
 export const AdminPageVm = new (class {
   private _tableTypes = ["users", "questions", "companies", "managers"];
-  private _translation = [
-    "Пользователи",
-    "Вопросы",
-    "Организации",
-    "Менеджеры",
-  ];
+  private _translation = ["Пользователи", "Вопросы", "Организации", "Менеджеры"];
   private _currentModal: ReactNode;
   private _companies: Company[] = [];
   isModalVisible = false;
@@ -44,9 +39,9 @@ export const AdminPageVm = new (class {
   }
 
   closeModal = () => {
-    this.CurrentModal = undefined
-    this.isModalVisible = false
-}
+    this.CurrentModal = undefined;
+    this.isModalVisible = false;
+  };
 
   get CurentModal() {
     return this._currentModal;

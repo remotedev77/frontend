@@ -14,10 +14,7 @@ const { Exam } = lazily(() => import("./views"));
 
 export const ExamSimulator = observer(() => {
   const vm = ExamSimulatorVm;
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
-    "/app/get-questions/",
-    getData
-  );
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>("/app/get-questions/", getData);
 
   useEffect(() => {
     mutate();
@@ -28,12 +25,7 @@ export const ExamSimulator = observer(() => {
   if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
-    <QuizStart
-      Icon={DocsIcon}
-      title="Симулятор экзамена"
-      subtitle="Информация об экзамене"
-      vm={vm}
-    />
+    <QuizStart Icon={DocsIcon} title="Симулятор экзамена" subtitle="Информация об экзамене" vm={vm} />
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (

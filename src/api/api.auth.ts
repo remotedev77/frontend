@@ -1,13 +1,13 @@
 import { instance } from "./api.config.js";
 
 export const authService = {
-  getUserEndpoint: "/user/get-user/",
-  getAdminUserEndpoint: "/admin-api/get-user/",
+  getUserEndpoint: "/auth/user/",
+  getAdminUserEndpoint: "/auth/user/",
   login(email: string, password: string) {
-    return instance.post("/user/login/", { email, password });
+    return instance.post("/auth/login/", { email, password });
   },
   refreshToken(refresh: string) {
-    return instance.post("/user/token/refresh/", { refresh });
+    return instance.post("/auth/token/refresh/", { refresh });
   },
   async getUser() {
     return (await instance.get(authService.getUserEndpoint)).data;

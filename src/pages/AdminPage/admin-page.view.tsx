@@ -27,7 +27,7 @@ const RightContainer = styled.div`
 export const AdminPage = observer(() => {
   const vm = AdminPageVm;
 
-  const { data, isLoading, error } = useSWR<Company[]>(`/admin-api/companies/`, getData);
+  const { data, isLoading, error } = useSWR<Company[]>(`/companies/`, getData);
   if (isLoading) return <Loading />;
   if (error) return <NotFound404 />;
   if (data) {

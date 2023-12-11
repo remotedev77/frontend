@@ -7,7 +7,7 @@ const useGetStatistics = () => {
     data: statisticsData,
     isLoading: statisticsLoading,
     error: statisticsError,
-  } = useSWR<IStatistics>("/app/get-user-statistic/", getData);
+  } = useSWR<IStatistics>("/app/statistics/", getData);
   return { statisticsData, statisticsLoading, statisticsError };
 };
 

@@ -163,29 +163,23 @@ export const QuizResult = observer((x: QuizResultProps) => {
   const { userStore } = useContext(RootStoreContext);
   const examType = x.vm?.exam_type;
 
-  const { data, isMutating, trigger } = useSWRMutation<
-    AnswerResultDTO[],
-    unknown,
-    string,
-    AnswersArgs[]
-  >(
+  const { data, isMutating, trigger } = useSWRMutation<AnswerResultDTO[], unknown, string, AnswersArgs[]>(
     examType === ExamType.CATEGORY
       ? "app/check-category-question/"
       : examType === ExamType.FINAL_TEST
-      ? "app/check-final-tets/"
+      ? "app/check-final-test/"
       : examType === ExamType.SIMULATOR
-      ? "app/check-question/"
+      ? "app/check-simulation/"
       : examType === ExamType.MARATHON
-      ? "app/check-category-question/"
+      ? "app/check-marathon/"
       : "",
-    postData
+    postData,
   );
 
   useEffect(() => {
     trigger(x.vm.selectedAnswers);
 
-    x.vm.exam_type === ExamType.FINAL_TEST &&
-      userStore.setIsFinalExamPass(data?.[data.length - 1]?.success || false);
+    x.vm.exam_type === ExamType.FINAL_TEST && userStore.setIsFinalExamPass(data?.[data.length - 1]?.success || false);
     userStore.setIsExamPass(data?.[data.length - 1]?.success || false);
     // Button is displayed after scrolling for 500 pixels
     const toggleVisibility = () => {
@@ -232,48 +226,26 @@ export const QuizResult = observer((x: QuizResultProps) => {
               <div>
                 <Title>Вы завершили марафон!</Title>
                 <Description>
+                  <p>Правильных ответов: {x.vm.checkedAnswers.filter(({ isCorrect }) => isCorrect).length}</p>
                   <p>
-                    Правильных ответов:{" "}
-                    {
-                      x.vm.checkedAnswers.filter(({ isCorrect }) => isCorrect)
-                        .length
-                    }
-                  </p>
-                  <p>
-                    Неправильных ответов:{" "}
-                    {/*  data?.[data.length - 1]?.incorrect_answers_count */}
-                    {
-                      x.vm.checkedAnswers.filter(({ isCorrect }) => !isCorrect)
-                        .length
-                    }
+                    Неправильных ответов: {/*  data?.[data.length - 1]?.incorrect_answers_count */}
+                    {x.vm.checkedAnswers.filter(({ isCorrect }) => !isCorrect).length}
                   </p>
                 </Description>
               </div>
             ) : x.vm.exam_type === ExamType.CATEGORY ? (
               <div>
                 <Title>{x.title}</Title>
-                <Description>
-                  Правильных ответов:{" "}
-                  {data?.[data.length - 1]?.correct_answers_count}
-                </Description>
+                <Description>Правильных ответов: {data?.[data.length - 1]?.correct_answers_count}</Description>
               </div>
             ) : (
               <div>
-                <Title>
-                  {userStore.isExamPassed ? "Экзамен сдан" : "Экзамен не сдан"}
-                </Title>
-                <Description>
-                  Правильных ответов:{" "}
-                  {data?.[data.length - 1]?.correct_answers_count}
-                </Description>
+                <Title>{userStore.isExamPassed ? "Экзамен сдан" : "Экзамен не сдан"}</Title>
+                <Description>Правильных ответов: {data?.[data.length - 1]?.correct_answers_count}</Description>
               </div>
             )}
 
-            <x.Icon
-              className={
-                x.vm.exam_type === ExamType.MARATHON ? "iconMarathone" : "icon"
-              }
-            />
+            <x.Icon className={x.vm.exam_type === ExamType.MARATHON ? "iconMarathone" : "icon"} />
 
             <ButtonSection>
               <Button primary onClick={handleStartQuiz}>
@@ -286,14 +258,10 @@ export const QuizResult = observer((x: QuizResultProps) => {
 
         <ResultContainer>
           {x.vm.exam_type === ExamType.MARATHON && !data
-            ? x.vm.answerResults?.map((result, index) => (
-                <Accordion key={index} {...result} index={index + 1} />
-              ))
+            ? x.vm.answerResults?.map((result, index) => <Accordion key={index} {...result} index={index + 1} />)
             : data
                 ?.slice(0, data?.length - 1)
-                ?.map((result, index) => (
-                  <Accordion key={index} {...result} index={index + 1} />
-                ))}
+                ?.map((result, index) => <Accordion key={index} {...result} index={index + 1} />)}
         </ResultContainer>
       </Wrapper>
 
@@ -306,13 +274,8 @@ export const QuizResult = observer((x: QuizResultProps) => {
             strokeWidth="1.5"
             stroke="#ffffff"
             width={30}
-            height={30}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
-            />
+            height={30}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75" />
           </svg>
         </ScrollToTop>
       )}

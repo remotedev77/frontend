@@ -1,8 +1,37 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { makeAutoObservable } from "mobx";
 import { Question } from "../../../QuestionTable/question-table.vm.ts";
 import { deleteById, updateAnswer, updateQuestion } from "../../../../../../api/apis.ts";
+import { MouseEventHandler } from "react";
 
 export class EditQuestionVm {
+  static setQuestion(_question: Question) {
+    throw new Error("Method not implemented.");
+  }
+  static onAnswersChange(_arg0: unknown, _checked: boolean): void {
+    throw new Error("Method not implemented.");
+  }
+  static onAnswerValueChange(_value: string, _i: unknown): void {
+    throw new Error("Method not implemented.");
+  }
+  static deleteQuestion() {
+    throw new Error("Method not implemented.");
+  }
+  static onNoteChange(_accessKey: string): void {
+    throw new Error("Method not implemented.");
+  }
+  static onQuestionChange(_value: string): void {
+    throw new Error("Method not implemented.");
+  }
+  static onWorkFunctionChange(_value: string): void {
+    throw new Error("Method not implemented.");
+  }
+  static onDescriptionChange(_value: string): void {
+    throw new Error("Method not implemented.");
+  }
+  static editQuestion() {
+    throw new Error("Method not implemented.");
+  }
   private _question: Question = {
     id: 0,
     question: "",
@@ -17,6 +46,10 @@ export class EditQuestionVm {
   setQuestion = (question: Question) => {
     this._question = question;
   };
+  static answers: [];
+  static addAnswer: MouseEventHandler<HTMLButtonElement> | undefined;
+  static isModalVisible: boolean;
+  static questionValue: string | number | readonly string[] | undefined;
 
   get answers() {
     return this._question.answers;

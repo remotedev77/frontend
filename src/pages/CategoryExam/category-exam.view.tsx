@@ -45,7 +45,7 @@ export const CategoryExam = observer(() => {
 
   const { data, isLoading, error } = useSWRImmutable<QuestionDTO[]>(
     state ? `app/get-category-question/${state}/` : null,
-    getData
+    getData,
   );
 
   useEffect(() => {
@@ -57,12 +57,7 @@ export const CategoryExam = observer(() => {
   if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
-    <QuizStart
-      Icon={getIcons(state).icon}
-      title={`«${state}»`}
-      subtitle={getIcons(state).desc}
-      vm={vm}
-    />
+    <QuizStart Icon={getIcons(state).icon} title={`«${state}»`} subtitle={getIcons(state).desc} vm={vm} />
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (

@@ -15,10 +15,7 @@ const { Exam } = lazily(() => import("./views"));
 
 export const Marathon = observer(() => {
   const vm = MarathonVm;
-  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>(
-    "/app/get-questions/",
-    getData
-  );
+  const { data, isLoading, error, mutate } = useSWRImmutable<QuestionDTO[]>("/app/get-questions/", getData);
 
   // const { trigger } = useSWRMutation<
   //   AnswerResultDTO[],
@@ -50,12 +47,7 @@ export const Marathon = observer(() => {
   if (error) return <NotFound404 />;
 
   return vm.sessionStatus === SessionStatus.WAIT ? (
-    <QuizStart
-      Icon={Cards}
-      title="Марафон"
-      subtitle="Бесконечный поток вопросов...."
-      vm={vm}
-    />
+    <QuizStart Icon={Cards} title="Марафон" subtitle="Бесконечный поток вопросов...." vm={vm} />
   ) : vm.sessionStatus === SessionStatus.START ? (
     <Exam />
   ) : vm.sessionStatus === SessionStatus.FINISH ? (

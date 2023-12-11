@@ -8,12 +8,10 @@ import {
   ModalTitle,
 } from "@/components/Modals/modal-wrapper.tsx";
 import { AdminPageVm } from "@/pages/AdminPage/admin-page.vm.ts";
-import {
-  Question,
-  QuestionTableVm,
-} from "../../../QuestionTable/question-table.vm.ts";
+import { Question, QuestionTableVm } from "../../../QuestionTable/question-table.vm.ts";
 import { Button } from "@/components";
 import { EditQuestion } from "../EditQuestion/edit-question.modal.tsx";
+import { EditQuestionVm } from "../EditQuestion/edit-question.vm.ts";
 
 interface UserInfoProps {
   question: Question;
@@ -29,12 +27,7 @@ export const QuestionInfo: FC<UserInfoProps> = observer((x) => {
     <ConfirmContainer style={{ display: isConfirming ? "flex" : "none" }}>
       <ModalTitle>Вы уверены, что хотите удалить вопрос?</ModalTitle>
       <ConfirmControlls>
-        <Button
-          width={160}
-          onClick={() => setIsConfirming(false)}
-          primary
-          size={16}
-        >
+        <Button width={160} onClick={() => setIsConfirming(false)} primary size={16}>
           Отменить
         </Button>
         <Button
@@ -43,8 +36,7 @@ export const QuestionInfo: FC<UserInfoProps> = observer((x) => {
             setIsConfirming(false);
           }}
           size={16}
-          width={160}
-        >
+          width={160}>
           Удалить
         </Button>
       </ConfirmControlls>
@@ -75,7 +67,7 @@ export const QuestionInfo: FC<UserInfoProps> = observer((x) => {
         onDelete={() => setIsConfirming(true)}
         onEdit={() => {
           x.admin.CurrentModal = (
-            <EditQuestion vm={x.admin} question={x.question} />
+            <EditQuestion vm={x.admin as unknown as typeof EditQuestionVm} question={x.question} />
           );
         }}
       />
