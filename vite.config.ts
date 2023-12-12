@@ -7,10 +7,6 @@ import path from "path";
 export default defineConfig({
   base: "/",
   plugins: [react(), svgr(), viteCompression()],
-  preview: {
-    port: 5173,
-    strictPort: true,
-  },
   server: {
     port: 3000,
     strictPort: true,
