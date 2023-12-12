@@ -12,4 +12,4 @@ RUN bunx --bun vite build
 
 EXPOSE 3000
 
-CMD [ "bunx", "--bun", "vite", "serve" ]
+CMD [ "bun", "serve", "-s", "dist" ]
