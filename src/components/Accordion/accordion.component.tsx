@@ -84,13 +84,7 @@ const Badge = styled.div<{ $type: boolean | undefined }>`
   width: fit-content;
   border-radius: 90px;
   background: ${(props) =>
-    props.$type === undefined
-      ? "#ffffff"
-      : props.$type === null
-      ? "#FFC42E"
-      : props.$type
-      ? "#6ACB00"
-      : "#f87063"};
+    props.$type === undefined ? "#ffffff" : props.$type === null ? "#FFC42E" : props.$type ? "#6ACB00" : "#f87063"};
   box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.15);
 
   color: ${(props) => (props.$type === undefined ? "#141414" : "#ffffff")};
@@ -134,13 +128,7 @@ export const Accordion = observer((x: AccordionProps) => {
         </AccordionContent>
 
         <TriggerButton isOpen={isOpen} onClick={handleTriggerBtn}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="17"
-            height="10"
-            viewBox="0 0 17 10"
-            fill="none"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="10" viewBox="0 0 17 10" fill="none">
             <path
               d="M9.2686 9.69448L16.5385 1.97992C16.6598 1.8512 16.7275 1.68018 16.7275 1.50234C16.7275 1.32451 16.6598 1.15349 16.5385 1.02477L16.5303 1.01646C16.4714 0.953847 16.4006 0.903986 16.3221 0.869914C16.2436 0.835841 16.1591 0.818271 16.0737 0.818271C15.9882 0.818271 15.9037 0.835841 15.8252 0.869914C15.7467 0.903986 15.6759 0.953847 15.6171 1.01646L8.77162 8.28113L1.92891 1.01646C1.87008 0.953846 1.79926 0.903985 1.72076 0.869913C1.64227 0.83584 1.55774 0.818269 1.47232 0.818269C1.3869 0.818269 1.30237 0.83584 1.22388 0.869913C1.14538 0.903985 1.07456 0.953846 1.01573 1.01646L1.00751 1.02477C0.886151 1.15349 0.818448 1.3245 0.818448 1.50234C0.818448 1.68018 0.886151 1.8512 1.00751 1.97992L8.27738 9.69448C8.34132 9.76232 8.41821 9.81634 8.5034 9.85324C8.58859 9.89015 8.68031 9.90918 8.77299 9.90918C8.86568 9.90918 8.95739 9.89015 9.04259 9.85324C9.12778 9.81634 9.20467 9.76232 9.2686 9.69448Z"
               fill="white"

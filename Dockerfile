@@ -1,20 +1,15 @@
-FROM node:20-alpine
+FROM oven/bun:1 as base
 
 WORKDIR /app
 
 COPY package.json .
-COPY yarn.lock .
 
-RUN yarn install
-
-RUN yarn add serve -g
-
-RUN yarn
+RUN bun install
 
 COPY . .
 
-RUN yarn build
+RUN bunx --bun vite build
 
 EXPOSE 3000
 
-CMD [ "yarn", "serve", "-s", "dist" ]
+CMD [ "bunx", "--bun", "vite", "serve" ]
