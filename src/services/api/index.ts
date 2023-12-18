@@ -1,0 +1,36 @@
+import axios from "axios";
+import useAuthStore from "../state/authStore";
+
+const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+
+const instance = axios.create({
+  baseURL: apiEndpoint,
+});
+
+instance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    config.headers.Authorization = accessToken;
+  }
+  return config;
+});
+
+instance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    const status = error.response ? error.response.status : null;
+
+    if ((status === 401 || status === 403) && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const accessToken = await useAuthStore.getState().getNewAccessToken();
+      instance.defaults.headers.Authorization = accessToken;
+      return instance(originalRequest);
+    }
+
+    originalRequest._retry && useAuthStore.getState().signOut();
+    return Promise.reject(error);
+  }
+);
+
+export { instance };

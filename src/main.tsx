@@ -1,7 +1,17 @@
+import { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { lazy } from "react";
-// eslint-disable-next-line react-refresh/only-export-components
-const App = lazy(() => import("@/app.view.tsx"));
+import { lazily } from "react-lazily";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+const { App } = lazily(() => import("./App"));
+
+import useAuthStore from "./services/state/authStore";
+
+import "./index.css";
+
+useAuthStore.getState().currentUser();
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <Suspense>
+    <App />
+  </Suspense>
+);
