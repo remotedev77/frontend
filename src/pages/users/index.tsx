@@ -9,17 +9,18 @@ import { columns } from "./components/columns";
 
 import useUserStore from "@/services/state/usersStore";
 import { useGetUsers } from "./hooks/useGetUsers";
-import { FilterForm, FilterFormSchema, User } from "./models";
+import { User } from "./models";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Filters from "./components/filters";
+import { FilterParams } from "@/common/types";
 
 const Users = () => {
-  const filterForm = useForm<FilterForm>({ resolver: zodResolver(FilterFormSchema) });
+  const filterForm = useForm<FilterParams>();
   const { setMutate, setDetailsDialogOpen, setUserDetails } = useUserStore();
 
   const { data, isLoading, isValidating, error, mutate, pagination } = useGetUsers(filterForm.watch());
 
+  console.log(filterForm.watch());
   const handleUserDetail = (userData: User) => {
     setUserDetails(userData);
     setDetailsDialogOpen();
@@ -35,7 +36,8 @@ const Users = () => {
     <div className="space-y-4">
       <UserDetails />
       <TableHeader
-        searchProps={{ placeholder: "Поиск по ФИО", ...filterForm.control.register("search") }}
+        searchProps={{ placeholder: "Поиск по ФИО" }}
+        searchControl={filterForm.control}
         CreateDialog={CreateUser}
         UploadDialog={UploadUsers}
         downloadLink={"/excel/Users-Template.xlsx"}

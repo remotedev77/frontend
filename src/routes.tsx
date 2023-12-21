@@ -8,7 +8,8 @@ const { SignIn } = lazily(() => import("./pages/sign-in"));
 const { Admin } = lazily(() => import("./pages/admin"));
 const { Users } = lazily(() => import("./pages/users"));
 const { Questions } = lazily(() => import("./pages/questions"));
-
+const { Companies } = lazily(() => import("./pages/companies"));
+const { Managers } = lazily(() => import("./pages/managers"));
 /*
     Not Found
     Login --> 
@@ -45,6 +46,9 @@ const router = createBrowserRouter(
           <Route path="admin" element={<Admin />}>
             <Route index element={<Users />} />
             <Route path="questions" element={<Questions />} />
+            <Route path="companies" element={<Companies />} />
+            <Route path="managers" element={<Managers />} />
+
             {/* user?.role === Role.Manager */}
           </Route>
         </Route>

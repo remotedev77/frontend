@@ -13,7 +13,7 @@ const Header = () => {
     navigate("/login");
   };
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-between w-full h-10 px-3 text-lg font-semibold bg-white shadow-md select-none lg:text-xl lg:h-14 lg:px-6">
+    <div className="sticky top-0 z-50 flex items-center justify-between w-full h-10 px-3 text-lg font-semibold bg-white shadow-md select-none lg:text-xl lg:h-14 lg:px-6">
       <h1>Тренажер НОК</h1>
       <button className="group" onClick={handleSignOut}>
         Выйти

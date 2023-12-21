@@ -9,7 +9,7 @@ import { Button } from "@/common/components/ui/button";
 import { Checkbox } from "@/common/components/ui/checkbox";
 import { useToast } from "@/common/components/ui/use-toast";
 
-import { toastMessages } from "@/common/lib/utils";
+import { notes, toastMessages } from "@/common/lib/utils";
 
 import useQuestionStore from "@/services/state/questionsStore";
 import { questionsEndpoints } from "@/services/api/endpoints";
@@ -73,10 +73,7 @@ const CreateForm = () => {
                       <SelectValue placeholder="Выбирать" />
                     </SelectTrigger>
                     <SelectContent>
-                      {[
-                        { name: "Одиночный", value: Note.Single },
-                        { name: "Множественный", value: Note.Multiple },
-                      ]?.map(({ name, value }) => (
+                      {notes?.map(({ name, value }) => (
                         <SelectItem key={value} value={value}>
                           {name}
                         </SelectItem>

@@ -99,35 +99,5 @@ interface IStatistics {
   category_counts: ICategoryCount[];
 }
 
-const FilterFormSchema = z.object({
-  search: z.string().optional(),
-  organization: z.string().optional(),
-  certification: z.string().optional(),
-  start_date: z
-    .object({
-      from: z.string().optional(),
-      to: z.string().optional(),
-    })
-    .optional(),
-  end_date: z
-    .object({
-      from: z.string().optional(),
-      to: z.string().optional(),
-    })
-    .optional(),
-});
-
-type FilterForm = z.infer<typeof FilterFormSchema>;
-
-export type {
-  User,
-  CreateUser,
-  UpdateUser,
-  UploadUser,
-  AccessorKeys,
-  ICategoryCount,
-  IStatistic,
-  IStatistics,
-  FilterForm,
-};
-export { TestResult, Access, Categories, CreateUserSchema, UploadUserSchema, FilterFormSchema };
+export type { User, CreateUser, UpdateUser, UploadUser, AccessorKeys, ICategoryCount, IStatistic, IStatistics };
+export { TestResult, Access, Categories, CreateUserSchema, UploadUserSchema };

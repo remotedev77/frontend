@@ -1,8 +1,9 @@
 import useGetDataWithPagination from "@/common/hooks/useGetDataWithPagination";
-import { FilterForm, User } from "../models";
+import { User } from "../models";
 import { usersEndpoints } from "@/services/api/endpoints";
+import { FilterParams } from "@/common/types";
 
-type UseGetUsersProps = FilterForm;
+type UseGetUsersProps = FilterParams;
 
 const useGetUsers = (params?: UseGetUsersProps) => {
   return useGetDataWithPagination<User>(usersEndpoints.search(params));

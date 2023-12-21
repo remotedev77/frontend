@@ -2,10 +2,10 @@ import useSWR from "swr";
 
 import { companiesEndpoints } from "@/services/api/endpoints";
 import { getData } from "@/services/api/requests";
-import { Companies } from "../models";
+import { Company } from "../models";
 
 const useGetAllCompanies = () => {
-  return useSWR<Companies[]>(companiesEndpoints.base, getData);
+  return useSWR<Company[]>(companiesEndpoints.base, getData);
 };
 
 export { useGetAllCompanies };

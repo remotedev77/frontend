@@ -1,4 +1,4 @@
-import { Params } from "@/common/types";
+import { FilterParams } from "@/common/types";
 
 const authEndpoints = {
   signIn: "auth/login/",
@@ -11,7 +11,7 @@ const usersEndpoints = {
   byId: (id: number) => `users/${id}/`,
   uploadFile: "users/upload-csv-user-file/",
   statistics: (id: number) => `users/statistics/${id}/`,
-  search: (params?: Params) =>
+  search: (params?: FilterParams) =>
     `users?${
       params
         ? Object.entries(params)
@@ -24,12 +24,40 @@ const usersEndpoints = {
 const companiesEndpoints = {
   base: "companies/",
   byId: (id: number) => `companies/${id}/`,
+  search: (params?: FilterParams) =>
+    `companies?${
+      params
+        ? Object.entries(params)
+            .map(([key, value]) => (value ? `${key}=${value}&` : ""))
+            .join("")
+        : ""
+    }`,
 };
 
 const questionsEndpoints = {
   base: "questions/",
   byId: (id: number) => `questions/${id}/`,
   uploadFile: "questions/upload-csv-question-file",
+  search: (params?: FilterParams) =>
+    `questions?${
+      params
+        ? Object.entries(params)
+            .map(([key, value]) => (value ? `${key}=${value}&` : ""))
+            .join("")
+        : ""
+    }`,
+};
+const managersEndpoints = {
+  base: "managers/",
+  byId: (id: number) => `managers/${id}/`,
+  search: (params?: FilterParams) =>
+    `managers?${
+      params
+        ? Object.entries(params)
+            .map(([key, value]) => (value ? `${key}=${value}&` : ""))
+            .join("")
+        : ""
+    }`,
 };
 
-export { authEndpoints, usersEndpoints, companiesEndpoints, questionsEndpoints };
+export { authEndpoints, usersEndpoints, companiesEndpoints, questionsEndpoints, managersEndpoints };

@@ -1,3 +1,6 @@
+import { Note } from "@/pages/questions/models";
+import { Role } from "@/pages/users/models";
+
 interface DataWithPagination<T = unknown> {
   count: number;
   total_pages: number;
@@ -18,12 +21,14 @@ type PaginationModel = {
   hasPreviousPage: boolean;
 };
 
-type Params = {
+type FilterParams = {
   search?: string;
   organization?: string;
   certification?: string;
-  start_Date?: { from?: string; to?: string };
-  end_Date?: { from?: string; to?: string };
+  start_date?: { from?: string; to?: string };
+  end_date?: { from?: string; to?: string };
+  note?: Note;
+  role?: Role;
 };
 
-export type { DataWithPagination, PaginationModel, Params };
+export type { DataWithPagination, PaginationModel, FilterParams };

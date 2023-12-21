@@ -15,7 +15,7 @@ const links = [
     name: "Вопросы",
     isPrivate: false,
   },
-  { link: "organizations", name: "Организации", isPrivate: true },
+  { link: "companies", name: "Организации", isPrivate: true },
   { link: "managers", name: "Менеджеры", isPrivate: true },
 ];
 
@@ -23,7 +23,7 @@ const Sidebar = () => {
   const { pathname } = useLocation();
   const { user } = useAuthStore();
   return (
-    <div className="sticky h-full min-h-[calc(100dvh-57px)] max-w-[240px] top-10 lg:top-14 flex flex-col justify-between items-center py-8 w-full shadow-md">
+    <div className="sticky h-full min-h-[calc(100vh-57px)] max-w-[240px] top-10 lg:top-14 flex flex-col justify-between items-center py-8 w-full shadow-md">
       <ul className="flex flex-col items-center w-full gap-4">
         {links
           .filter(({ isPrivate }) => user?.role === Role.Admin || !isPrivate)

@@ -9,12 +9,12 @@ import { Command, CommandEmpty, CommandGroup, CommandItem } from "@/common/compo
 import { CalendarIcon, CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn, testResult } from "@/common/lib/utils";
 import { format } from "date-fns";
-import { FilterForm } from "../models";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
+import { FilterParams } from "@/common/types";
 
-type Filters = { form: UseFormReturn<FilterForm, unknown, undefined> };
+type Filters = { form: UseFormReturn<FilterParams, unknown, undefined> };
 
 const Filters = ({ form }: Filters) => {
   const [startDate, setStartDate] = useState<DateRange | undefined>();

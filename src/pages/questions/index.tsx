@@ -10,10 +10,14 @@ import { useGetQuestions } from "./hooks/useGetQuestions";
 import { Question } from "./models";
 import { UploadQuestions } from "./components/upload/upload-questions";
 import { QuestionDetails } from "./components/question-details";
+import { useForm } from "react-hook-form";
+import { FilterParams } from "@/common/types";
+import Filters from "./components/filters";
 
 const Questions = () => {
+  const filterForm = useForm<FilterParams>();
   const { setMutate, setDetailsDialogOpen, setQuestionDetails } = useQuestionStore();
-  const { data, isLoading, isValidating, error, mutate, pagination } = useGetQuestions();
+  const { data, isLoading, isValidating, error, mutate, pagination } = useGetQuestions(filterForm.watch());
 
   const handleUserDetail = (userData: Question) => {
     setQuestionDetails(userData);
@@ -31,10 +35,12 @@ const Questions = () => {
       <QuestionDetails />
       <TableHeader
         searchProps={{ placeholder: "Поиск" }}
+        searchControl={filterForm.control}
         CreateDialog={CreateQuestion}
         UploadDialog={UploadQuestions}
         downloadLink={"/excel/Questions-Template.xlsx"}
       />
+      <Filters form={filterForm} />
       <DataTable
         columns={columns}
         data={data}

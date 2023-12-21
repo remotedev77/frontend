@@ -4,19 +4,22 @@ import { Search } from "../search";
 import { Button } from "../ui/button";
 
 import { DownloadIcon } from "@radix-ui/react-icons";
+import { Control } from "react-hook-form";
+import { FilterParams } from "@/common/types";
 
 type TableHeader = {
   searchProps: React.InputHTMLAttributes<HTMLInputElement>;
+  searchControl: Control<FilterParams, unknown>;
   CreateDialog?: () => JSX.Element;
   UploadDialog?: () => JSX.Element;
   downloadLink?: string;
 };
 
 const TableHeader = forwardRef<HTMLInputElement, TableHeader>(
-  ({ searchProps, CreateDialog, UploadDialog, downloadLink }, ref) => {
+  ({ searchProps, searchControl, CreateDialog, UploadDialog, downloadLink }, ref) => {
     return (
       <div className="flex gap-4">
-        <Search {...searchProps} ref={ref} />
+        <Search {...searchProps} control={searchControl} ref={ref} />
 
         {CreateDialog ? <CreateDialog /> : null}
 

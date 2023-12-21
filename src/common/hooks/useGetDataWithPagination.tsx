@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 
 const useGetDataWithPagination = <T = unknown,>(path: string) => {
   const [pageNum, setPageNum] = useState(1);
-  const { data, ...swr } = useSWRImmutable<DataWithPagination<T>>(path ? `${path}?page=${pageNum}` : null, getData, {
+  const { data, ...swr } = useSWRImmutable<DataWithPagination<T>>(path ? `${path}page=${pageNum}` : null, getData, {
     keepPreviousData: true,
   });
 
@@ -23,7 +23,7 @@ const useGetDataWithPagination = <T = unknown,>(path: string) => {
       swr.mutate();
     }
   }
-
+  console.log(data);
   return {
     data: data?.results || [],
     ...swr,

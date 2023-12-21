@@ -11,7 +11,7 @@ import { Checkbox } from "@/common/components/ui/checkbox";
 import { useToast } from "@/common/components/ui/use-toast";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { toastMessages } from "@/common/lib/utils";
+import { notes, toastMessages } from "@/common/lib/utils";
 import { putData } from "@/services/api/requests";
 import useQuestionStore from "@/services/state/questionsStore";
 import { questionsEndpoints } from "@/services/api/endpoints";
@@ -24,7 +24,7 @@ type UpdateFormProps = {
 const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   const { toast } = useToast();
 
-  const { mutate, setUpdateDialogOpen, questionDetails } = useQuestionStore();
+  const { mutate, setDetailsDialogOpen, questionDetails } = useQuestionStore();
 
   const { trigger: updateQuestion, isMutating } = useSWRMutation(
     questionDetails?.id ? questionsEndpoints.byId(questionDetails?.id) : null,
@@ -42,7 +42,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
       await updateQuestion(values);
       toast(toastMessages.success);
       mutate();
-      setUpdateDialogOpen();
+      setDetailsDialogOpen();
     } catch (error) {
       toast(toastMessages.error);
     }
@@ -71,10 +71,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                       <SelectValue placeholder="Выбирать" />
                     </SelectTrigger>
                     <SelectContent>
-                      {[
-                        { name: "Одиночный", value: Note.Single },
-                        { name: "Множественный", value: Note.Multiple },
-                      ]?.map(({ name, value }) => (
+                      {notes?.map(({ name, value }) => (
                         <SelectItem key={value} value={value}>
                           {name}
                         </SelectItem>
@@ -247,12 +244,12 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
         </div>
 
         <div className="flex items-center justify-between">
-          <Button variant={"outline"} onClick={() => handleEdit(false)}>
+          <Button type="button" variant={"outline"} onClick={() => handleEdit(false)}>
             Отмена
           </Button>
 
           <Button type="submit" disabled={isMutating || !form.formState.isValid}>
-            Добавить
+            Cохранить
           </Button>
         </div>
       </form>

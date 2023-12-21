@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ToastProps } from "../components/ui/toast";
 import { User, Role, Categories, IStatistic, TestResult } from "@/pages/users/models";
+import { Note } from "@/pages/questions/models";
 
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -35,4 +36,15 @@ const testResult = [
   { name: TestResult.Fail, value: false },
 ];
 
-export { cn, toastMessages, checkPermission, getConstantCategories, testResult };
+const notes = [
+  { name: "Одиночный", value: Note.Single },
+  { name: "Множественный", value: Note.Multiple },
+];
+
+const roles = [
+  { name: "Админ", value: Role.Admin },
+  { name: "Менеджер", value: Role.Manager },
+  { name: "Пользователь", value: Role.User },
+];
+
+export { cn, toastMessages, checkPermission, getConstantCategories, testResult, notes, roles };

@@ -1,37 +1,37 @@
 import { DataWithPagination } from "@/common/types";
-import { User } from "@/pages/users/models";
+import { Manager } from "@/pages/managers/models";
 import { KeyedMutator } from "swr";
 import { create } from "zustand";
 
 type State = {
-  userDetails: User | undefined;
-  mutate: KeyedMutator<DataWithPagination<User>>;
+  managerDetails: Manager | undefined;
+  mutate: KeyedMutator<DataWithPagination<Manager>>;
   createDialogOpen: boolean;
   uploadDialogOpen: boolean;
   detailsDialogOpen: boolean;
 };
 
 type Action = {
-  setUserDetails: (newUserDetail: User) => void;
-  setMutate: (newMutate: KeyedMutator<DataWithPagination<User>>) => void;
+  setManagerDetails: (newManagerDetail: Manager) => void;
+  setMutate: (newMutate: KeyedMutator<DataWithPagination<Manager>>) => void;
   setCreateDialogOpen: () => void;
   setUploadDialogOpen: () => void;
   setDetailsDialogOpen: () => void;
 };
 
-type UseUserStore = State & Action;
+type UseManagerStore = State & Action;
 
-const useUserStore = create<UseUserStore>((set) => ({
+const useManagerStore = create<UseManagerStore>((set) => ({
   mutate: async () => undefined,
-  userDetails: undefined,
+  managerDetails: undefined,
   createDialogOpen: false,
   uploadDialogOpen: false,
   detailsDialogOpen: false,
-  setUserDetails: (newUserDetail) => set({ userDetails: newUserDetail }),
+  setManagerDetails: (newManagerDetail) => set({ managerDetails: newManagerDetail }),
   setMutate: (newMutate) => set({ mutate: newMutate }),
   setCreateDialogOpen: () => set((state) => ({ createDialogOpen: !state.createDialogOpen })),
   setUploadDialogOpen: () => set((state) => ({ uploadDialogOpen: !state.uploadDialogOpen })),
   setDetailsDialogOpen: () => set((state) => ({ detailsDialogOpen: !state.detailsDialogOpen })),
 }));
 
-export default useUserStore;
+export default useManagerStore;
