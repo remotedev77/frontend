@@ -1,6 +1,7 @@
 import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import { lazily } from "react-lazily";
 import useAuthStore from "./services/state/authStore";
+import Main from "./pages/main";
 
 const { Persist } = lazily(() => import("./common/components/persist"));
 const { PrivateRoute } = lazily(() => import("./common/components/private-route"));
@@ -41,7 +42,7 @@ const router = createBrowserRouter(
       <Route path="*" />
       <Route element={<Persist />}>
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<>Hello</>} />
+          <Route path="/" element={<Main />} />
 
           <Route path="admin" element={<Admin />}>
             <Route index element={<Users />} />

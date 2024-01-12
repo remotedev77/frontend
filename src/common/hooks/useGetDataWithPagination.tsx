@@ -23,7 +23,6 @@ const useGetDataWithPagination = <T = unknown,>(path: string) => {
       swr.mutate();
     }
   }
-  console.log(data);
   return {
     data: data?.results || [],
     ...swr,

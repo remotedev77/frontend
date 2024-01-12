@@ -20,7 +20,6 @@ const Users = () => {
 
   const { data, isLoading, isValidating, error, mutate, pagination } = useGetUsers(filterForm.watch());
 
-  console.log(filterForm.watch());
   const handleUserDetail = (userData: User) => {
     setUserDetails(userData);
     setDetailsDialogOpen();

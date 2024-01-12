@@ -6,6 +6,10 @@ const authEndpoints = {
   currentUser: "auth/user/",
 };
 
+const appEndpoints = {
+  statistics: "app/statistics/",
+};
+
 const usersEndpoints = {
   base: "users/",
   byId: (id: number) => `users/${id}/`,
@@ -60,4 +64,4 @@ const managersEndpoints = {
     }`,
 };
 
-export { authEndpoints, usersEndpoints, companiesEndpoints, questionsEndpoints, managersEndpoints };
+export { authEndpoints, appEndpoints, usersEndpoints, companiesEndpoints, questionsEndpoints, managersEndpoints };

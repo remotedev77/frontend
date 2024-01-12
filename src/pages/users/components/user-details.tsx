@@ -21,7 +21,7 @@ import { Badge } from "@/common/components/ui/badge";
 const UserDetails = () => {
   const [onEdit, setOnEdit] = useState(false);
   const { detailsDialogOpen, setDetailsDialogOpen, userDetails } = useUserStore();
-  const { data: statistics } = useGetStatistics({ id: userDetails?.id });
+  const { data: statistics } = useGetStatistics(userDetails?.id);
   const handleEdit = (onEdit: boolean = true) => setOnEdit(onEdit);
   return (
     <Dialog

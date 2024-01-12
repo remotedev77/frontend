@@ -161,7 +161,6 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                                       is_correct: !currentAnswers?.[index].is_correct,
                                     });
                                     field.onChange(newValues);
-                                    console.log(currentAnswers);
                                   }}
                                   className="p-1.5 rounded-full appearance-none checked:bg-primary ring-offset-2 ring-1 ring-primary"
                                 />

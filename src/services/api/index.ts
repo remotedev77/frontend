@@ -21,14 +21,16 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
     const status = error.response ? error.response.status : null;
 
-    if ((status === 401 || status === 403) && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (status === 401 && error.response.statusText === "Unauthorized") {
       const accessToken = await useAuthStore.getState().getNewAccessToken();
-      instance.defaults.headers.Authorization = accessToken;
-      return instance(originalRequest);
-    }
 
-    originalRequest._retry && useAuthStore.getState().signOut();
+      if (accessToken) {
+        instance.defaults.headers.Authorization = accessToken;
+        return instance(originalRequest);
+      }
+
+      return useAuthStore.getState().signOut();
+    }
     return Promise.reject(error);
   }
 );
