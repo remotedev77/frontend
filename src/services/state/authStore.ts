@@ -33,7 +33,6 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     set({ isUserLoading: true });
     try {
       const currentUser = await getData(authEndpoints.currentUser);
-      console.log(currentUser);
       set({ user: currentUser });
       set({ isAuth: true });
     } catch (error) {
