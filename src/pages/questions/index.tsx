@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { CreateQuestion } from "./components/create/create-question";
 import { DataTable } from "@/common/components/ui/data-table";
@@ -15,7 +16,8 @@ import { FilterParams } from "@/common/types";
 import Filters from "./components/filters";
 
 const Questions = () => {
-  const filterForm = useForm<FilterParams>();
+  const { id } = useParams<{ id: string }>();
+  const filterForm = useForm<FilterParams>({ values: { direction_id: Number(id) } });
   const { setMutate, setDetailsDialogOpen, setQuestionDetails } = useQuestionStore();
   const { data, isLoading, isValidating, error, mutate, pagination } = useGetQuestions(filterForm.watch());
 

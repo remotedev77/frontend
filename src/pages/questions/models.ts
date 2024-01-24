@@ -20,6 +20,7 @@ interface Question {
   correct_answer_description: string;
   work_function: string;
   note: Note;
+  direction_type: number;
 }
 
 const CreateQuestionSchema = z.object({

@@ -11,6 +11,7 @@ const { Users } = lazily(() => import("./pages/users"));
 const { Questions } = lazily(() => import("./pages/questions"));
 const { Companies } = lazily(() => import("./pages/companies"));
 const { Managers } = lazily(() => import("./pages/managers"));
+const { ExamEntry } = lazily(() => import("./pages/exam-entry"));
 /*
     Not Found
     Login --> 
@@ -30,9 +31,9 @@ const { Managers } = lazily(() => import("./pages/managers"));
             Make-Mistake
             Do-Not-Know
 
-            Start
-            Exam
-            Result
+            Exam-Entry
+            Exam-Session
+            Exam-Result
 
 */
 
@@ -43,14 +44,15 @@ const router = createBrowserRouter(
       <Route element={<Persist />}>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Main />} />
+          <Route path="exam-entry/:exam-type" element={<ExamEntry />} />
 
           <Route path="admin" element={<Admin />}>
             <Route index element={<Users />} />
-            <Route path="questions" element={<Questions />} />
+            <Route path="questions/:id" element={<Questions />} />
             <Route path="companies" element={<Companies />} />
             <Route path="managers" element={<Managers />} />
 
-            {/* user?.role === Role.Manager */}
+            {/* user?.role  */}
           </Route>
         </Route>
       </Route>

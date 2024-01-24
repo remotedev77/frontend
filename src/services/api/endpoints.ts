@@ -63,5 +63,16 @@ const managersEndpoints = {
         : ""
     }`,
 };
+const directionsEndpoints = {
+  base: "directions/",
+};
 
-export { authEndpoints, appEndpoints, usersEndpoints, companiesEndpoints, questionsEndpoints, managersEndpoints };
+export {
+  authEndpoints,
+  appEndpoints,
+  usersEndpoints,
+  companiesEndpoints,
+  questionsEndpoints,
+  managersEndpoints,
+  directionsEndpoints,
+};

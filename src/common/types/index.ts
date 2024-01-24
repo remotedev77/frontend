@@ -23,6 +23,7 @@ type PaginationModel = {
 
 type FilterParams = {
   search?: string;
+  direction_id?: number;
   organization?: string;
   certification?: string;
   start_date?: { from?: string; to?: string };

@@ -10,7 +10,7 @@ import { FilterParams } from "@/common/types";
 
 type SearchProps = React.InputHTMLAttributes<HTMLInputElement> & { control: Control<FilterParams, unknown> };
 
-const Search = forwardRef<HTMLInputElement, SearchProps>(({ control, ...props }) => {
+const Search = forwardRef<HTMLInputElement, SearchProps>(({ control, ...props }, ref) => {
   const { field } = useController({ name: "search", control });
   const [inputValue, setInputValue] = useState("");
   const debouncedValue = useDebounce(inputValue, 1000);
@@ -26,7 +26,15 @@ const Search = forwardRef<HTMLInputElement, SearchProps>(({ control, ...props })
 
   return (
     <div className="relative flex items-center w-full max-w-sm mr-10">
-      <Input className="focus-visible:ring-0" {...props} onChange={handleChange} />
+      <Input
+        className="focus-visible:ring-0"
+        {...props}
+        onChange={(e) => {
+          props.onChange && props.onChange(e);
+          handleChange(e);
+        }}
+        ref={ref}
+      />
       <Button size="icon" className="absolute w-12 -right-10 bg-alternative">
         <MagnifyingGlassIcon className="w-6 h-6" />
       </Button>

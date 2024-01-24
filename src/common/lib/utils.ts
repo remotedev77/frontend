@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { ToastProps } from "../components/ui/toast";
 import { User, Role, Categories, IStatistic, TestResult } from "@/pages/users/models";
 import { Note } from "@/pages/questions/models";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 

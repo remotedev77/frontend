@@ -5,13 +5,14 @@ import { CreateManager } from "./components/create/create-manager";
 import { TableHeader } from "@/common/components/table-header";
 import { DataTable } from "@/common/components/ui/data-table";
 import { columns } from "./components/columns";
+import { ManagerDetails } from "./components/manager-details";
+import Filters from "./components/filters";
 
-import useManagerStore from "@/services/state/managersStore";
 import { useGetManagers } from "./hooks/useGetManagers";
+
 import { Manager } from "./models";
 import { FilterParams } from "@/common/types";
-import Filters from "./components/filters";
-import { ManagerDetails } from "./components/manager-details";
+import useManagerStore from "@/services/state/managersStore";
 
 const Managers = () => {
   const filterForm = useForm<FilterParams>();

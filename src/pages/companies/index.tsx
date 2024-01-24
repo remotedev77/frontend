@@ -1,16 +1,17 @@
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 import { CreateCompany } from "./components/create/create-company";
 import { TableHeader } from "@/common/components/table-header";
 import { DataTable } from "@/common/components/ui/data-table";
 import { columns } from "./components/columns";
-
-import useCompaniesStore from "@/services/state/companiesStore";
-import { useGetCompanies } from "./hooks/useGetCompanies";
-import { Company } from "./models";
-import { useForm } from "react-hook-form";
-import { FilterParams } from "@/common/types";
 import { CompanyDetails } from "./components/company-details";
+
+import { useGetCompanies } from "./hooks/useGetCompanies";
+
+import { Company } from "./models";
+import { FilterParams } from "@/common/types";
+import useCompaniesStore from "@/services/state/companiesStore";
 
 const Companies = () => {
   const filterForm = useForm<FilterParams>();
