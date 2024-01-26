@@ -1,3 +1,4 @@
+import { CategoriesType } from "@/common/types";
 import { z } from "zod";
 
 type AccessorKeys = {
@@ -85,7 +86,7 @@ enum Categories {
 }
 
 interface ICategoryCount {
-  category: Categories;
+  category: CategoriesType;
   category_count: number;
 }
 

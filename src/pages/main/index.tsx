@@ -14,26 +14,41 @@ import BlackCard from "@/assets/svg/black-card.svg?react";
 import GreenCard from "@/assets/svg/green-card.svg?react";
 import YellowCard from "@/assets/svg/yellow-card.svg?react";
 import RedCard from "@/assets/svg/red-card.svg?react";
+import ExamLink from "./components/exam-link";
+import useAuthStore from "@/services/state/authStore";
 
 const categoryIcons = [BlackCard, GreenCard, YellowCard, RedCard];
 
 const Main = () => {
+  const { user } = useAuthStore();
   const { data, isLoading, error } = useGetStatistics();
-
   return (
     <div>
       <Header />
-      <div className="max-w-screen-lg p-2 mx-auto space-y-4 lg:p-5">
+      <div className="w-full min-h-full space-y-4 layout">
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <UserInfoCard />
           <UserStatisticsCard />
         </div>
 
-        <FinalExamCard />
+        <div>
+          {user?.main_test_count && user?.main_test_count > 2 ? (
+            <ExamLink key="final-test" examType="final-test" examId="final-test">
+              <FinalExamCard />
+            </ExamLink>
+          ) : (
+            <FinalExamCard />
+          )}
+        </div>
 
         <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <ExamCard title="Симулятор экзамена" icon={Watch} />
-          <ExamCard title="Марафон" icon={Cards} />
+          <ExamLink key="simulator" examType="simulator" examId="simulator">
+            <ExamCard title="Симулятор экзамена" icon={Watch} />
+          </ExamLink>
+
+          <ExamLink key="marathon" examType="marathon" examId="marathon">
+            <ExamCard title="Марафон" icon={Cards} />
+          </ExamLink>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
@@ -44,7 +59,9 @@ const Main = () => {
             : error
             ? null
             : data?.category_counts?.map(({ category, category_count }, index) => (
-                <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
+                <ExamLink key={category} examType="category" examId={category}>
+                  <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
+                </ExamLink>
               ))}
         </div>
       </div>

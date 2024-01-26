@@ -78,3 +78,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .layout {
+    @apply max-w-screen-lg p-2 mx-auto sm:p-3 lg:p-5 min-h-dvh;
+  }
+
+  .card-title {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+}

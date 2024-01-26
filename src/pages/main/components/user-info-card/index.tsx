@@ -20,7 +20,7 @@ const UserInfoCard = () => {
   return (
     <Card className="flex-grow">
       <CardHeader>
-        <CardTitle className="text-base sm:text-lg lg:text-xl">
+        <CardTitle className="card-title">
           {user?.last_name} {user?.first_name} {user?.father_name}
         </CardTitle>
         <CardDescription>{user?.organization}</CardDescription>

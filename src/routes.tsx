@@ -11,18 +11,18 @@ const { Users } = lazily(() => import("./pages/users"));
 const { Questions } = lazily(() => import("./pages/questions"));
 const { Companies } = lazily(() => import("./pages/companies"));
 const { Managers } = lazily(() => import("./pages/managers"));
-const { ExamEntry } = lazily(() => import("./pages/exam-entry"));
+const { Exam } = lazily(() => import("./pages/exam"));
 /*
     Not Found
     Login --> 
     role = Admin or Manager: 
-        Admin
+        Admin:
             Users
             Questions
             Companies
             Managers
     role = User:
-        Simulation
+        Main:
             Final-Test
             Exam-Simulation
             Marathon
@@ -31,6 +31,7 @@ const { ExamEntry } = lazily(() => import("./pages/exam-entry"));
             Make-Mistake
             Do-Not-Know
 
+        Exam:
             Exam-Entry
             Exam-Session
             Exam-Result
@@ -44,7 +45,7 @@ const router = createBrowserRouter(
       <Route element={<Persist />}>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Main />} />
-          <Route path="exam-entry/:exam-type" element={<ExamEntry />} />
+          <Route path="exam/:exam-type" element={<Exam />} />
 
           <Route path="admin" element={<Admin />}>
             <Route index element={<Users />} />

@@ -24,7 +24,7 @@ const FinalExamCard = () => {
         </CardDescription>
       </CardContent>
       <CardFooter>
-        <CardTitle className="text-base sm:text-lg lg:text-xl">Итоговое тестирование</CardTitle>
+        <CardTitle className="card-title">Итоговое тестирование</CardTitle>
         <Badge variant={"secondary"} className="relative flex gap-2 ml-auto text-sm cursor-default">
           {user?.final_test ? (
             <>

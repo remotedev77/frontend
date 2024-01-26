@@ -1,5 +1,5 @@
 import { Note } from "@/pages/questions/models";
-import { Role } from "@/pages/users/models";
+import { Categories, Role } from "@/pages/users/models";
 
 interface DataWithPagination<T = unknown> {
   count: number;
@@ -32,4 +32,8 @@ type FilterParams = {
   role?: Role;
 };
 
-export type { DataWithPagination, PaginationModel, FilterParams };
+type CategoriesType = keyof typeof Categories;
+
+type ExamTypes = CategoriesType | "final-test" | "simulator" | "marathon";
+
+export type { DataWithPagination, PaginationModel, FilterParams, ExamTypes, CategoriesType };

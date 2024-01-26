@@ -1,4 +1,4 @@
-import { FilterParams } from "@/common/types";
+import { CategoriesType, FilterParams } from "@/common/types";
 
 const authEndpoints = {
   signIn: "auth/login/",
@@ -7,6 +7,8 @@ const authEndpoints = {
 };
 
 const appEndpoints = {
+  categoryQuestions: (category: CategoriesType) => `app/category-questions/${category}/`,
+  questions: "app/get-questions/",
   statistics: "app/statistics/",
 };
 

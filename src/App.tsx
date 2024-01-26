@@ -8,7 +8,7 @@ import router from "./routes";
 
 const App = () => {
   return (
-    <div className="container w-full min-h-screen text-gray-950">
+    <div className="text-gray-950">
       <Suspense fallback={<Spinner />}>
         <RouterProvider router={router} />
       </Suspense>
