@@ -11,7 +11,7 @@ const appEndpoints = {
   checkFinalTest: "app/check-final-test/",
   checkMarathon: "app/check-marathon/",
   checkSimulation: "app/check-simulation/",
-  questions: (questionType: string) => `app/get-questions/${questionType ? `?category_name=${questionType}` : null}`,
+  questions: (questionType: string) => `app/get-questions/${questionType ? `?category_name=${questionType}` : ""}`,
   statistics: "app/statistics/",
 };
 
