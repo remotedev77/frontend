@@ -10,11 +10,10 @@ type QuestionAccordionProps = {
 };
 
 const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
-  console.log(questions);
   return (
     <Accordion type="single" className="grid gap-4" collapsible>
       {questions
-        ?.slice(0, questions.length - 1)
+        ?.slice(0, questions.length)
         ?.map(({ question, answers, description, is_correct, checkedIndex }, index) => (
           <AccordionItem className="px-4 border shadow rounded-xl" value={`item-${index}`} key={index}>
             <AccordionTrigger className="items-end text-start hover:no-underline">
@@ -29,7 +28,7 @@ const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
                       : "bg-red-500 hover:bg-red-600"
                   )}
                 >
-                  Вопрос №{checkedIndex || index + 1}
+                  Вопрос №{(checkedIndex && checkedIndex + 1) || index + 1}
                 </Badge>
                 <div className="text-xs sm:text-sm lg:text-base">{question}</div>
               </div>
