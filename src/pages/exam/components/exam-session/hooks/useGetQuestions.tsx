@@ -5,16 +5,27 @@ import { getData } from "@/services/api/requests";
 import useExamStore from "@/services/state/examStore";
 import { Question } from "@/pages/exam/models";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const useGetQuestions = () => {
-  const { setQuestions } = useExamStore();
-  const { data, isLoading, error } = useSWRImmutable<Question[]>(appEndpoints.questions, getData);
+  const { pathname, state } = useLocation();
+  const { questionType, setQuestions, resetExam, setSelectedIndex, setInitialAnswers } = useExamStore();
+  const { data, isLoading, isValidating, error, mutate } = useSWRImmutable<Question[]>(
+    appEndpoints.questions(questionType === "category" ? state : null),
+    getData
+  );
+
+  useEffect(() => {
+    resetExam();
+    mutate();
+  }, [mutate, pathname, resetExam, setSelectedIndex]);
 
   useEffect(() => {
     setQuestions(data || []);
-  }, [data, setQuestions]);
+    setInitialAnswers();
+  }, [data, questionType, setInitialAnswers, setQuestions]);
 
-  return { data, isLoading, error };
+  return { data, isLoading, isValidating, error };
 };
 
 export default useGetQuestions;

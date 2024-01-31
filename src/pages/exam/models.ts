@@ -23,5 +23,24 @@ interface AnswerArgs {
   a_id: number[];
 }
 
-export type { Answer, Question, AnswerArgs };
+interface AnswerResponse {
+  answer: string;
+  is_correct: boolean;
+}
+
+interface QuestionResponse {
+  question?: string;
+  is_correct?: boolean;
+  user_selected_check?: null;
+  description?: null;
+  answers?: AnswerResponse[];
+  correct_answers_count?: number;
+  incorrect_answers_count?: number;
+  success?: boolean;
+  checkedIndex?: number;
+}
+
+type QuestionType = "marathon" | "category" | "final-test" | "simulation";
+
+export type { Answer, Question, AnswerArgs, QuestionResponse, QuestionType };
 export { Note };

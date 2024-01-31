@@ -6,9 +6,9 @@ import useGetQuestions from "./hooks/useGetQuestions";
 import { TailSpin } from "react-loader-spinner";
 
 const ExamSession = () => {
-  const { isLoading, error } = useGetQuestions();
+  const { isLoading, isValidating, error } = useGetQuestions();
 
-  if (isLoading) {
+  if (isLoading || isValidating) {
     return (
       <TailSpin
         visible={true}

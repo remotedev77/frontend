@@ -34,6 +34,6 @@ type FilterParams = {
 
 type CategoriesType = keyof typeof Categories;
 
-type ExamTypes = CategoriesType | "final-test" | "simulator" | "marathon";
+type ExamTypes = CategoriesType | "final-test" | "simulation" | "marathon";
 
 export type { DataWithPagination, PaginationModel, FilterParams, ExamTypes, CategoriesType };

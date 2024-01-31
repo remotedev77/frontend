@@ -16,12 +16,14 @@ import YellowCard from "@/assets/svg/yellow-card.svg?react";
 import RedCard from "@/assets/svg/red-card.svg?react";
 import ExamLink from "./components/exam-link";
 import useAuthStore from "@/services/state/authStore";
+import { getCategories } from "@/common/lib/utils";
 
 const categoryIcons = [BlackCard, GreenCard, YellowCard, RedCard];
 
 const Main = () => {
   const { user } = useAuthStore();
   const { data, isLoading, error } = useGetStatistics();
+
   return (
     <div>
       <Header />
@@ -42,7 +44,7 @@ const Main = () => {
         </div>
 
         <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <ExamLink key="simulator" examType="simulator" examId="simulator">
+          <ExamLink key="simulation" examType="simulation" examId="simulation">
             <ExamCard title="Симулятор экзамена" icon={Watch} />
           </ExamLink>
 
@@ -58,11 +60,13 @@ const Main = () => {
               ))
             : error
             ? null
-            : data?.category_counts?.map(({ category, category_count }, index) => (
-                <ExamLink key={category} examType="category" examId={category}>
-                  <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
-                </ExamLink>
-              ))}
+            : getCategories(data?.category_counts)?.map(({ category, category_count }, index) =>
+                category_count ? (
+                  <ExamLink key={category} examType="category" examId={category}>
+                    <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
+                  </ExamLink>
+                ) : null
+              )}
         </div>
       </div>
     </div>

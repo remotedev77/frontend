@@ -1,7 +1,8 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-import { ExamEntry } from "./components/exam-entry";
+import ExamEntry from "./components/exam-entry";
 import ExamSession from "./components/exam-session";
+import ExamResult from "./components/exam-result";
 
 import useExamStore, { Stage } from "@/services/state/examStore";
 import { useLayoutEffect } from "react";
@@ -19,7 +20,7 @@ const Exam = () => {
   ) : stage === Stage.SESSION ? (
     <ExamSession />
   ) : stage === Stage.RESULT ? (
-    <>{/* <ExamResult /> */} Exam Result</>
+    <ExamResult />
   ) : (
     <Navigate to="/" />
   );
