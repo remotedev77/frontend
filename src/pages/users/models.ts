@@ -79,10 +79,10 @@ const UploadUserSchema = z.object({
 type UploadUser = z.infer<typeof UploadUserSchema>;
 
 enum Categories {
-  "Не решал",
-  "Знаю",
-  "Делаю ошибки",
-  "Не знаю",
+  "Не решал" = "Не решал",
+  "Знаю" = "Знаю",
+  "Делаю ошибки" = "Делаю ошибки",
+  "Не знаю" = "Не знаю",
 }
 
 interface ICategoryCount {
