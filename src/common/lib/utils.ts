@@ -24,7 +24,9 @@ const checkPermission = (user: User | null) => {
 };
 
 const getConstantCategories = (data: IStatistic[] = []) => {
-  const constantCategories = Object.values(Categories).slice(0, Object.values(Categories).length / 2);
+  const constantCategories = Object.values(Categories).slice(0, Object.values(Categories).length);
+
+  console.log(constantCategories);
 
   return constantCategories.map((constantCategory) => ({
     statistic: data.find(({ category }) => category === constantCategory)?.statistic || 0,
@@ -33,7 +35,7 @@ const getConstantCategories = (data: IStatistic[] = []) => {
 };
 
 const getCategories = (data: ICategoryCount[] = []) => {
-  const constantCategories = Object.values(Categories).slice(0, Object.values(Categories).length / 2);
+  const constantCategories = Object.values(Categories).slice(0, Object.values(Categories).length);
 
   return constantCategories.map((constantCategory) => ({
     category_count: data.find(({ category }) => category === constantCategory)?.category_count || 0,

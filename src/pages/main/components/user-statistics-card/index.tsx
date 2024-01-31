@@ -15,6 +15,9 @@ const UserStatisticsCard = () => {
     () => statistics?.statistic.find(({ category }) => category === Categories.Знаю)?.statistic || 0,
     [statistics?.statistic]
   );
+
+  console.log(getConstantCategories(data?.statistic));
+
   return (
     <Fragment>
       <Accordion type="single" className="px-4 border shadow md:hidden rounded-xl bg-card" collapsible>
