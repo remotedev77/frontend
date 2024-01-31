@@ -13,7 +13,7 @@ const UserInfoCard = () => {
   const { data: statistics } = useGetStatistics();
 
   const getProgress = useCallback(
-    () => statistics?.statistic.find(({ category }) => category === Categories.Знаю)?.statistic || 0,
+    () => statistics?.statistic.find(({ category }) => category === "Знаю")?.statistic || 0,
     [statistics?.statistic]
   );
 
