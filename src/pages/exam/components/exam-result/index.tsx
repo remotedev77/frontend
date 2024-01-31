@@ -1,7 +1,4 @@
 import useSWR from "swr";
-import { TailSpin } from "react-loader-spinner";
-
-import QuestionAccordion from "../question-accordion";
 
 import useExamStore, { Format } from "@/services/state/examStore";
 
@@ -9,12 +6,15 @@ import { postData } from "@/services/api/requests";
 
 import { QuestionResponse } from "@/pages/exam/models";
 
+import { checkQuestionType } from "../../lib/utils";
+import { TailSpin } from "react-loader-spinner";
 import CardIcon from "../card-icon";
+import QuestionAccordion from "../question-accordion";
 
 const ExamResult = () => {
   const { questionType, answers, format, checkedQuestions } = useExamStore();
   const { data, isLoading, isValidating, error } = useSWR<QuestionResponse[]>(
-    format === Format.TIME ? questionType : null,
+    format === Format.TIME ? checkQuestionType(questionType || "simulation") : null,
     (path: string) =>
       postData(path, {
         arg: answers,
