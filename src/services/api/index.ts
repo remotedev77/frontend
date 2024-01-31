@@ -21,9 +21,8 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
     const status = error.response ? error.response.status : null;
 
-    if (status === 401 && error.response.statusText === "Unauthorized") {
+    if (status === 401 && error.response.data.detail === "Authentication credentials were not provided.") {
       const accessToken = await useAuthStore.getState().getNewAccessToken();
-
       if (accessToken) {
         instance.defaults.headers.Authorization = accessToken;
         return instance(originalRequest);

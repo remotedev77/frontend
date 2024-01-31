@@ -26,8 +26,6 @@ const checkPermission = (user: User | null) => {
 const getConstantCategories = (data: IStatistic[] = []) => {
   const constantCategories = Object.values(Categories).slice(0, Object.values(Categories).length);
 
-  console.log(constantCategories);
-
   return constantCategories.map((constantCategory) => ({
     statistic: data.find(({ category }) => category === constantCategory)?.statistic || 0,
     category: constantCategory,

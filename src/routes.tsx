@@ -1,6 +1,5 @@
-import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import { lazily } from "react-lazily";
-import useAuthStore from "./services/state/authStore";
 import Main from "./pages/main";
 
 const { Persist } = lazily(() => import("./common/components/persist"));
@@ -57,17 +56,7 @@ const router = createBrowserRouter(
           </Route>
         </Route>
       </Route>
-      <Route
-        index
-        path="login"
-        element={
-          useAuthStore.getState().isAuth !== undefined && useAuthStore.getState().isAuth ? (
-            <Navigate to="/" replace />
-          ) : (
-            <SignIn />
-          )
-        }
-      />
+      <Route index path="login" element={<SignIn />} />
     </Route>
   )
 );

@@ -16,8 +16,6 @@ const UserStatisticsCard = () => {
     [statistics?.statistic]
   );
 
-  console.log(getConstantCategories(data?.statistic));
-
   return (
     <Fragment>
       <Accordion type="single" className="px-4 border shadow md:hidden rounded-xl bg-card" collapsible>
