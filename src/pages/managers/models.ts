@@ -17,7 +17,7 @@ const CreateManagerSchema = z.object({
   first_name: z.string().min(1),
   last_name: z.string().min(1),
   father_name: z.string().min(1),
-  manager_role: z.string().min(1),
+  role: z.string().min(1),
   email: z.string().min(1),
   password: z.string().min(1),
 });

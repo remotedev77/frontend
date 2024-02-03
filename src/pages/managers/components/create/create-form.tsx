@@ -30,7 +30,7 @@ const CreateForm = () => {
       first_name: "",
       last_name: "",
       father_name: "",
-      manager_role: "",
+      role: "",
       email: "",
       password: "",
     },
@@ -123,7 +123,7 @@ const CreateForm = () => {
 
           <FormField
             control={form.control}
-            name="manager_role"
+            name="role"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Роль</FormLabel>

@@ -33,11 +33,11 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
     resolver: zodResolver(CreateCompanySchema),
     mode: "onChange",
     defaultValues: {
-      manager_role: "",
+      role: "",
       email: "",
       password: "",
     },
-    values: { ...managerDetails, manager_role: roles.find(({ value }) => value === managerDetails?.role)?.value },
+    values: { ...managerDetails, role: roles.find(({ value }) => value === managerDetails?.role)?.value },
   });
 
   const onSubmit = async (values: UpdateManager) => {
@@ -128,7 +128,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
 
           <FormField
             control={form.control}
-            name="manager_role"
+            name="role"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Роль</FormLabel>
