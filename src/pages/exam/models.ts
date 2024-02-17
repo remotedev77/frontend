@@ -26,7 +26,7 @@ interface AnswerArgs {
 interface AnswerResponse {
   answer: string;
   is_correct: boolean;
-  user_select: boolean;
+  user_selected: boolean;
 }
 
 interface QuestionResponse {

@@ -18,7 +18,8 @@ const ExamResult = () => {
     (path: string) =>
       postData(path, {
         arg: answers,
-      })
+      }),
+    { revalidateOnFocus: false }
   );
 
   if (isLoading || isValidating) {

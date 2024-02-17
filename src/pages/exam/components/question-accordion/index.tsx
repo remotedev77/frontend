@@ -34,11 +34,11 @@ const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="space-y-3 text-xs sm:text-sm lg:text-base">
-              {answers?.map(({ is_correct: answerIsCorrect, answer, user_select }, index) => (
+              {answers?.map(({ is_correct: answerIsCorrect, answer, user_selected }, index) => (
                 <Card
                   className={cn(
                     "h-full p-3 text-pretty",
-                    user_select && "border-primary border-2",
+                    user_selected && "border-red-500 border-2",
                     answerIsCorrect && "border-green-500 border-2"
                   )}
                   key={index}
