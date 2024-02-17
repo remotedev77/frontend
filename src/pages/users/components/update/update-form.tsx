@@ -18,6 +18,7 @@ import useUserStore from "@/services/state/usersStore";
 import { usersEndpoints } from "@/services/api/endpoints";
 import { putData } from "@/services/api/requests";
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
+import { useGetDirections } from "@/pages/questions/hooks/useGetDirections";
 
 type UpdateFormProps = {
   handleEdit?: (onEdit: boolean) => void;
@@ -27,6 +28,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   const { toast } = useToast();
 
   const { mutate, setDetailsDialogOpen, userDetails } = useUserStore();
+  const { data: directions, isLoading: loadingDirections, error: errorDirections } = useGetDirections();
 
   const { data: companies, isLoading, error } = useGetAllCompanies();
   const { trigger: updateUser, isMutating } = useSWRMutation(
@@ -134,25 +136,10 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="col-span-2">
                 <FormLabel>Логин</FormLabel>
                 <FormControl>
                   <Input type="email" autoComplete="true" placeholder="Почту" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            disabled
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Пароль</FormLabel>
-                <FormControl>
-                  <Input type="password" autoComplete="true" placeholder="•••••••••" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -225,6 +212,36 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="direction"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Направление</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={loadingDirections || errorDirections}
+                    {...field}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Выбирать" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {directions?.map(({ id, name }) => (
+                        <SelectItem key={id} value={`${id}`}>
+                          {name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

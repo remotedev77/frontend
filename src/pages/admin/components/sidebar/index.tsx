@@ -1,14 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
-import useSWR from "swr";
 
 import { Button } from "@/common/components/ui/button";
 import { Separator } from "@/common/components/ui/separator";
 
-import useAuthStore from "@/services/state/authStore";
 import { Role } from "@/pages/users/models";
-import { directionsEndpoints } from "@/services/api/endpoints";
-import { getData } from "@/services/api/requests";
-import { Direction } from "@/pages/admin/models";
+import { useGetDirections } from "@/pages/questions/hooks/useGetDirections";
+
+import useAuthStore from "@/services/state/authStore";
 
 const links = [
   {
@@ -24,7 +22,7 @@ const Sidebar = () => {
   const { pathname } = useLocation();
   const { user } = useAuthStore();
 
-  const { data } = useSWR<Direction[]>(directionsEndpoints.base, getData);
+  const { data } = useGetDirections();
   return (
     <div className="sticky h-full min-h-[calc(100vh-57px)] max-w-[240px] top-10 lg:top-14 flex flex-col justify-between items-center py-8 w-full shadow-md">
       <ul className="flex flex-col items-center w-full gap-4">

@@ -9,7 +9,7 @@ type ExamLinkProps = {
 
 const ExamLink = ({ children, examType, examId }: ExamLinkProps) => {
   return (
-    <Link to={`exam/${examType}`} state={examId} className="w-full">
+    <Link to={examType ? `exam/${examType}` : ""} state={examId} className="w-full">
       {children}
     </Link>
   );

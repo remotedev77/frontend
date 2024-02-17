@@ -60,13 +60,11 @@ const Main = () => {
               ))
             : error
             ? null
-            : getCategories(data?.category_counts)?.map(({ category, category_count }, index) =>
-                category_count ? (
-                  <ExamLink key={category} examType="category" examId={category}>
-                    <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
-                  </ExamLink>
-                ) : null
-              )}
+            : getCategories(data?.category_counts)?.map(({ category, category_count }, index) => (
+                <ExamLink key={category} examType={category_count !== 0 ? "category" : ""} examId={category}>
+                  <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
+                </ExamLink>
+              ))}
         </div>
       </div>
     </div>

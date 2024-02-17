@@ -14,6 +14,7 @@ import { Button } from "@/common/components/ui/button";
 import { useToast } from "@/common/components/ui/use-toast";
 
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
+import { useGetDirections } from "@/pages/questions/hooks/useGetDirections";
 
 import { CreateUser, CreateUserSchema } from "../../models";
 import { cn, toastMessages } from "@/common/lib/utils";
@@ -29,6 +30,8 @@ const CreateForm = () => {
 
   const { data: companies, isLoading, error } = useGetAllCompanies();
   const { trigger: createUser, isMutating } = useSWRMutation(usersEndpoints.base, postData);
+
+  const { data: directions, isLoading: loadingDirections, error: errorDirections } = useGetDirections();
 
   const form = useForm<CreateUser>({
     resolver: zodResolver(CreateUserSchema),
@@ -221,6 +224,36 @@ const CreateForm = () => {
                     />
                   </PopoverContent>
                 </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="direction"
+            render={({ field }) => (
+              <FormItem className="col-span-2">
+                <FormLabel>Направление</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={loadingDirections || errorDirections}
+                    {...field}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Выбирать" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {directions?.map(({ id, name }) => (
+                        <SelectItem key={id} value={`${id}`}>
+                          {name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
