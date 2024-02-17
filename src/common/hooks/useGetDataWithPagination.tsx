@@ -18,7 +18,7 @@ const useGetDataWithPagination = <T = unknown,>(path: string) => {
   const previousPage = () => setPageNum((prev) => prev - 1);
 
   if (swr.error instanceof AxiosError) {
-    if (swr.error.response?.status === 403) {
+    if (swr.error.response?.status === 403 || swr.error.response?.status === 404) {
       setPage(1);
       swr.mutate();
     }

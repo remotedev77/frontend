@@ -36,11 +36,6 @@ const CreateForm = () => {
   const form = useForm<CreateUser>({
     resolver: zodResolver(CreateUserSchema),
     mode: "onChange",
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      father_name: "",
-    },
   });
 
   const onSubmit = async (values: CreateUser) => {
@@ -231,7 +226,7 @@ const CreateForm = () => {
 
           <FormField
             control={form.control}
-            name="direction"
+            name="direction_type"
             render={({ field }) => (
               <FormItem className="col-span-2">
                 <FormLabel>Направление</FormLabel>

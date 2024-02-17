@@ -12,7 +12,7 @@ import { Button } from "@/common/components/ui/button";
 import { useToast } from "@/common/components/ui/use-toast";
 
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { CreateUser, CreateUserSchema, UpdateUser, User } from "../../models";
+import { CreateUser, CreateUserSchema, UpdateUser } from "../../models";
 import { cn, toastMessages } from "@/common/lib/utils";
 import useUserStore from "@/services/state/usersStore";
 import { usersEndpoints } from "@/services/api/endpoints";
@@ -42,7 +42,8 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
     values: {
       ...userDetails,
       organization: companies?.find(({ company_name }) => company_name === userDetails?.organization)?.id.toString(),
-    } as User,
+      direction_type: userDetails?.direction_type ? userDetails?.direction_type.toString() : "",
+    } as CreateUser,
   });
 
   const onSubmit = async (values: UpdateUser) => {
@@ -55,6 +56,8 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
       toast(toastMessages.error);
     }
   };
+
+  console.log(userDetails, form.watch("direction_type"));
 
   return (
     <Form {...form}>
@@ -219,7 +222,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
 
           <FormField
             control={form.control}
-            name="direction"
+            name="direction_type"
             render={({ field }) => (
               <FormItem className="col-span-2">
                 <FormLabel>Направление</FormLabel>
@@ -253,7 +256,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
             Отмена
           </Button>
 
-          <Button type="submit" disabled={isMutating || !form.formState.isValid}>
+          <Button type="submit" disabled={isMutating || !form.formState.isDirty || !form.formState.isValid}>
             Cохранить
           </Button>
         </div>

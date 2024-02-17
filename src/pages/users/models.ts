@@ -49,7 +49,7 @@ interface User {
   main_test_count: number;
   final_test: boolean;
   role: Role;
-  direction: string;
+  direction_type: number;
 }
 
 const CreateUserSchema = z.object({
@@ -61,7 +61,7 @@ const CreateUserSchema = z.object({
   start_date: z.string(),
   end_date: z.string(),
   organization: z.string().min(1),
-  direction: z.string().min(1),
+  direction_type: z.string().min(1),
 });
 
 type CreateUser = z.infer<typeof CreateUserSchema>;

@@ -9,7 +9,7 @@ import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { cn, notes } from "@/common/lib/utils";
 import { FilterParams } from "@/common/types";
 
-type Filters = { form: UseFormReturn<FilterParams, unknown, undefined> };
+type Filters = { form: UseFormReturn<FilterParams, unknown> };
 
 const Filters = ({ form }: Filters) => {
   return (

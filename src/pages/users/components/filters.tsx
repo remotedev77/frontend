@@ -14,7 +14,7 @@ import { DateRange } from "react-day-picker";
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
 import { FilterParams } from "@/common/types";
 
-type Filters = { form: UseFormReturn<FilterParams, unknown, undefined> };
+type Filters = { form: UseFormReturn<FilterParams, unknown> };
 
 const Filters = ({ form }: Filters) => {
   const [startDate, setStartDate] = useState<DateRange | undefined>();

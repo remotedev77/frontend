@@ -1,7 +1,8 @@
-import { DataWithPagination } from "@/common/types";
-import { User } from "@/pages/users/models";
 import { KeyedMutator } from "swr";
 import { create } from "zustand";
+
+import { DataWithPagination } from "@/common/types";
+import { User } from "@/pages/users/models";
 
 type State = {
   userDetails: User | undefined;

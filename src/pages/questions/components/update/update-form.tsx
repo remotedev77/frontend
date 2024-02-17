@@ -32,8 +32,8 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   );
 
   const form = useForm<CreateQuestion>({
-    resolver: zodResolver(CreateQuestionSchema),
     mode: "onChange",
+    resolver: zodResolver(CreateQuestionSchema),
     values: questionDetails,
   });
 
@@ -247,7 +247,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
             Отмена
           </Button>
 
-          <Button type="submit" disabled={isMutating || !form.formState.isValid}>
+          <Button type="submit" disabled={isMutating || !form.formState.isDirty || !form.formState.isValid}>
             Cохранить
           </Button>
         </div>

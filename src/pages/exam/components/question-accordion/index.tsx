@@ -3,17 +3,20 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/common/components/ui/badge";
 
 import { cn } from "@/common/lib/utils";
-import { QuestionResponse } from "../../models";
+import { QuestionResponse, QuestionType } from "../../models";
+import { useLocation } from "react-router-dom";
 
 type QuestionAccordionProps = {
   questions: QuestionResponse[];
 };
 
 const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
+  const { state } = useLocation() as { state: QuestionType };
+
   return (
     <Accordion type="single" className="grid gap-4" collapsible>
       {questions
-        ?.slice(0, questions.length)
+        ?.slice(0, state === "simulation" ? questions.length - 1 : questions.length)
         ?.map(({ question, answers, description, is_correct, checkedIndex }, index) => (
           <AccordionItem className="px-4 border shadow rounded-xl" value={`item-${index}`} key={index}>
             <AccordionTrigger className="items-end text-start hover:no-underline">

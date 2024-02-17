@@ -17,12 +17,12 @@ import { postData } from "@/services/api/requests";
 import { CreateQuestion, CreateQuestionSchema, Note } from "../../models";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Textarea } from "@/common/components/ui/textarea";
+import { useParams } from "react-router-dom";
 
 const CreateForm = () => {
+  const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
-
   const { mutate, setCreateDialogOpen } = useQuestionStore();
-
   const { trigger: createQuestion, isMutating } = useSWRMutation(questionsEndpoints.base, postData);
 
   const form = useForm<CreateQuestion>({
@@ -36,6 +36,7 @@ const CreateForm = () => {
       work_function: "",
       answers: [{ answer: "", is_correct: true }],
       correct_answer_description: "",
+      direction_type: id,
     },
   });
 

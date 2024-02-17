@@ -21,14 +21,15 @@ const Questions = () => {
   const { setMutate, setDetailsDialogOpen, setQuestionDetails } = useQuestionStore();
   const { data, isLoading, isValidating, error, mutate, pagination } = useGetQuestions(filterForm.watch());
 
-  const handleUserDetail = (userData: Question) => {
-    setQuestionDetails(userData);
+  const handleQuestionDetails = (questionData: Question) => {
+    setQuestionDetails(questionData);
     setDetailsDialogOpen();
   };
 
   useEffect(() => {
+    mutate();
     setMutate(mutate);
-  }, [mutate, setMutate]);
+  }, [mutate, setMutate, id]);
 
   if (error) return <>Error</>;
 
@@ -48,7 +49,7 @@ const Questions = () => {
         data={data}
         pagination={pagination}
         loading={isLoading || isValidating}
-        handleDetails={handleUserDetail}
+        handleDetails={handleQuestionDetails}
       />
     </div>
   );
