@@ -256,7 +256,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
             Отмена
           </Button>
 
-          <Button type="submit" disabled={isMutating || !form.formState.isDirty || !form.formState.isValid}>
+          <Button type="submit" disabled={isMutating || !form.formState.isDirty}>
             Cохранить
           </Button>
         </div>

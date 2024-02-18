@@ -32,11 +32,6 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   const form = useForm<UpdateManager>({
     resolver: zodResolver(CreateCompanySchema),
     mode: "onChange",
-    defaultValues: {
-      role: "",
-      email: "",
-      password: "",
-    },
     values: { ...managerDetails, role: roles.find(({ value }) => value === managerDetails?.role)?.value },
   });
 
@@ -113,21 +108,6 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
 
           <FormField
             control={form.control}
-            name="password"
-            disabled
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Пароль</FormLabel>
-                <FormControl>
-                  <Input type="password" autoComplete="true" placeholder="Пароль" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="role"
             render={({ field }) => (
               <FormItem>
@@ -157,7 +137,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
             Отмена
           </Button>
 
-          <Button type="submit" disabled={isMutating || !form.formState.isDirty || !form.formState.isValid}>
+          <Button type="submit" disabled={isMutating || !form.formState.isDirty}>
             Cохранить
           </Button>
         </div>
