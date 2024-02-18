@@ -31,13 +31,6 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   const form = useForm<UpdateCompany>({
     resolver: zodResolver(CreateCompanySchema),
     mode: "onChange",
-    defaultValues: {
-      company_name: "",
-      contact_person: "",
-      email: "",
-      phone: "",
-      legal_adress: "",
-    },
     values: companyDetails,
   });
 

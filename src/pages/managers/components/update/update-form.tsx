@@ -11,8 +11,7 @@ import { useToast } from "@/common/components/ui/use-toast";
 import useManagerStore from "@/services/state/managersStore";
 import { managersEndpoints } from "@/services/api/endpoints";
 import { putData } from "@/services/api/requests";
-import { UpdateManager } from "../../models";
-import { CreateCompanySchema } from "@/pages/companies/models";
+import { CreateManagerSchema, UpdateManager } from "../../models";
 import { roles, toastMessages } from "@/common/lib/utils";
 
 type UpdateFormProps = {
@@ -30,7 +29,15 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   );
 
   const form = useForm<UpdateManager>({
-    resolver: zodResolver(CreateCompanySchema),
+    resolver: zodResolver(CreateManagerSchema),
+    defaultValues: {
+      first_name: "",
+      last_name: "",
+      father_name: "",
+      role: "",
+      email: "",
+      password: "",
+    },
     mode: "onChange",
     values: { ...managerDetails, role: roles.find(({ value }) => value === managerDetails?.role)?.value },
   });

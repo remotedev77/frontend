@@ -57,8 +57,6 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
     }
   };
 
-  console.log(userDetails, form.watch("direction_type"));
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
