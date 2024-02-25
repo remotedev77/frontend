@@ -11,7 +11,6 @@ const ExamEntry = () => {
   const { state } = useSetExamDetails();
   const { questionType } = useExamStore();
   const { data, isLoading, isValidating, error } = useGetQuestions();
-  console.log(questionType);
 
   if (isLoading || isValidating) {
     return (

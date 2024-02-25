@@ -10,7 +10,6 @@ type QuestionAccordionProps = { type?: "entry"; questions: QuestionResponse[] };
 
 const QuestionAccordion = ({ type, questions }: QuestionAccordionProps) => {
   const { state } = useLocation() as { state: QuestionType };
-  console.log(questions);
   return (
     <Accordion type="single" className="grid gap-4" collapsible>
       {questions
