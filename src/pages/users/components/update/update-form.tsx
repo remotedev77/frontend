@@ -19,6 +19,7 @@ import { usersEndpoints } from "@/services/api/endpoints";
 import { putData } from "@/services/api/requests";
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
 import { useGetDirections } from "@/pages/questions/hooks/useGetDirections";
+import { RadioGroup, RadioGroupItem } from "@/common/components/ui/radio-group";
 
 type UpdateFormProps = {
   handleEdit?: (onEdit: boolean) => void;
@@ -242,6 +243,37 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                       ))}
                     </SelectContent>
                   </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="plan"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormLabel>План</FormLabel>
+                <FormControl>
+                  <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-4">
+                    <FormItem className="group">
+                      <FormControl>
+                        <RadioGroupItem value="базовым" className="hidden peer" />
+                      </FormControl>
+                      <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
+                        Базовым
+                      </FormLabel>
+                    </FormItem>
+                    <FormItem className="group">
+                      <FormControl>
+                        <RadioGroupItem value="разрешенным" className="hidden" />
+                      </FormControl>
+                      <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
+                        Разрешенным
+                      </FormLabel>
+                    </FormItem>
+                  </RadioGroup>
                 </FormControl>
                 <FormMessage />
               </FormItem>

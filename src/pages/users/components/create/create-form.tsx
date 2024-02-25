@@ -22,6 +22,7 @@ import { cn, toastMessages } from "@/common/lib/utils";
 import useUserStore from "@/services/state/usersStore";
 import { usersEndpoints } from "@/services/api/endpoints";
 import { postData } from "@/services/api/requests";
+import { RadioGroup, RadioGroupItem } from "@/common/components/ui/radio-group";
 
 const CreateForm = () => {
   const { toast } = useToast();
@@ -254,6 +255,37 @@ const CreateForm = () => {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="plan"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>План</FormLabel>
+              <FormControl>
+                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-4">
+                  <FormItem className="group">
+                    <FormControl>
+                      <RadioGroupItem value="базовым" className="hidden peer" />
+                    </FormControl>
+                    <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
+                      Базовым
+                    </FormLabel>
+                  </FormItem>
+                  <FormItem className="group">
+                    <FormControl>
+                      <RadioGroupItem value="разрешенным" className="hidden" />
+                    </FormControl>
+                    <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
+                      Разрешенным
+                    </FormLabel>
+                  </FormItem>
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button
           type="submit"

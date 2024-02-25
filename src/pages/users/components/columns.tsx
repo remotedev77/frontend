@@ -4,7 +4,7 @@ import { toast } from "@/common/components/ui/use-toast";
 import { Badge } from "@/common/components/ui/badge";
 import { DeleteAlert } from "@/common/components/delete-alert";
 
-import { Access, TestResult, User } from "../models";
+import { Access, Plan, TestResult, User } from "../models";
 import useUserStore from "@/services/state/usersStore";
 import { toastMessages } from "@/common/lib/utils";
 import { usersEndpoints } from "@/services/api/endpoints";
@@ -79,6 +79,15 @@ export const columns: ColumnDef<User>[] = [
           {access}
         </Badge>
       );
+    },
+  },
+  {
+    accessorKey: "plan",
+    header: "План",
+    cell: ({ row }) => {
+      const plan = row.getValue("plan") as Plan;
+
+      return <Badge className={`justify-center w-full`}>{plan}</Badge>;
     },
   },
   {

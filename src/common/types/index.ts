@@ -1,5 +1,5 @@
 import { Note } from "@/pages/questions/models";
-import { Categories, Role } from "@/pages/users/models";
+import { Categories, Plan, Role } from "@/pages/users/models";
 
 interface DataWithPagination<T = unknown> {
   count: number;
@@ -30,6 +30,7 @@ type FilterParams = {
   end_date?: { from?: string; to?: string };
   note?: Note;
   role?: Role;
+  plan?: Plan;
 };
 
 type CategoriesType = keyof typeof Categories;

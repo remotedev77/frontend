@@ -34,7 +34,7 @@ const Main = () => {
         </div>
 
         <div>
-          {user?.main_test_count && user?.main_test_count > 2 ? (
+          {user?.final_test ? (
             <ExamLink key="final-test" examType="final-test" examId="final-test">
               <FinalExamCard />
             </ExamLink>

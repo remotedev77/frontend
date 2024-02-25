@@ -13,6 +13,7 @@ import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useGetAllCompanies } from "@/pages/companies/hooks/useGetAllCompanies";
 import { FilterParams } from "@/common/types";
+import { Plan } from "../models";
 
 type Filters = { form: UseFormReturn<FilterParams, unknown> };
 
@@ -224,6 +225,50 @@ const Filters = ({ form }: Filters) => {
                     numberOfMonths={2}
                     {...field}
                   />
+                </PopoverContent>
+              </Popover>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="plan"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn("w-56 justify-between", !field.value && "text-muted-foreground")}
+                      disabled={isLoading || error}
+                    >
+                      <p className="truncate">
+                        {field.value ? Object.values(Plan)?.find((plan) => plan == field.value) : "План"}
+                      </p>
+                      <CaretSortIcon className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-56 p-0">
+                  <Command>
+                    <CommandGroup>
+                      {Object.values(Plan)?.map((plan) => (
+                        <CommandItem
+                          value={plan}
+                          key={plan}
+                          onSelect={(val) => field.onChange(val == field.value ? undefined : val)}
+                        >
+                          {plan}
+                          <CheckIcon
+                            className={cn("ml-auto h-4 w-4", plan == field.value ? "opacity-100" : "opacity-0")}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
                 </PopoverContent>
               </Popover>
             </FormItem>

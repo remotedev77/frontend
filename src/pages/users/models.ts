@@ -23,10 +23,15 @@ enum Access {
   Открыт = "открыт",
 }
 
-export enum Role {
+enum Role {
   User = "user",
   Manager = "manager",
   Admin = "admin",
+}
+
+enum Plan {
+  BASIC = "базовым",
+  PRO = "разрешенным",
 }
 
 interface User {
@@ -50,6 +55,7 @@ interface User {
   final_test: boolean;
   role: Role;
   direction_type: number;
+  plan: string;
 }
 
 const CreateUserSchema = z.object({
@@ -62,6 +68,7 @@ const CreateUserSchema = z.object({
   end_date: z.string(),
   organization: z.string().min(1),
   direction_type: z.string().min(1),
+  plan: z.string().min(1),
 });
 
 type CreateUser = z.infer<typeof CreateUserSchema>;
@@ -104,4 +111,4 @@ interface IStatistics {
 }
 
 export type { User, CreateUser, UpdateUser, UploadUser, AccessorKeys, ICategoryCount, IStatistic, IStatistics };
-export { TestResult, Access, Categories, CreateUserSchema, UploadUserSchema };
+export { TestResult, Access, Categories, CreateUserSchema, UploadUserSchema, Role, Plan };
