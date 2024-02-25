@@ -50,7 +50,6 @@ const CreateForm = () => {
       toast(toastMessages.error);
     }
   };
-  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
