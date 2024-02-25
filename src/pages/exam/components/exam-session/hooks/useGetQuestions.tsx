@@ -25,7 +25,7 @@ const useGetQuestions = () => {
     setInitialAnswers();
   }, [data, questionType, setInitialAnswers, setQuestions]);
 
-  return { data, isLoading, isValidating, error };
+  return { data, isLoading, isValidating, error, mutate };
 };
 
 export default useGetQuestions;

@@ -5,17 +5,12 @@ import { Badge } from "@/common/components/ui/badge";
 import { cn } from "@/common/lib/utils";
 import { QuestionResponse, QuestionType } from "../../models";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
-type QuestionAccordionProps = {
-  questions: QuestionResponse[];
-};
+type QuestionAccordionProps = { type?: "entry"; questions: QuestionResponse[] };
 
-const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
+const QuestionAccordion = ({ type, questions }: QuestionAccordionProps) => {
   const { state } = useLocation() as { state: QuestionType };
-
-  useEffect(() => {});
-
+  console.log(questions);
   return (
     <Accordion type="single" className="grid gap-4" collapsible>
       {questions
@@ -27,7 +22,9 @@ const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
                 <Badge
                   className={cn(
                     " select-none",
-                    is_correct === null
+                    type
+                      ? "bg-white hover:bg-white/90 text-gray-950"
+                      : is_correct === null
                       ? "bg-amber-500 hover:bg-amber-600"
                       : is_correct
                       ? "bg-green-500 hover:bg-green-600"
