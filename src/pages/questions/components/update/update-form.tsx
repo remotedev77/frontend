@@ -34,9 +34,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
   const form = useForm<CreateQuestion>({
     mode: "onChange",
     resolver: zodResolver(CreateQuestionSchema),
-    values: questionDetails
-      ? { ...questionDetails, direction_type: questionDetails.direction_type.toString() }
-      : undefined,
+    values: questionDetails,
   });
 
   const onSubmit = async (values: CreateQuestion) => {
@@ -49,6 +47,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
       toast(toastMessages.error);
     }
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

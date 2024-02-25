@@ -29,7 +29,7 @@ const UserInfoCard = () => {
       <CardFooter className="flex flex-col items-start max-md:hidden">
         <p>Готовность к экзамену:</p>
         <div className="flex items-center w-full gap-4">
-          <Progress value={getProgress()} /> {getProgress()}%
+          <Progress value={getProgress()} /> <span className="font-semibold">{getProgress()}%</span>
         </div>
       </CardFooter>
     </Card>

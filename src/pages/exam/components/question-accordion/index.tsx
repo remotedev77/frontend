@@ -5,6 +5,7 @@ import { Badge } from "@/common/components/ui/badge";
 import { cn } from "@/common/lib/utils";
 import { QuestionResponse, QuestionType } from "../../models";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 type QuestionAccordionProps = {
   questions: QuestionResponse[];
@@ -12,6 +13,8 @@ type QuestionAccordionProps = {
 
 const QuestionAccordion = ({ questions }: QuestionAccordionProps) => {
   const { state } = useLocation() as { state: QuestionType };
+
+  useEffect(() => {});
 
   return (
     <Accordion type="single" className="grid gap-4" collapsible>

@@ -4,9 +4,8 @@ import useAuthStore from "@/services/state/authStore";
 import { Spinner } from "../spinner";
 
 const Persist = () => {
-  const { isAuth, isUserLoading } = useAuthStore();
-
-  if (isAuth === undefined || isUserLoading) return <Spinner />;
+  const { isAuth } = useAuthStore();
+  if (!isAuth) return <Spinner />;
   return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 };
 export { Persist };

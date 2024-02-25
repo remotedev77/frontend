@@ -20,7 +20,7 @@ interface Question {
   correct_answer_description: string;
   work_function: string;
   note: Note;
-  direction_type: string;
+  direction_type: number;
 }
 
 const CreateQuestionSchema = z.object({
@@ -36,7 +36,7 @@ const CreateQuestionSchema = z.object({
     })
   ),
   correct_answer_description: z.string().min(1),
-  direction_type: z.string().min(1),
+  direction_type: z.number().min(1),
 });
 
 type CreateQuestion = z.infer<typeof CreateQuestionSchema>;

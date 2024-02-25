@@ -10,6 +10,7 @@ import { checkQuestionType } from "../../lib/utils";
 import { TailSpin } from "react-loader-spinner";
 import CardIcon from "../card-icon";
 import QuestionAccordion from "../question-accordion";
+import { ScrollToTop } from "@/common/components/scroll-to-top";
 
 const ExamResult = () => {
   const { questionType, answers, format, checkedQuestions } = useExamStore();
@@ -50,6 +51,8 @@ const ExamResult = () => {
         falseAnswerCount={getAnswersCount(false)}
       />
       <QuestionAccordion questions={format === Format.TIME ? data || [] : checkedQuestions} />
+
+      <ScrollToTop />
     </div>
   );
 };

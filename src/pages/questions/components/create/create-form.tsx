@@ -36,7 +36,7 @@ const CreateForm = () => {
       work_function: "",
       answers: [{ answer: "", is_correct: true }],
       correct_answer_description: "",
-      direction_type: id,
+      direction_type: parseInt(id || ""),
     },
   });
 
@@ -50,7 +50,7 @@ const CreateForm = () => {
       toast(toastMessages.error);
     }
   };
-
+  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
