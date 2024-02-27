@@ -87,7 +87,7 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ row }) => {
       const plan = row.getValue("plan") as Plan;
 
-      return <Badge className={`justify-center w-full`}>{plan}</Badge>;
+      return <Badge className={`justify-center w-full uppercase`}>{plan.charAt(0)}</Badge>;
     },
   },
   {
