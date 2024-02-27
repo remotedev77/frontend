@@ -7,6 +7,7 @@ import { useGetStatistics } from "@/pages/users/hooks/useGetStatistics";
 
 import { Categories } from "@/pages/users/models";
 import useAuthStore from "@/services/state/authStore";
+import { Badge } from "@/common/components/ui/badge";
 
 const UserInfoCard = () => {
   const { user } = useAuthStore();
@@ -20,8 +21,9 @@ const UserInfoCard = () => {
   return (
     <Card className="flex-grow">
       <CardHeader>
-        <CardTitle className="card-title">
+        <CardTitle className="relative card-title">
           {user?.last_name} {user?.first_name} {user?.father_name}
+          <Badge className="absolute right-0 text-base uppercase size-fit">{user?.plan.charAt(0)}</Badge>
         </CardTitle>
         <CardDescription>{user?.organization}</CardDescription>
       </CardHeader>
