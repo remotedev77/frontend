@@ -259,7 +259,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                   <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex space-x-4">
                     <FormItem className="group">
                       <FormControl>
-                        <RadioGroupItem value="базовым" className="hidden peer" />
+                        <RadioGroupItem value="базовый" className="hidden peer" />
                       </FormControl>
                       <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
                         Базовым
@@ -267,7 +267,7 @@ const UpdateForm = ({ handleEdit = () => null }: UpdateFormProps) => {
                     </FormItem>
                     <FormItem className="group">
                       <FormControl>
-                        <RadioGroupItem value="разрешенным" className="hidden" />
+                        <RadioGroupItem value="расширенный" className="hidden" />
                       </FormControl>
                       <FormLabel className="bg-white border rounded-md shadow-sm border-input py-2 px-4 group-has-[:checked]:border-primary">
                         Разрешенным
