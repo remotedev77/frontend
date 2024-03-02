@@ -49,6 +49,7 @@ const ExamResult = () => {
         buttonTitle="Пройти заново"
         correctAnswerCount={getAnswersCount(true)}
         falseAnswerCount={getAnswersCount(false)}
+        isResult
       />
       <QuestionAccordion questions={format === Format.TIME ? data || [] : checkedQuestions} />
 

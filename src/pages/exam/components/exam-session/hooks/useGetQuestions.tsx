@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const useGetQuestions = () => {
   const { pathname, state } = useLocation();
-  const { questionType, setQuestions, resetExam, setSelectedIndex, setInitialAnswers } = useExamStore();
+  const { stage, questionType, setQuestions, resetExam, setSelectedIndex, setInitialAnswers } = useExamStore();
   const { data, isLoading, isValidating, error, mutate } = useSWRImmutable<Question[]>(
     appEndpoints.questions(questionType === "category" ? state : ""),
     getData
@@ -18,12 +18,12 @@ const useGetQuestions = () => {
   useEffect(() => {
     resetExam();
     mutate();
-  }, [mutate, pathname, resetExam, setSelectedIndex]);
+  }, [mutate, stage, pathname, resetExam, setSelectedIndex]);
 
   useEffect(() => {
     setQuestions(data || []);
     setInitialAnswers();
-  }, [data, questionType, setInitialAnswers, setQuestions]);
+  }, [stage, data, questionType, setInitialAnswers, setQuestions]);
 
   return { data, isLoading, isValidating, error, mutate };
 };

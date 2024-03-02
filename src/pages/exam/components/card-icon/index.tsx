@@ -12,14 +12,21 @@ type CardIconProps = {
   title?: string;
   correctAnswerCount?: number;
   falseAnswerCount?: number;
+  isResult?: boolean;
 };
 
-const CardIcon = ({ buttonTitle, title: cardTitle, correctAnswerCount, falseAnswerCount }: CardIconProps) => {
+const CardIcon = ({
+  buttonTitle,
+  title: cardTitle,
+  correctAnswerCount,
+  falseAnswerCount,
+  isResult = false,
+}: CardIconProps) => {
   const { setStage } = useExamStore();
   const { state } = useLocation() as { pathname: string; state: ExamTypes };
   const { title, icon: Icon, desc } = examData?.[state] ? examData[state] : { title: "", icon: null, desc: "" };
 
-  const handleStage = () => setStage(Stage.SESSION);
+  const handleStage = () => setStage(isResult ? Stage.ENTRY : Stage.SESSION);
 
   const handleStartExam = () => {
     handleStage();
@@ -44,7 +51,7 @@ const CardIcon = ({ buttonTitle, title: cardTitle, correctAnswerCount, falseAnsw
         </Button>
 
         <Button variant={"outline"} asChild>
-          <Link to="/" className="w-full">
+          <Link to="/" className="w-full" replace>
             Вернуться в меню
           </Link>
         </Button>
