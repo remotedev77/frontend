@@ -33,8 +33,19 @@ type FilterParams = {
   plan?: Plan;
 };
 
+enum ClosedTest {
+  final_test = "Итоговое тестирование",
+  simulation = "Симулятор экзамена",
+  marathon = "Марафон",
+  not_decide = "Не решал",
+  know = "Знаю",
+  make_mistake = "Делаю ошибки",
+  not_know = "Не знаю"
+}
+
 type CategoriesType = keyof typeof Categories;
 
 type ExamTypes = CategoriesType | "final-test" | "simulation" | "marathon";
 
 export type { DataWithPagination, PaginationModel, FilterParams, ExamTypes, CategoriesType };
+export { ClosedTest }

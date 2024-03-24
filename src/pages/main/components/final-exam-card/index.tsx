@@ -11,12 +11,7 @@ import TwoLayer from "@/assets/svg/two-layer.svg?react";
 const FinalExamCard = () => {
   const { user } = useAuthStore();
   return (
-    <Card
-      className={cn(
-        "relative text-white overflow-hidden",
-        user?.final_test ? "bg-primary" : " bg-gradient-to-r from-gray-400  to-gray-300"
-      )}
-    >
+    <Card className={cn("relative text-white overflow-hidden", "bg-primary")}>
       <TwoLayer className="absolute invisible top-2 lg:visible" />
       <CardContent className="pt-6 pb-0 lg:pt-14">
         <CardDescription className="max-w-sm text-xs text-white md:text-sm lg:text-base">

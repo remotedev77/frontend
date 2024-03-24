@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { CategoriesType } from "@/common/types";
+import { CategoriesType, ClosedTest } from "@/common/types";
 
 type AccessorKeys = {
   id: string;
@@ -56,6 +56,7 @@ interface User {
   role: Role;
   direction_type: number;
   plan: string;
+  closed_tests: ClosedTest[]
 }
 
 const CreateUserSchema = z.object({

@@ -1,6 +1,7 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import { lazily } from "react-lazily";
 import Main from "./pages/main";
+import ProtectedExam from "./common/components/protected-exam";
 
 const { Persist } = lazily(() => import("./common/components/persist"));
 const { PrivateRoute } = lazily(() => import("./common/components/private-route"));
@@ -44,7 +45,9 @@ const router = createBrowserRouter(
       <Route element={<Persist />}>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Main />} />
-          <Route path="exam/:exam-type" element={<Exam />} />
+          <Route element={<ProtectedExam />}>
+            <Route path="exam/:exam-type" element={<Exam />} />
+          </Route>
 
           <Route path="admin" element={<Admin />}>
             <Route index element={<Users />} />

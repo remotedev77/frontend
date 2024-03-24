@@ -16,7 +16,8 @@ import YellowCard from "@/assets/svg/yellow-card.svg?react";
 import RedCard from "@/assets/svg/red-card.svg?react";
 import ExamLink from "./components/exam-link";
 import useAuthStore from "@/services/state/authStore";
-import { getCategories } from "@/common/lib/utils";
+import { cn, getCategories } from "@/common/lib/utils";
+import { ClosedTest } from "@/common/types";
 
 const categoryIcons = [BlackCard, GreenCard, YellowCard, RedCard];
 
@@ -33,24 +34,41 @@ const Main = () => {
           <UserStatisticsCard />
         </div>
 
-        <div>
-          {user?.final_test ? (
-            <ExamLink key="final-test" examType="final-test" examId="final-test">
-              <FinalExamCard />
-            </ExamLink>
-          ) : (
-            <FinalExamCard />
+        <div
+          className={cn(
+            user?.closed_tests?.find((closedTest) => closedTest === ClosedTest.final_test) &&
+              "pointer-events-none opacity-50"
           )}
+        >
+          <ExamLink key="final-test" examType="final-test" examId="final-test" examName="Итоговое тестирование">
+            <FinalExamCard />
+          </ExamLink>
         </div>
 
-        <div className="flex flex-col justify-between gap-4 md:flex-row">
-          <ExamLink key="simulation" examType="simulation" examId="simulation">
-            <ExamCard title="Симулятор экзамена" icon={Watch} />
-          </ExamLink>
+        <div className={cn("flex flex-col justify-between gap-4 md:flex-row")}>
+          <div
+            className={cn(
+              "w-full",
+              user?.closed_tests?.find((closedTest) => closedTest === ClosedTest.simulation) &&
+                "pointer-events-none opacity-50"
+            )}
+          >
+            <ExamLink key="simulation" examType="simulation" examId="simulation" examName="Симулятор экзамена">
+              <ExamCard title="Симулятор экзамена" icon={Watch} />
+            </ExamLink>
+          </div>
 
-          <ExamLink key="marathon" examType="marathon" examId="marathon">
-            <ExamCard title="Марафон" icon={Cards} />
-          </ExamLink>
+          <div
+            className={cn(
+              "w-full",
+              user?.closed_tests?.find((closedTest) => closedTest === ClosedTest.marathon) &&
+                "pointer-events-none opacity-50"
+            )}
+          >
+            <ExamLink key="marathon" examType="marathon" examId="marathon" examName="Марафон">
+              <ExamCard title="Марафон" icon={Cards} />
+            </ExamLink>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
@@ -60,11 +78,30 @@ const Main = () => {
               ))
             : error
             ? null
-            : getCategories(data?.category_counts)?.map(({ category, category_count }, index) => (
-                <ExamLink key={category} examType={category_count !== 0 ? "category" : ""} examId={category}>
-                  <CategoryCard key={category} title={category} count={category_count} icon={categoryIcons[index]} />
-                </ExamLink>
-              ))}
+            : getCategories(data?.category_counts)?.map(({ category, category_count }, index) =>
+                category_count ? (
+                  <div
+                    className={cn(
+                      user?.closed_tests?.find((closedTest) => closedTest === category) &&
+                        "pointer-events-none opacity-50"
+                    )}
+                  >
+                    <ExamLink
+                      key={category}
+                      examType={category_count !== 0 ? "category" : ""}
+                      examId={category}
+                      examName={category}
+                    >
+                      <CategoryCard
+                        key={category}
+                        title={category}
+                        count={category_count}
+                        icon={categoryIcons[index]}
+                      />
+                    </ExamLink>
+                  </div>
+                ) : null
+              )}
         </div>
       </div>
     </div>

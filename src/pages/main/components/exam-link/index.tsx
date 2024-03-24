@@ -5,11 +5,16 @@ import { ExamTypes } from "@/common/types";
 type ExamLinkProps = {
   examType: string;
   examId: ExamTypes;
+  examName: string;
 } & React.PropsWithChildren;
 
-const ExamLink = ({ children, examType, examId }: ExamLinkProps) => {
+const ExamLink = ({ children, examType, examId, examName }: ExamLinkProps) => {
   return (
-    <Link to={examType ? `exam/${examType}` : ""} state={examId} className="w-full">
+    <Link
+      to={{ pathname: examType ? `exam/${examType}` : "", search: `name=${examName}` }}
+      state={examId}
+      className="w-full"
+    >
       {children}
     </Link>
   );
