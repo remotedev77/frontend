@@ -28,6 +28,7 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
   isAuth: undefined,
   isSignInLoading: false,
   isUserLoading: false,
+  isVerified: false,
   setIsAuth: (isAuth) => set({ isAuth }),
   currentUser: async () => {
     set({ isUserLoading: true });
@@ -35,6 +36,7 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
       const currentUser = await getData(authEndpoints.currentUser);
       set({ user: currentUser });
       set({ isAuth: true });
+
     } catch (error) {
       set({ user: null });
       set({ isAuth: false });
@@ -46,15 +48,18 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     set({ isSignInLoading: true });
 
     try {
-      const { access, refresh } = (await postData(authEndpoints.signIn, { arg: data })) as unknown as SignInResponse;
+      const { access, refresh, is_verified } = (await postData(authEndpoints.signIn, { arg: data })) as unknown as SignInResponse;
       localStorage.setItem("accessToken", `Bearer ${access}`);
       localStorage.setItem("refreshToken", `Bearer ${refresh}`);
       get().currentUser();
+      if (!is_verified) {
+        window.location.pathname = "/2fa"
+      }
     } catch (error) {
       toast(toastMessages.error);
     }
-
     set({ isSignInLoading: false });
+
   },
   signOut: () => {
     localStorage.removeItem("accessToken");
@@ -70,7 +75,6 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     })) as unknown as SignInResponse;
     localStorage.setItem("accessToken", `Bearer ${access}`);
     set({ isAuth: true });
-
     return access;
   },
 }));

@@ -15,12 +15,12 @@ const SignInForm = () => {
   const form = useForm<SignIn>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
-      email: "",
+      phone_number: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: SignIn) => {
+  const onSubmit = (values: SignIn) => {
     signIn(values);
   };
 
@@ -30,12 +30,12 @@ const SignInForm = () => {
         <div className="grid grid-cols-1 gap-4">
           <FormField
             control={form.control}
-            name="email"
+            name="phone_number"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input type="email" autoComplete="true" placeholder="Почту" {...field} />
+                  <Input type="tel" autoComplete="true" placeholder="Номер телефона" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -85,13 +85,9 @@ const Main = () => {
                       user?.closed_tests?.find((closedTest) => closedTest === category) &&
                         "pointer-events-none opacity-50"
                     )}
+                    key={category}
                   >
-                    <ExamLink
-                      key={category}
-                      examType={category_count !== 0 ? "category" : ""}
-                      examId={category}
-                      examName={category}
-                    >
+                    <ExamLink examType={category_count !== 0 ? "category" : ""} examId={category} examName={category}>
                       <CategoryCard
                         key={category}
                         title={category}

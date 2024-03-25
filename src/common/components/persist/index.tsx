@@ -6,8 +6,12 @@ import { Spinner } from "../spinner";
 const Persist = () => {
   const { isAuth } = useAuthStore();
 
-  console.log(isAuth);
   if (isAuth === undefined) return <Spinner />;
-  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+
+  if (!isAuth || isAuth === undefined) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 };
 export { Persist };

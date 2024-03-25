@@ -5,6 +5,7 @@ import ProtectedExam from "./common/components/protected-exam";
 
 const { Persist } = lazily(() => import("./common/components/persist"));
 const { PrivateRoute } = lazily(() => import("./common/components/private-route"));
+const { VerifyOTP } = lazily(() => import("./pages/verify-otp"));
 const { SignIn } = lazily(() => import("./pages/sign-in"));
 const { Admin } = lazily(() => import("./pages/admin"));
 const { Users } = lazily(() => import("./pages/users"));
@@ -60,6 +61,7 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route index path="login" element={<SignIn />} />
+      <Route index path="2fa" element={<VerifyOTP />} />
     </Route>
   )
 );

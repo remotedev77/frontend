@@ -3,10 +3,11 @@ import { z } from "zod";
 interface SignInResponse {
   refresh: string;
   access: string;
+  is_verified: boolean,
 }
 
 const SignInSchema = z.object({
-  email: z.string().email().min(1),
+  phone_number: z.string().min(1),
   password: z.string().min(1),
 });
 
