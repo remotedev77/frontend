@@ -48,12 +48,13 @@ const useAuthStore = create<UseAuthStore>((set, get) => ({
     set({ isSignInLoading: true });
 
     try {
-      const { access, refresh, is_verified } = (await postData(authEndpoints.signIn, { arg: data })) as unknown as SignInResponse;
+      const { access, refresh, is_verified, ...props } = (await postData(authEndpoints.signIn, { arg: data })) as unknown as SignInResponse;
       localStorage.setItem("accessToken", `Bearer ${access}`);
       localStorage.setItem("refreshToken", `Bearer ${refresh}`);
       get().currentUser();
       if (!is_verified) {
-        window.location.pathname = "/2fa"
+        window.location.pathname = `/2fa`
+        localStorage.setItem("data", JSON.stringify(props))
       }
     } catch (error) {
       toast(toastMessages.error);

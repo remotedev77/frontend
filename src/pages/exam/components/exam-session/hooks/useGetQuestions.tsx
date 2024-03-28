@@ -11,7 +11,9 @@ const useGetQuestions = () => {
   const { pathname, state } = useLocation();
   const { stage, questionType, setQuestions, resetExam, setSelectedIndex, setInitialAnswers } = useExamStore();
   const { data, isLoading, isValidating, error, mutate } = useSWRImmutable<Question[]>(
-    appEndpoints.questions(questionType === "category" ? state : ""),
+    questionType === "final-test"
+      ? appEndpoints.finalSimulation
+      : appEndpoints.questions(questionType === "category" ? state : ""),
     getData
   );
 
