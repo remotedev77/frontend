@@ -12,7 +12,7 @@ const appEndpoints = {
   checkFinalTest: "app/check-final-test/",
   checkMarathon: "app/check-marathon/",
   checkSimulation: "app/check-simulation/",
-  finalSimulation: "get-finaly-test-questions/",
+  finalSimulation: "app/get-finaly-test-questions/",
   questions: (questionType: string) => `app/get-questions/${questionType ? `?category_name=${questionType}` : ""}`,
   statistics: "app/statistics/",
 };
